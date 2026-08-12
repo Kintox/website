@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cedric Nitsch – Persönliche Reico-Futterberatung für deinen Hund</title>
+<meta name="description" content="Individuelle Reico-Futterberatung für deinen Hund – persönlich, unverbindlich, direkt per WhatsApp. Selbstständiger Reico-Vertriebspartner Cedric Nitsch.">
+
+<!--
+  ============================================================
+  HINWEISE FÜR DICH VOR DEM ONLINE-STELLEN
+  ============================================================
+  1. Name & Telefon/WhatsApp sind bereits eingetragen (Cedric Nitsch,
+     +49 156 78516818). Noch offen in [eckigen Klammern]: E-Mail-Adresse,
+     Jahr des Starts als Vertriebspartner, Jahre Erfahrung, Fotos, eigene
+     Geschichte, Impressum/Datenschutz-Inhalte, Sprechzeiten.
+     WICHTIG: Diese Seite ist bewusst separat von cedricnitsch.de (deine
+     bestehende Seite zur Vertriebspartnergewinnung) – andere Zielgruppe
+     (Endkunden statt künftige Vertriebspartner), andere Domain, eigenes
+     Design. Nicht vermischen, sonst verwässert die Klarheit beider Seiten.
+  2. LOGO: Ersetze den Platzhalter-Wortmark-Text im Header/Footer durch
+     die offizielle REiCO-Logo-Datei (Alge- oder Weiß-Variante je nach
+     Hintergrund, siehe Partner Guideline). Schutzzone = Logobreite / 12
+     nicht unterschreiten. Keine Verzerrung, keine Farbänderung.
+  3. FARBEN: Ausschließlich REiCO-Markenfarben verwendet (Alge, Kalk,
+     Chlorophyll Hell/Dunkel, Sauerstoff-Weiß). Kristall-Rot ist laut
+     Richtlinie exklusiv für interaktive Elemente/Buttons reserviert –
+     bitte nicht für Flächen oder Fließtext zweckentfremden.
+  4. Diese Seite ist bewusst NICHT als Onlineshop gebaut: kein "Jetzt
+     bestellen", kein Warenkorb, keine Preisliste mit Kauffunktion.
+     Bitte nichts in diese Richtung ergänzen.
+  5. Domain darf laut Richtlinie NICHT "Reico" enthalten.
+  ============================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --alge: #3A3D0C;
+    --kalk: #EAE2D5;
+    --chloro-hell: #EEF5B2;
+    --chloro-dunkel: #E7F191;
+    --weiss: #FFFFFF;
+    --kristall: #FF9888;
+    --alge-70: rgba(58,61,12,0.7);
+    --alge-10: rgba(58,61,12,0.08);
+    --radius: 18px;
+    --maxw: 1180px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    font-family:'Poppins', sans-serif;
+    color: var(--alge);
+    background: var(--weiss);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img{ max-width:100%; display:block; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{
+    max-width: var(--maxw);
+    margin:0 auto;
+    padding: 0 24px;
+  }
+
+  h1,h2,h3{ font-weight:700; line-height:1.15; letter-spacing:-0.02em; }
+
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-size:0.72rem;
+    font-weight:600;
+    color: var(--alge-70);
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--alge-10);
+  }
+  .header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 14px 24px;
+  }
+  .logo-mark{
+    font-weight:800;
+    font-size:1.05rem;
+    letter-spacing:0.02em;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo-mark .dot{
+    width:9px; height:9px; border-radius:50%;
+    background: var(--kristall);
+    display:inline-block;
+  }
+  .logo-sub{
+    font-size:0.68rem;
+    color: var(--alge-70);
+    font-weight:400;
+    display:block;
+  }
+  .header-cta{
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-weight:600;
+    font-size:0.92rem;
+    border:2px solid transparent;
+    cursor:pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+    white-space:nowrap;
+  }
+  .btn:active{ transform: scale(0.97); }
+  .btn-icon{
+    width:18px; height:18px;
+    flex-shrink:0;
+  }
+
+  .btn-primary{
+    background: var(--kristall);
+    color: var(--alge);
+    box-shadow: 0 6px 18px rgba(255,152,136,0.45);
+  }
+  .btn-primary:hover{ box-shadow: 0 8px 22px rgba(255,152,136,0.6); transform: translateY(-1px); }
+  .btn-outline{
+    background:transparent;
+    border-color: var(--kristall);
+    color: var(--kristall);
+  }
+  .btn-outline:hover{ background: var(--kristall); color: var(--alge); }
+  .btn-small{ padding: 9px 16px; font-size:0.8rem; }
+
+  .header-cta .btn-outline{ display:none; }
+  @media(min-width:720px){
+    .header-cta .btn-outline{ display:inline-flex; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background: var(--alge);
+    color: var(--weiss);
+    position:relative;
+    overflow:hidden;
+    padding: 56px 0 72px;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-120px; right:-120px;
+    width:420px; height:420px;
+    border-radius:50%;
+    background: radial-gradient(circle, var(--chloro-hell) 0%, transparent 70%);
+    opacity:0.35;
+  }
+  .hero-inner{
+    position:relative;
+    z-index:2;
+    display:grid;
+    gap:36px;
+  }
+  @media(min-width:900px){
+    .hero-inner{ grid-template-columns: 1.15fr 0.85fr; align-items:center; gap:56px; }
+  }
+  .hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background: rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.25);
+    padding: 7px 16px;
+    border-radius:999px;
+    font-size:0.78rem;
+    font-weight:500;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size: clamp(2.1rem, 5.2vw, 3.4rem);
+    color: var(--weiss);
+    margin-bottom:20px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color: var(--chloro-dunkel);
+  }
+  .hero p.lead{
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: rgba(255,255,255,0.82);
+    max-width: 46ch;
+    margin-bottom:32px;
+    font-weight:300;
+  }
+  .hero-ctas{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:26px;
+  }
+  .hero-ctas .btn-outline{
+    border-color: rgba(255,255,255,0.5);
+    color: var(--weiss);
+  }
+  .hero-ctas .btn-outline:hover{ background: rgba(255,255,255,0.12); color:var(--weiss); }
+
+  .trustline{
+    font-size:0.85rem;
+    color: rgba(255,255,255,0.65);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .trustline .sep{ opacity:0.5; }
+
+  .hero-visual{
+    position:relative;
+  }
+  .hero-photo-frame{
+    aspect-ratio: 4/5;
+    background: var(--chloro-hell);
+    border-radius: var(--radius);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--alge);
+    font-size:0.85rem;
+    text-align:center;
+    padding:0;
+    position:relative;
+    overflow:hidden;
+    border: 6px solid rgba(255,255,255,0.15);
+  }
+  .hero-photo-frame span{ opacity:0.55; padding:24px; }
+  .hero-photo-img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{ padding: 72px 0; }
+  .section-head{
+    max-width: 640px;
+    margin-bottom:44px;
+  }
+  .section-head h2{
+    font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+    margin-top:10px;
+  }
+  .section-head p{
+    margin-top:14px;
+    color: var(--alge-70);
+    font-size:1.02rem;
+  }
+
+  /* ---------- ABLAUF / TIMELINE ---------- */
+  .ablauf{ background: var(--kalk); }
+  .steps{
+    display:grid;
+    gap:20px;
+  }
+  @media(min-width:800px){
+    .steps{ grid-template-columns: repeat(3, 1fr); gap:28px; }
+  }
+  .step{
+    background: var(--weiss);
+    border-radius: var(--radius);
+    padding:32px 26px;
+    position:relative;
+  }
+  .step-num{
+    width:44px; height:44px;
+    border-radius:50%;
+    background: var(--alge);
+    color: var(--weiss);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700;
+    margin-bottom:18px;
+    font-size:1.05rem;
+  }
+  .step h3{ font-size:1.08rem; margin-bottom:10px; }
+  .step p{ font-size:0.92rem; color: var(--alge-70); }
+  .steps-connector{
+    display:none;
+  }
+  @media(min-width:800px){
+    .step:not(:last-child)::after{
+      content:"→";
+      position:absolute;
+      right:-26px;
+      top:32px;
+      font-size:1.3rem;
+      color: var(--alge-70);
+    }
+  }
+  .ablauf-note{
+    margin-top:28px;
+    font-size:0.9rem;
+    color: var(--alge-70);
+    max-width: 60ch;
+  }
+
+  /* ---------- QUIZ ---------- */
+  .quiz{
+    background: var(--weiss);
+  }
+  .quiz-card{
+    background: var(--alge);
+    color: var(--weiss);
+    border-radius: 24px;
+    padding: 40px 24px;
+  }
+  @media(min-width:700px){ .quiz-card{ padding: 52px 48px; } }
+  .quiz-card .eyebrow{ color: var(--chloro-dunkel); }
+  .quiz-card h2{ color: var(--weiss); font-size: clamp(1.5rem, 3vw, 2rem); margin: 10px 0 8px; }
+  .quiz-card p.lead{ color: rgba(255,255,255,0.75); max-width:56ch; margin-bottom:30px; font-size:0.98rem; }
+
+  .quiz-options{
+    display:grid;
+    gap:12px;
+    grid-template-columns: 1fr;
+    margin-bottom:26px;
+  }
+  @media(min-width:640px){
+    .quiz-options{ grid-template-columns: 1fr 1fr; }
+  }
+  .quiz-option{
+    background: rgba(255,255,255,0.06);
+    border:1.5px solid rgba(255,255,255,0.22);
+    border-radius:14px;
+    padding:18px 20px;
+    text-align:left;
+    cursor:pointer;
+    color: var(--weiss);
+    font-family:inherit;
+    font-size:0.96rem;
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    transition: background .15s ease, border-color .15s ease, transform .1s ease;
+  }
+  .quiz-option:hover{
+    background: rgba(255,255,255,0.14);
+    border-color: var(--chloro-dunkel);
+  }
+  .quiz-option.active{
+    background: var(--kristall);
+    color: var(--alge);
+    border-color: var(--kristall);
+  }
+  .quiz-option .arrow{ opacity:0.6; font-size:1.1rem; }
+
+  .quiz-result{
+    display:none;
+    background: rgba(255,255,255,0.08);
+    border-radius:14px;
+    padding:22px 24px;
+    margin-top:8px;
+  }
+  .quiz-result.show{ display:block; }
+  .quiz-result p{ font-size:0.9rem; color: rgba(255,255,255,0.78); margin-bottom:14px; }
+  .quiz-result .btn-primary{ width:100%; justify-content:center; }
+  @media(min-width:520px){ .quiz-result .btn-primary{ width:auto; } }
+
+  /* ---------- THEMEN ---------- */
+  .themen{ background: var(--kalk); }
+  .theme-grid{
+    display:grid;
+    gap:18px;
+    grid-template-columns: 1fr;
+  }
+  @media(min-width:640px){ .theme-grid{ grid-template-columns: 1fr 1fr; } }
+  .theme-card{
+    background: var(--weiss);
+    border-radius:16px;
+    padding:26px 24px;
+    border-left: 4px solid var(--chloro-dunkel);
+  }
+  .theme-card h3{ font-size:1.02rem; margin-bottom:8px; }
+  .theme-card p{ font-size:0.9rem; color: var(--alge-70); }
+  .themen-disclaimer{
+    margin-top:24px;
+    font-size:0.82rem;
+    color: var(--alge-70);
+    font-style:italic;
+  }
+
+  /* ---------- ÜBER MICH ---------- */
+  .about{ background: var(--weiss); }
+  .about-inner{
+    display:grid;
+    gap:36px;
+    align-items:center;
+  }
+  @media(min-width:860px){
+    .about-inner{ grid-template-columns: 0.8fr 1.2fr; gap:56px; }
+  }
+  .about-photo{
+    aspect-ratio: 1/1;
+    background: var(--chloro-hell);
+    border-radius: var(--radius);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0;
+    color: var(--alge-70);
+    font-size:0.85rem;
+    overflow:hidden;
+  }
+  .about-photo-img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .about-text h2{ font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom:16px; }
+  .about-text p{ margin-bottom:14px; color: var(--alge-70); }
+  .about-text p strong{ color: var(--alge); }
+  .about-badges{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:22px;
+  }
+  .about-badge{
+    background: var(--kalk);
+    padding:10px 16px;
+    border-radius:999px;
+    font-size:0.82rem;
+    font-weight:500;
+  }
+
+  /* ---------- KONTAKT ---------- */
+  .kontakt{
+    background: var(--alge);
+    color: var(--weiss);
+  }
+  .kontakt .section-head p{ color: rgba(255,255,255,0.7); }
+  .kontakt-grid{
+    display:grid;
+    gap:16px;
+    grid-template-columns: 1fr;
+  }
+  @media(min-width:760px){ .kontakt-grid{ grid-template-columns: repeat(3, 1fr); } }
+  .kontakt-card{
+    background: rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:16px;
+    padding:26px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .kontakt-card .icon{
+    width:38px; height:38px;
+    border-radius:10px;
+    background: var(--kristall);
+    color: var(--alge);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700;
+  }
+  .kontakt-card h3{ font-size:1rem; }
+  .kontakt-card p{ font-size:0.88rem; color: rgba(255,255,255,0.65); }
+  .kontakt-card .btn{ margin-top:auto; align-self:flex-start; }
+
+  .kontakt-form{
+    margin-top:40px;
+    background: rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 32px 26px;
+  }
+  .kontakt-form h3{ margin-bottom:6px; font-size:1.1rem; }
+  .kontakt-form p.hint{ font-size:0.85rem; color: rgba(255,255,255,0.6); margin-bottom:22px; }
+  .form-row{ display:grid; gap:16px; margin-bottom:16px; }
+  @media(min-width:640px){ .form-row.two{ grid-template-columns: 1fr 1fr; } }
+  label{ display:block; font-size:0.8rem; margin-bottom:6px; color: rgba(255,255,255,0.75); }
+  input, select, textarea{
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.05);
+    color: var(--weiss);
+    font-family:inherit;
+    font-size:0.92rem;
+  }
+  input::placeholder, textarea::placeholder{ color: rgba(255,255,255,0.4); }
+  textarea{ resize:vertical; min-height:90px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--alge);
+    color: rgba(255,255,255,0.55);
+    padding: 28px 0 110px;
+    font-size:0.8rem;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .footer-inner{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  @media(min-width:700px){
+    .footer-inner{ flex-direction:row; justify-content:space-between; align-items:center; }
+  }
+  .footer-links{ display:flex; gap:18px; flex-wrap:wrap; }
+  .footer-links a:hover{ color: var(--weiss); }
+
+  /* ---------- STICKY WHATSAPP ---------- */
+  .sticky-wa{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background: var(--kristall);
+    color: var(--alge);
+    padding: 15px 22px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:0.9rem;
+    box-shadow: 0 10px 30px rgba(58,61,12,0.35);
+  }
+  .sticky-wa:hover{ transform: translateY(-2px); }
+  .sticky-wa .wa-dot{
+    width:8px; height:8px; border-radius:50%;
+    background: var(--alge);
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse{
+    0%{ opacity:1; } 50%{ opacity:0.3; } 100%{ opacity:1; }
+  }
+  @media(max-width:480px){
+    .sticky-wa span.wa-label-full{ display:none; }
+  }
+
+
+  .reico-logo{ height:26px; width:auto; display:block; }
+  .reico-logo-lg{ height:44px; width:auto; display:block; }
+  .header-brand{ display:flex; align-items:center; gap:14px; }
+  .header-brand .divider{ width:1px; height:28px; background: var(--alge-10); }
+  .header-brand .vp-label{ font-size:0.72rem; line-height:1.3; color: var(--alge-70); }
+  .header-brand .vp-label strong{ display:block; color: var(--alge); font-size:0.85rem; font-weight:600; }
+  .hero-logo-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    background: rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.2);
+    padding:10px 18px 10px 14px;
+    border-radius:999px;
+    margin-bottom:26px;
+  }
+  .hero-logo-badge .reico-logo{ height:20px; }
+  .hero-logo-badge span{ font-size:0.78rem; color: rgba(255,255,255,0.85); font-weight:500; }
+  .warum-reico{ background: var(--weiss); }
+  .warum-reico-inner{
+    background: var(--chloro-hell);
+    border-radius: 28px;
+    padding: 48px 28px;
+    display:grid;
+    gap:32px;
+    align-items:center;
+  }
+  @media(min-width:860px){ .warum-reico-inner{ grid-template-columns: 0.9fr 1.1fr; padding:56px 60px; gap:48px; } }
+  .warum-reico-logo{ display:flex; justify-content:flex-start; }
+  .warum-reico-logo .reico-logo-lg{ height:56px; }
+  .warum-reico-text p{ font-size:1rem; color: var(--alge); margin-bottom:14px; }
+  .warum-reico-text p:last-child{ margin-bottom:0; }
+  .footer-logo{ margin-bottom:10px; }
+  .footer-logo .reico-logo{ height:22px; }
+
+
+  .lead-form-note{
+    font-size:0.8rem;
+    color: rgba(255,255,255,0.55);
+    margin-top:12px;
+  }
+  .checkbox-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin: 4px 0 20px;
+  }
+  .checkbox-row input[type="checkbox"]{
+    width:18px; height:18px;
+    margin-top:2px;
+    accent-color: var(--kristall);
+    flex-shrink:0;
+  }
+  .checkbox-row label{
+    margin:0;
+    font-size:0.85rem;
+    color: rgba(255,255,255,0.8);
+    line-height:1.4;
+  }
+  .form-success{
+    display:none;
+    background: var(--chloro-hell);
+    color: var(--alge);
+    border-radius:12px;
+    padding:18px 20px;
+    font-size:0.92rem;
+    font-weight:500;
+    margin-top:16px;
+  }
+  .form-success.show{ display:block; }
+  .form-error{
+    display:none;
+    background: rgba(255,152,136,0.15);
+    border:1px solid var(--kristall);
+    color: var(--weiss);
+    border-radius:12px;
+    padding:14px 18px;
+    font-size:0.85rem;
+    margin-top:14px;
+  }
+  .form-error.show{ display:block; }
+
+  /* ---------- HANDBUCH (Lead-Magnet) ---------- */
+  .handbuch{ background: var(--kalk); }
+  .handbuch-inner{
+    display:grid;
+    gap:36px;
+    align-items:center;
+  }
+  @media(min-width:900px){ .handbuch-inner{ grid-template-columns: 1fr 1fr; gap:56px; } }
+  .handbuch-visual{
+    background: var(--weiss);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    text-align:center;
+  }
+  .handbuch-visual .handbuch-cover{
+    width:180px;
+    margin:0 auto 20px;
+    border-radius:8px;
+    box-shadow: 0 14px 34px rgba(58,61,12,0.25);
+  }
+  .handbuch-visual p{ font-size:0.85rem; color: var(--alge-70); max-width:280px; margin:0 auto; }
+  .handbuch-form-card{
+    background: var(--alge);
+    color: var(--weiss);
+    border-radius: var(--radius);
+    padding: 32px 26px;
+  }
+  @media(min-width:600px){ .handbuch-form-card{ padding:40px 36px; } }
+  .handbuch-form-card h3{ font-size:1.3rem; margin-bottom:8px; }
+  .handbuch-form-card p.hint{ font-size:0.9rem; color: rgba(255,255,255,0.65); margin-bottom:24px; }
+
+
+  /* ---------- FUTTERCHECK ---------- */
+  .fc-progress-wrap{ margin-bottom:28px; }
+  .fc-progress-track{
+    width:100%;
+    height:8px;
+    background: rgba(255,255,255,0.15);
+    border-radius:999px;
+    overflow:hidden;
+    margin-bottom:8px;
+  }
+  .fc-progress-bar{
+    height:100%;
+    width:0%;
+    background: var(--kristall);
+    border-radius:999px;
+    transition: width .4s ease;
+  }
+  .fc-progress-toprow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+  }
+  .fc-progress-label{
+    font-size:0.78rem;
+    color: rgba(255,255,255,0.6);
+  }
+  .fc-progress-pct{
+    font-size:0.78rem;
+    font-weight:700;
+    color: var(--kristall);
+  }
+  .fc-step{ animation: fcFadeIn .35s ease; }
+  @keyframes fcFadeIn{ from{ opacity:0; transform: translateY(8px); } to{ opacity:1; transform:none; } }
+  .fc-step h2{ color: var(--weiss); font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin-bottom:22px; }
+  .fc-choice-grid{
+    display:grid;
+    gap:12px;
+    grid-template-columns: 1fr;
+    margin-bottom:26px;
+  }
+  @media(min-width:640px){ .fc-choice-grid{ grid-template-columns: 1fr 1fr; } }
+  .fc-choice{
+    background: rgba(255,255,255,0.06);
+    border:1.5px solid rgba(255,255,255,0.22);
+    border-radius:14px;
+    padding:16px 18px;
+    text-align:left;
+    cursor:pointer;
+    color: var(--weiss);
+    font-family:inherit;
+    font-size:0.95rem;
+    font-weight:500;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .fc-choice:hover{ background: rgba(255,255,255,0.14); border-color: var(--kristall); }
+  .fc-choice.selected{ background: var(--kristall); color: var(--alge); border-color: var(--kristall); }
+  .fc-text-input{
+    width:100%;
+    padding:16px 18px;
+    border-radius:14px;
+    border:1.5px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.06);
+    color: var(--weiss);
+    font-family:inherit;
+    font-size:1rem;
+    margin-bottom:26px;
+  }
+  .fc-text-input::placeholder{ color: rgba(255,255,255,0.4); }
+  .fc-nav{ display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .fc-back{
+    background:none; border:none; color: rgba(255,255,255,0.55);
+    font-family:inherit; font-size:0.85rem; cursor:pointer; padding:10px 4px;
+  }
+  .fc-back:hover{ color: var(--weiss); }
+  .fc-next{ margin-left:auto; }
+  .fc-next:disabled{ opacity:0.4; cursor:not-allowed; }
+  .fc-hint{ font-size:0.8rem; color: rgba(255,255,255,0.5); margin-top:-14px; margin-bottom:22px; }
+
+  /* Lead-Formular als letzter Schritt */
+  .fc-lead-fields{ display:grid; gap:16px; margin-bottom:20px; }
+  @media(min-width:600px){ .fc-lead-fields.two{ grid-template-columns: 1fr 1fr; } }
+  .fc-lead-fields label{ font-size:0.8rem; color: rgba(255,255,255,0.75); display:block; margin-bottom:6px; }
+
+  /* Ergebnis-Screen */
+  .fc-result-head{ display:flex; flex-direction:column; align-items:center; text-align:center; margin-bottom:28px; }
+  .fc-score-circle{
+    width:150px; height:150px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:20px;
+    background: conic-gradient(var(--fc-score-color, var(--kristall)) calc(var(--fc-score, 0) * 1%), rgba(255,255,255,0.12) 0);
+    transition: background 1.2s ease-out;
+  }
+  .fc-score-circle-inner{
+    width:118px; height:118px;
+    border-radius:50%;
+    background: var(--alge);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    color: var(--weiss);
+  }
+  .fc-score-circle-inner .fc-score-num{ font-size:2rem; font-weight:800; line-height:1; }
+  .fc-score-circle-inner .fc-score-max{ font-size:0.75rem; color: rgba(255,255,255,0.5); }
+  .fc-result-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:8px 18px; border-radius:999px;
+    font-size:0.85rem; font-weight:600;
+    margin-bottom:14px;
+  }
+  .fc-result-badge.good{ background: var(--chloro-hell); color: var(--alge); }
+  .fc-result-badge.mid{ background: var(--kalk); color: var(--alge); }
+  .fc-result-badge.low{ background: var(--weiss); color: var(--alge); border:2px solid var(--kristall); }
+  .fc-result-head h2{ margin-bottom:8px; }
+  .fc-result-head p{ color: rgba(255,255,255,0.75); max-width:48ch; font-size:0.95rem; }
+  .fc-result-topics{
+    background: rgba(255,255,255,0.06);
+    border-radius:14px;
+    padding:22px 24px;
+    margin-bottom:24px;
+  }
+  .fc-result-topics h3{ color: var(--weiss); font-size:1rem; margin-bottom:12px; }
+  .fc-result-topics ul{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+  .fc-result-topics li{ color: rgba(255,255,255,0.8); font-size:0.9rem; display:flex; gap:8px; }
+  .fc-result-cta{ text-align:center; }
+  .fc-result-cta .btn{ width:100%; justify-content:center; }
+  @media(min-width:480px){ .fc-result-cta .btn{ width:auto; } }
+  .fc-result-note{ font-size:0.8rem; color: rgba(255,255,255,0.5); margin-top:14px; }
+
+  .disclosure-strip{
+    background: var(--chloro-hell);
+    text-align:center;
+    font-size:0.78rem;
+    padding:8px 16px;
+    color: var(--alge);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner wrap">
+    <div class="header-brand">
+      <img class="reico-logo" src="img/logo-alge.png" alt="REiCO Logo">
+      <div class="divider"></div>
+      <span class="vp-label"><strong>Cedric Nitsch</strong>Selbstständiger Vertriebspartner</span>
+    </div>
+    <div class="header-cta">
+      <a href="#kontakt" class="btn btn-outline btn-small">Kontakt</a>
+      <a href="https://wa.me/4915678516818?text=Hallo%20Cedric%2C%20ich%20habe%20eine%20Frage%20zur%20Reico-F%C3%BCtterung%20meines%20Hundes." target="_blank" rel="noopener" class="btn btn-primary btn-small">WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <div class="hero-logo-badge">
+        <img class="reico-logo" src="img/logo-sauerstoff-white.png" alt="REiCO Logo">
+        <span>Offizieller REiCO-Vertriebspartner</span>
+      </div>
+      <h1>REiCO Futterberatung – <em>persönlich</em> für deinen Hund.</h1>
+      <p class="lead">
+        Individuelle Empfehlung aus dem REiCO Vital-System – ehrlich, unverbindlich
+        und direkt von deinem Vertriebspartner Cedric Nitsch.
+      </p>
+      <div class="hero-ctas">
+        <a href="https://wa.me/4915678516818?text=Hallo%20Cedric%2C%20ich%20habe%20eine%20Frage%20zur%20Reico-F%C3%BCtterung%20meines%20Hundes." target="_blank" rel="noopener" class="btn btn-primary"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Jetzt per WhatsApp schreiben</a>
+        <a href="tel:+4915678516818" class="btn btn-outline"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> +49 156 78516818</a>
+      </div>
+      <div class="trustline">
+        <span>Seit 10 Jahren im Reico-Direktvertrieb</span>
+        <span class="sep">·</span>
+        <span>Beratung für Hund, Katze &amp; Pferd</span>
+        <span class="sep">·</span>
+        <span>Antwort meist innerhalb 24 Std.</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-photo-frame">
+        <img src="img/hero-hund.jpg" alt="Cedric Nitsch mit Hund" class="hero-photo-img">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WARUM REiCO ================= -->
+<section class="warum-reico" id="warum-reico">
+  <div class="wrap">
+    <div class="warum-reico-inner">
+      <div class="warum-reico-logo">
+        <img class="reico-logo-lg" src="img/logo-alge.png" alt="REiCO Logo">
+      </div>
+      <div class="warum-reico-text">
+        <p><strong>REiCO ist ein Familienunternehmen aus dem Allgäu</strong>, geprägt von Naturverbundenheit und einem klaren Qualitätsanspruch. Entwickelt werden Tiernahrung und Nahrungsergänzungsmittel für Mensch und Tier.</p>
+        <p>Im Mittelpunkt steht das <strong>REiCO Vital-System</strong> mit dem Ziel, das mineralische Gleichgewicht als Basis für Wohlbefinden und Vitalität zu fördern – erhältlich ausschließlich über geschulte Vertriebspartner:innen wie mich.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABLAUF ================= -->
+<section class="ablauf" id="ablauf">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">So läuft es ab</p>
+      <h2>Drei Schritte bis zur passenden Empfehlung</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Kontakt aufnehmen</h3>
+        <p>Per WhatsApp, Telefon oder Formular – schreib mir kurz, worum es geht. Unverbindlich und kostenlos.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Kurzes Gespräch</h3>
+        <p>Wir sprechen über deinen Hund, seine aktuelle Fütterung und was dich gerade beschäftigt.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Individuelle Empfehlung</h3>
+        <p>Du bekommst einen auf deinen Hund abgestimmten Vorschlag – ganz ohne Verkaufsdruck.</p>
+      </div>
+    </div>
+    <p class="ablauf-note">
+      Reico-Produkte gibt es nicht im normalen Handel, sondern nur über geschulte
+      Vertriebspartner:innen, die persönlich begleiten. Das ist kein Umweg – jedes
+      Tier ist anders, und eine pauschale Empfehlung wird dem selten gerecht.
+    </p>
+  </div>
+</section>
+
+<!-- ================= FUTTERCHECK (interaktiver Kurz-Check) ================= -->
+<section class="quiz" id="futtercheck">
+  <div class="wrap">
+    <div class="quiz-card">
+      <div class="fc-progress-wrap" id="fcProgressWrap">
+        <div class="fc-progress-toprow">
+          <span class="fc-progress-label" id="fcProgressLabel">Frage 1 von 13</span>
+          <span class="fc-progress-pct" id="fcProgressPct">0%</span>
+        </div>
+        <div class="fc-progress-track"><div class="fc-progress-bar" id="fcProgressBar"></div></div>
+      </div>
+      <div id="fcStepArea"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THEMEN ================= -->
+<section class="themen" id="themen">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Beratungsschwerpunkte</p>
+      <h2>Worauf ich in der Beratung eingehe</h2>
+      <p>Ein kurzer Überblick – für alles Weitere sprechen wir persönlich.</p>
+    </div>
+    <div class="theme-grid">
+      <div class="theme-card">
+        <h3>✨ Fell &amp; Haut</h3>
+        <p>Glänzendes Fell und gesunde Haut hängen eng mit der Ernährung zusammen. Wir schauen gemeinsam, welche Bausteine in der aktuellen Fütterung eventuell fehlen könnten.</p>
+      </div>
+      <div class="theme-card">
+        <h3>🌿 Verdauung &amp; Wohlbefinden</h3>
+        <p>Manche Hunde reagieren empfindlich auf bestimmte Zutaten. Ich helfe dir, mögliche Zusammenhänge zwischen Fütterung und Wohlbefinden besser zu verstehen.</p>
+      </div>
+      <div class="theme-card">
+        <h3>🎾 Gewicht &amp; Aktivität</h3>
+        <p>Ob Wachstum, Sport oder Ruhestand – der Nährstoffbedarf verändert sich im Hundeleben. Wir finden eine Fütterung, die zum aktuellen Lebensabschnitt passt.</p>
+      </div>
+      <div class="theme-card">
+        <h3>🔄 Futterumstellung</h3>
+        <p>Eine Futterumstellung will gut begleitet sein. Ich unterstütze dich Schritt für Schritt, damit sie für deinen Hund so angenehm wie möglich verläuft.</p>
+      </div>
+    </div>
+    <p class="themen-disclaimer">
+      Hinweis: Diese Beratung ersetzt keine tierärztliche Diagnose oder Behandlung.
+      Bei gesundheitlichen Beschwerden wende dich bitte an deine Tierarztpraxis.
+    </p>
+  </div>
+</section>
+
+<!-- ================= ÜBER MICH ================= -->
+<section class="about" id="about">
+  <div class="wrap about-inner">
+    <div class="about-photo">
+      <img src="img/about-portrait.jpg" alt="Portrait von Cedric Nitsch" class="about-photo-img">
+    </div>
+    <div class="about-text">
+      <p class="eyebrow">Über mich</p>
+      <h2>Wer steckt hinter Cedric Nitsch?</h2>
+      <p>
+        Hallo, ich bin <strong>Cedric Nitsch</strong> – seit dem 1. August 2016
+        selbstständiger Reico-Vertriebspartner, mit Sitz in Lippstadt. Eigentlich
+        bin ich mit Reico aufgewachsen: Meine Mutter ist seit über 20 Jahren dabei,
+        die Begeisterung für eine natürliche, individuell abgestimmte Ernährung
+        habe ich quasi von klein auf mitbekommen. [Kurzer persönlicher Satz zu
+        deinem eigenen Hund / was dich an der Beratung heute noch begeistert.]
+      </p>
+      <p>
+        Mir ist wichtig, dass du dich bei mir gut aufgehoben fühlst – ohne
+        Verkaufsdruck, dafür mit ehrlicher, individueller Beratung. Ich begleite
+        dich nicht nur bei der ersten Bestellung, sondern bleibe danach dein
+        fester Ansprechpartner.
+      </p>
+      <div class="about-badges">
+        <span class="about-badge">10 Jahre Erfahrung</span>
+        <span class="about-badge">Geschulter Reico-Partner</span>
+        <span class="about-badge">Hund · Katze · Pferd</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRODUKTHANDBUCH (LEAD-MAGNET) ================= -->
+<section class="handbuch" id="handbuch">
+  <div class="wrap">
+    <div class="handbuch-inner">
+      <div class="handbuch-visual">
+        <img class="handbuch-cover" src="img/handbuch-cover.jpg" alt="REiCO Produktkatalog 03/2026">
+        <p>Alle REiCO Produkte für Hund, Katze &amp; Pferd im Überblick – plus Hintergrund zum REiCO Vital-System.</p>
+      </div>
+      <div class="handbuch-form-card">
+        <p class="eyebrow" style="color:var(--chloro-dunkel)">Kostenlos &amp; unverbindlich</p>
+        <h3>Das REiCO Produkthandbuch – ich schicke es dir zu</h3>
+        <p class="hint">Kein Kauf, keine Verpflichtung. Trag dich kurz ein, ich sende dir das aktuelle Handbuch persönlich zu.</p>
+        <form id="handbuchForm" novalidate>
+          <div class="form-row two">
+            <div>
+              <label for="hb-name">Vor- und Nachname</label>
+              <input type="text" id="hb-name" name="Name" placeholder="Dein Name" required>
+            </div>
+            <div>
+              <label for="hb-email">E-Mail-Adresse</label>
+              <input type="email" id="hb-email" name="E-Mail" placeholder="du@beispiel.de" required>
+            </div>
+          </div>
+          <div class="form-row two">
+            <div>
+              <label for="hb-strasse">Straße &amp; Hausnummer</label>
+              <input type="text" id="hb-strasse" name="Strasse" placeholder="Musterstraße 1" required>
+            </div>
+            <div>
+              <label for="hb-ort">PLZ &amp; Ort</label>
+              <input type="text" id="hb-ort" name="Ort" placeholder="12345 Musterstadt" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="hb-telefon">Telefonnummer</label>
+              <input type="tel" id="hb-telefon" name="Telefon" placeholder="Für Rückfragen zur Zustellung" required>
+            </div>
+          </div>
+          <input type="hidden" name="Anfrageart" value="Produkthandbuch-Anfrage">
+          <div class="checkbox-row">
+            <input type="checkbox" id="hb-neukunde" name="Noch kein Kunde" required>
+            <label for="hb-neukunde">Ja, ich bin aktuell nicht bei einem Reico-Vertriebspartner registriert. *</label>
+          </div>
+          <button type="submit" class="btn btn-primary"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg> Handbuch kostenlos anfordern</button>
+          <p class="lead-form-note">* Pflichtfeld. Deine Daten nutze ich ausschließlich, um dir das Handbuch zuzusenden und dich als Interessent zu sichern.</p>
+          <div class="form-success" id="hbSuccess">Danke dir! Ich habe deine Anfrage erhalten und schicke dir das Handbuch in Kürze persönlich zu.</div>
+          <div class="form-error" id="hbError">Das hat leider nicht geklappt. Schreib mir stattdessen kurz per <a href="https://wa.me/4915678516818" style="color:var(--chloro-dunkel); text-decoration:underline;">WhatsApp</a>.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KONTAKT ================= -->
+<section class="kontakt" id="kontakt">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" style="color:var(--chloro-dunkel)">Lass uns sprechen</p>
+      <h2>Egal ob du schon genau weißt, was du möchtest, oder erstmal Fragen hast</h2>
+      <p>Melde dich einfach – auf dem Weg, der dir am liebsten ist.</p>
+    </div>
+
+    <div class="kontakt-grid">
+      <div class="kontakt-card">
+        <div class="icon">W</div>
+        <h3>WhatsApp</h3>
+        <p>Der schnellste Weg – meist Antwort innerhalb von 24 Std.</p>
+        <a href="https://wa.me/4915678516818" target="_blank" rel="noopener" class="btn btn-primary btn-small">Nachricht schreiben</a>
+      </div>
+      <div class="kontakt-card">
+        <div class="icon">T</div>
+        <h3>Telefon</h3>
+        <p>[Sprechzeiten, z. B. Mo–Fr 9–18 Uhr]</p>
+        <a href="tel:+4915678516818" class="btn btn-outline btn-small">+49 156 78516818</a>
+      </div>
+      <div class="kontakt-card">
+        <div class="icon">@</div>
+        <h3>E-Mail</h3>
+        <p>Für ausführlichere Anliegen.</p>
+        <a href="mailto:info@cedricnitsch.de" class="btn btn-outline btn-small">info@cedricnitsch.de</a>
+      </div>
+    </div>
+
+    <div class="kontakt-form">
+      <h3>Kundenzugang sichern</h3>
+      <p class="hint">Frag mich einfach – dein Weg zur ersten Beratung ist schneller, als du denkst. Kurz deine Daten hinterlassen, ich melde mich innerhalb von 24 Std. persönlich. Kein Bestellformular, keine Verpflichtung.</p>
+      <form id="kundenzugangForm" novalidate>
+        <div class="form-row two">
+          <div>
+            <label for="name">Dein Name</label>
+            <input type="text" id="name" name="Name" placeholder="Vor- und Nachname" required>
+          </div>
+          <div>
+            <label for="tierart">Tierart</label>
+            <select id="tierart" name="Tierart">
+              <option>Hund</option>
+              <option>Katze</option>
+              <option>Pferd</option>
+              <option>Sonstiges</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row two">
+          <div>
+            <label for="kz-email">E-Mail-Adresse</label>
+            <input type="email" id="kz-email" name="E-Mail" placeholder="du@beispiel.de" required>
+          </div>
+          <div>
+            <label for="kz-telefon">Telefon (optional)</label>
+            <input type="tel" id="kz-telefon" name="Telefon" placeholder="Für Rückruf">
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="nachricht">Deine Nachricht</label>
+            <textarea id="nachricht" name="Nachricht" placeholder="Erzähl mir kurz, worum es geht …"></textarea>
+          </div>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="kz-neukunde" name="Noch kein Kunde" required>
+          <label for="kz-neukunde">Ja, ich bin aktuell nicht bei einem Reico-Vertriebspartner registriert. *</label>
+        </div>
+        <button type="submit" class="btn btn-primary"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Kundenzugang sichern</button>
+        <p class="lead-form-note">* Pflichtfeld. Damit sichere ich dich als Interessent, bis wir persönlich gesprochen haben – ganz ohne Kauf oder Verpflichtung.</p>
+        <div class="form-success" id="kzSuccess">Danke dir! Deine Anfrage ist bei mir eingegangen – ich melde mich innerhalb von 24 Std. persönlich.</div>
+        <div class="form-error" id="kzError">Das hat leider nicht geklappt. Schreib mir stattdessen kurz per <a href="https://wa.me/4915678516818" style="color:var(--chloro-dunkel); text-decoration:underline;">WhatsApp</a>.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-logo">
+      <img class="reico-logo" src="img/logo-sauerstoff-white.png" alt="REiCO Logo">
+    </div>
+  </div>
+  <div class="wrap footer-inner">
+    <div>Cedric Nitsch · Selbstständiger Reico-Vertriebspartner · Reico &amp; Partner Vertriebs GmbH</div>
+    <div class="footer-links">
+      <a href="#impressum">Impressum</a>
+      <a href="#datenschutz">Datenschutz</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/4915678516818?text=Hallo%20Cedric%2C%20ich%20habe%20eine%20Frage%20zur%20Reico-F%C3%BCtterung%20meines%20Hundes."
+   target="_blank" rel="noopener" class="sticky-wa" id="stickyWa">
+  <span class="wa-dot"></span>
+  <span class="wa-label-full">WhatsApp schreiben</span>
+  <span class="wa-label-short" style="display:none;">WhatsApp</span>
+</a>
+
+<script>
+  // ============================================================
+  // FUTTERCHECK -- interaktiver Kurz-Check mit Score & personalisierter
+  // WhatsApp-Uebergabe. Angelehnt an das bewaehrte Futtercheck-Konzept,
+  // ohne Blur-Teaser-Mechanik und ohne separate Vertriebspartner-Werbebox
+  // (Frage 10 bleibt im Flow, ihr Ergebnis fliesst nur in die interne
+  // Anfrage-Notiz, nicht in eine Werbeflaeche fuer Kunden).
+  // ============================================================
+  const WA_NUMBER = "4915678516818";
+
+  const FC_GEWICHT_HUND = [
+    { v:'klein', l:'🐕 Klein (bis 10 kg)', pts:10 },
+    { v:'mittel', l:'🐕 Mittel (10–25 kg)', pts:10 },
+    { v:'gross', l:'🐕 Groß (25–40 kg)', pts:10 },
+    { v:'sehrgross', l:'🐕 Sehr groß (über 40 kg)', pts:5 },
+  ];
+  const FC_GEWICHT_KATZE = [
+    { v:'normal', l:'😺 Normalgewichtig', pts:10 },
+    { v:'leichtueber', l:'😸 Etwas zu schwer', pts:5 },
+    { v:'deutlichueber', l:'🐱 Deutlich übergewichtig', pts:0 },
+    { v:'unter', l:'🐱 Untergewichtig', pts:0 },
+  ];
+
+  const FC_QUESTIONS = [
+    { id:'tierart', type:'choice',
+      title: 'Welches Tier möchtest du checken?',
+      options: [ {v:'hund', l:'🐕 Hund'}, {v:'katze', l:'🐱 Katze'} ] },
+    { id:'tiername', type:'text',
+      title: a => `Wie heißt dein ${a.tierart === 'katze' ? 'Katze' : 'Hund'}?`,
+      placeholder: 'Name deines Tieres' },
+    { id:'alter', type:'choice',
+      title: a => `Wie alt ist ${a.tiername || 'dein Tier'}?`,
+      options: [
+        {v:'welpe', l:'👶 Welpe / Kitten (unter 1 Jahr)', pts:10},
+        {v:'jung', l:'🐾 Jung (1–3 Jahre)', pts:10},
+        {v:'erwachsen', l:'💪 Erwachsen (4–7 Jahre)', pts:10},
+        {v:'senior', l:'👴 Senior (8+ Jahre)', pts:5},
+      ] },
+    { id:'groesse', type:'choice',
+      title: a => `Wie groß / schwer ist ${a.tiername || 'dein Tier'}?`,
+      options: a => a.tierart === 'katze' ? FC_GEWICHT_KATZE : FC_GEWICHT_HUND },
+    { id:'aktivitaet', type:'choice',
+      title: a => `Wie aktiv ist ${a.tiername || 'dein Tier'}?`,
+      options: [
+        {v:'sehraktiv', l:'🏃 Sehr aktiv (viel Bewegung/Sport)', pts:10},
+        {v:'normal', l:'🚶 Normal aktiv', pts:10},
+        {v:'ruhig', l:'🛋️ Eher ruhig / wenig Bewegung', pts:5},
+        {v:'kaum', l:'😴 Kaum Bewegung', pts:0},
+      ] },
+    { id:'futter', type:'choice',
+      title: a => `Was fütterst du ${a.tiername || 'dein Tier'} hauptsächlich?`,
+      options: [
+        {v:'premiumnass', l:'🥩 Hochwertiges Nassfutter (hoher Fleischanteil)', pts:15},
+        {v:'barf', l:'🦴 BARF / Rohfütterung', pts:12},
+        {v:'selbstgekocht', l:'🍳 Selbstgekocht', pts:10},
+        {v:'premiumtrocken', l:'🏷️ Trockenfutter (Premium, getreidefrei)', pts:8},
+        {v:'misch', l:'🔄 Mischfütterung (Nass + Trocken)', pts:6},
+        {v:'standardtrocken', l:'🛒 Trockenfutter (Standard / Supermarkt)', pts:3},
+        {v:'unsicher', l:'❓ Ich bin unsicher / wechsle oft', pts:2},
+      ] },
+    { id:'symptome', type:'multi',
+      title: a => `Zeigt ${a.tiername || 'dein Tier'} eines dieser Anzeichen?`,
+      hint: 'Mehrfachauswahl möglich.',
+      exclusive: 'keine',
+      options: [
+        {v:'keine', l:'✅ Keine – alles prima!'},
+        {v:'juckreiz', l:'🐾 Juckreiz / häufiges Kratzen'},
+        {v:'stumpfesfell', l:'🪮 Stumpfes / schuppiges Fell'},
+        {v:'verdauung', l:'💩 Verdauungsprobleme'},
+        {v:'mundgeruch', l:'😮‍💨 Mundgeruch'},
+        {v:'uebergewicht', l:'⚖️ Übergewicht'},
+        {v:'energielos', l:'😴 Energielosigkeit'},
+        {v:'haut', l:'🩹 Hautprobleme'},
+        {v:'ohren', l:'👂 Ohrenprobleme'},
+        {v:'allergie', l:'🤧 Allergien'},
+      ] },
+    { id:'allergien', type:'choice',
+      title: a => `Hat ${a.tiername || 'dein Tier'} bekannte Allergien?`,
+      options: [
+        {v:'nein', l:'✅ Nein, keine bekannt', pts:10},
+        {v:'imgriff', l:'⚠️ Ja, aber wir haben es im Griff', pts:5},
+        {v:'problem', l:'❌ Ja, und es ist ein Problem', pts:0},
+        {v:'unsicher', l:'🤷 Ich bin mir nicht sicher', pts:3},
+      ] },
+    { id:'leckerlis', type:'choice',
+      title: a => `Wie oft bekommt ${a.tiername || 'dein Tier'} Leckerlis oder Tischreste?`,
+      options: [
+        {v:'selten', l:'🥕 Selten / gesunde Leckerlis', pts:10},
+        {v:'gelegentlich', l:'🍖 Gelegentlich Leckerlis', pts:7},
+        {v:'taeglich', l:'🍬 Täglich mehrere Leckerlis', pts:3},
+        {v:'tischreste', l:'🍕 Regelmäßig Tischreste', pts:0},
+      ] },
+    { id:'zufriedenheit', type:'choice',
+      title: 'Wie zufrieden bist du aktuell mit der Ernährung?',
+      options: [
+        {v:'sehr', l:'😊 Sehr zufrieden – alles top', pts:10},
+        {v:'okay', l:'😐 Ganz okay, aber unsicher', pts:5},
+        {v:'nicht', l:'😕 Nicht wirklich zufrieden', pts:2},
+        {v:'suche', l:'😟 Unzufrieden – suche bessere Lösung', pts:0},
+      ] },
+    { id:'partner', type:'choice',
+      title: 'Noch eine letzte Frage, bevor wir auswerten: Viele unserer Kunden empfehlen Reico weiter – und verdienen dabei.',
+      hint: 'Würde dich das auch interessieren?',
+      options: [
+        {v:'ja_interesse', l:'💡 Ja, klingt spannend – ich möchte mehr erfahren'},
+        {v:'vielleicht', l:'🤔 Vielleicht – zeigt mir erstmal das Ergebnis'},
+        {v:'nein', l:'🐾 Nein danke, nur für mein eigenes Tier'},
+      ] },
+    { id:'vorname', type:'text',
+      title: 'Wie heißt du? Damit ich dein Ergebnis persönlich gestalten kann.',
+      placeholder: 'Dein Vorname' },
+    { id:'lead', type:'lead' },
+  ];
+
+  const FC_MAX_RAW = 85;
+  const fcState = { step: 0, answers: {} };
+  const fcStepArea = document.getElementById('fcStepArea');
+  const fcProgressBar = document.getElementById('fcProgressBar');
+  const fcProgressLabel = document.getElementById('fcProgressLabel');
+  const fcProgressPct = document.getElementById('fcProgressPct');
+  const FC_TOTAL = FC_QUESTIONS.length;
+
+  function fcResolve(val, answers){
+    return typeof val === 'function' ? val(answers) : val;
+  }
+
+  function fcUpdateProgress(){
+    const current = Math.min(fcState.step + 1, FC_TOTAL);
+    const pct = Math.round((fcState.step / FC_TOTAL) * 100);
+    fcProgressBar.style.width = pct + '%';
+    fcProgressLabel.textContent = 'Frage ' + current + ' von ' + FC_TOTAL;
+    fcProgressPct.textContent = pct + '%';
+  }
+
+  function fcGoTo(stepIndex){
+    fcState.step = stepIndex;
+    fcRenderStep();
+  }
+
+  function fcNext(){
+    if (fcState.step < FC_QUESTIONS.length - 1) {
+      fcGoTo(fcState.step + 1);
+    } else {
+      fcShowResult();
+    }
+  }
+
+  function fcBack(){
+    if (fcState.step > 0) fcGoTo(fcState.step - 1);
+  }
+
+  function fcRenderStep(){
+    const q = FC_QUESTIONS[fcState.step];
+    fcProgressWrap_show();
+    fcUpdateProgress();
+
+    if (q.type === 'lead') { fcRenderLead(q); return; }
+
+    const title = fcResolve(q.title, fcState.answers);
+    let html = '<div class="fc-step"><h2>' + title + '</h2>';
+
+    if (q.hint) html += '<p class="fc-hint">' + q.hint + '</p>';
+
+    if (q.type === 'choice') {
+      const opts = fcResolve(q.options, fcState.answers);
+      html += '<div class="fc-choice-grid">';
+      opts.forEach(function(opt){
+        const selected = fcState.answers[q.id] === opt.v ? ' selected' : '';
+        html += '<button type="button" class="fc-choice' + selected + '" data-value="' + opt.v + '">' + opt.l + '</button>';
+      });
+      html += '</div>';
+      html += '<div class="fc-nav">' + (fcState.step > 0 ? '<button type="button" class="fc-back" id="fcBackBtn">← Zurück</button>' : '<span></span>') + '</div>';
+    }
+
+    if (q.type === 'multi') {
+      const opts = fcResolve(q.options, fcState.answers);
+      const current = fcState.answers[q.id] || [];
+      html += '<div class="fc-choice-grid">';
+      opts.forEach(function(opt){
+        const selected = current.indexOf(opt.v) !== -1 ? ' selected' : '';
+        html += '<button type="button" class="fc-choice' + selected + '" data-value="' + opt.v + '">' + opt.l + '</button>';
+      });
+      html += '</div>';
+      html += '<div class="fc-nav">' +
+        (fcState.step > 0 ? '<button type="button" class="fc-back" id="fcBackBtn">← Zurück</button>' : '<span></span>') +
+        '<button type="button" class="btn btn-primary fc-next" id="fcNextBtn">Weiter →</button>' +
+        '</div>';
+    }
+
+    if (q.type === 'text') {
+      const val = fcState.answers[q.id] || '';
+      html += '<input type="text" class="fc-text-input" id="fcTextInput" placeholder="' + q.placeholder + '" value="' + val.replace(/"/g,'&quot;') + '">';
+      html += '<div class="fc-nav">' +
+        (fcState.step > 0 ? '<button type="button" class="fc-back" id="fcBackBtn">← Zurück</button>' : '<span></span>') +
+        '<button type="button" class="btn btn-primary fc-next" id="fcNextBtn">Weiter →</button>' +
+        '</div>';
+    }
+
+    html += '</div>';
+    fcStepArea.innerHTML = html;
+    fcBindStep(q);
+  }
+
+  function fcProgressWrap_show(){
+    document.getElementById('fcProgressWrap').style.display = 'block';
+  }
+
+  function fcBindStep(q){
+    const backBtn = document.getElementById('fcBackBtn');
+    if (backBtn) backBtn.addEventListener('click', fcBack);
+
+    if (q.type === 'choice') {
+      document.querySelectorAll('.fc-choice').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          fcState.answers[q.id] = btn.getAttribute('data-value');
+          fcNext();
+        });
+      });
+    }
+
+    if (q.type === 'multi') {
+      const nextBtn = document.getElementById('fcNextBtn');
+      document.querySelectorAll('.fc-choice').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          const val = btn.getAttribute('data-value');
+          let current = fcState.answers[q.id] || [];
+          if (q.exclusive && val === q.exclusive) {
+            current = current.indexOf(val) !== -1 ? [] : [val];
+          } else {
+            current = current.filter(function(v){ return v !== q.exclusive; });
+            const idx = current.indexOf(val);
+            if (idx === -1) current.push(val); else current.splice(idx, 1);
+          }
+          fcState.answers[q.id] = current;
+          fcRenderStep();
+        });
+      });
+      if (nextBtn) nextBtn.addEventListener('click', fcNext);
+    }
+
+    if (q.type === 'text') {
+      const input = document.getElementById('fcTextInput');
+      const nextBtn = document.getElementById('fcNextBtn');
+      input.addEventListener('input', function(){ fcState.answers[q.id] = input.value; });
+      input.focus();
+      input.addEventListener('keydown', function(e){ if (e.key === 'Enter') fcNext(); });
+      if (nextBtn) nextBtn.addEventListener('click', fcNext);
+    }
+  }
+
+  function fcRenderLead(q){
+    let html = '<div class="fc-step">' +
+      '<h2>Fast geschafft – wohin darf ich dein Ergebnis schicken?</h2>' +
+      '<p class="lead" style="margin-bottom:22px;">Deine Auswertung UND eine erste persönliche Einschätzung bekommst du direkt hier UND per WhatsApp – ganz ohne Wartezeit.</p>' +
+      '<form id="fcLeadForm" novalidate>' +
+      '<div class="fc-lead-fields two">' +
+      '<div><label for="fcEmail">E-Mail-Adresse *</label><input type="email" class="fc-text-input" id="fcEmail" required></div>' +
+      '<div><label for="fcTelefon">Telefon / WhatsApp (optional)</label><input type="tel" class="fc-text-input" id="fcTelefon"></div>' +
+      '</div>' +
+      '<div class="checkbox-row"><input type="checkbox" id="fcDsgvo" required><label for="fcDsgvo">Ja, ich möchte mein Ergebnis erhalten und bin mit der Verarbeitung meiner Daten zu diesem Zweck einverstanden. *</label></div>' +
+      '<div class="fc-nav"><button type="button" class="fc-back" id="fcBackBtn">← Zurück</button>' +
+      '<button type="submit" class="btn btn-primary fc-next">Ergebnis anzeigen →</button></div>' +
+      '</form></div>';
+    fcStepArea.innerHTML = html;
+    document.getElementById('fcBackBtn').addEventListener('click', fcBack);
+    document.getElementById('fcLeadForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      fcState.answers.email = document.getElementById('fcEmail').value;
+      fcState.answers.telefon = document.getElementById('fcTelefon').value;
+      fcSubmitLead();
+      fcShowResult();
+    });
+  }
+
+  function fcSubmitLead(){
+    if (FORM_ENDPOINT.indexOf('DEINE-FORM-ID') !== -1) return; // Endpoint noch nicht eingerichtet
+    const a = fcState.answers;
+    const data = new FormData();
+    data.append('Anfrageart', 'Futtercheck-Ergebnis');
+    data.append('Vorname', a.vorname || '');
+    data.append('E-Mail', a.email || '');
+    data.append('Telefon', a.telefon || '');
+    data.append('Tierart', a.tierart || '');
+    data.append('Tiername', a.tiername || '');
+    data.append('Score', String(fcComputeScore().final));
+    data.append('Interesse an Partnerschaft (intern)', a.partner || '');
+    fetch(FORM_ENDPOINT, { method:'POST', body:data, headers:{ 'Accept':'application/json' } }).catch(function(){});
+  }
+
+  function fcComputeScore(){
+    const a = fcState.answers;
+    let raw = 0;
+
+    const altersPts = { welpe:10, jung:10, erwachsen:10, senior:5 };
+    raw += altersPts[a.alter] || 0;
+
+    const groesseOpts = a.tierart === 'katze' ? FC_GEWICHT_KATZE : FC_GEWICHT_HUND;
+    const groesseOpt = groesseOpts.find(function(o){ return o.v === a.groesse; });
+    raw += groesseOpt ? groesseOpt.pts : 0;
+
+    const aktivPts = { sehraktiv:10, normal:10, ruhig:5, kaum:0 };
+    raw += aktivPts[a.aktivitaet] || 0;
+
+    const futterPts = { premiumnass:15, barf:12, selbstgekocht:10, premiumtrocken:8, misch:6, standardtrocken:3, unsicher:2 };
+    raw += futterPts[a.futter] || 0;
+
+    const symptome = a.symptome || [];
+    let symptomScore = 10;
+    if (!(symptome.length === 1 && symptome[0] === 'keine') && symptome.length > 0) {
+      symptomScore = Math.max(0, 10 - symptome.length * 6);
+    }
+    raw += symptomScore;
+
+    const allergiePts = { nein:10, imgriff:5, problem:0, unsicher:3 };
+    raw += allergiePts[a.allergien] || 0;
+
+    const leckerliPts = { selten:10, gelegentlich:7, taeglich:3, tischreste:0 };
+    raw += leckerliPts[a.leckerlis] || 0;
+
+    const zufriedenPts = { sehr:10, okay:5, nicht:2, suche:0 };
+    raw += zufriedenPts[a.zufriedenheit] || 0;
+
+    const normalized = Math.round((raw / FC_MAX_RAW) * 100);
+    return { raw: raw, final: Math.min(100, Math.max(0, normalized)) };
+  }
+
+  const FC_THEMEN_LABEL = {
+    juckreiz: 'Juckreiz', stumpfesfell: 'Fell & Haut', verdauung: 'Verdauung', mundgeruch: 'Mundgeruch',
+    uebergewicht: 'Gewicht', energielos: 'Energielevel', haut: 'Hautbild', ohren: 'Ohren', allergie: 'Allergien'
+  };
+
+  function fcShowResult(){
+    const a = fcState.answers;
+    const score = fcComputeScore();
+    const tiername = a.tiername || 'dein Tier';
+    const vorname = a.vorname || '';
+
+    let profile, badgeClass, headline, teaser;
+    if (score.final >= 75) {
+      profile = 'Gute Basis'; badgeClass = 'good';
+      headline = (vorname ? vorname + ', d' : 'D') + 'as sieht schon richtig gut aus 🎉';
+      teaser = 'Die Grundlage für ' + tiername + ' passt bereits gut. Ein kurzer Check mit mir zeigt dir, wo sich noch Feinschliff lohnt.';
+    } else if (score.final >= 40) {
+      profile = 'Verbesserungspotenzial'; badgeClass = 'mid';
+      headline = (vorname ? vorname + ', bei' : 'Bei') + ' ' + tiername + ' geht sicher noch etwas mehr ⚡';
+      teaser = 'Ein paar Stellschrauben könnten die Fütterung von ' + tiername + ' spürbar verbessern. Lass uns gemeinsam draufschauen.';
+    } else {
+      profile = 'Handlungsbedarf'; badgeClass = 'low';
+      headline = (vorname ? vorname + ', f' : 'F') + 'ür ' + tiername + ' lohnt sich ein genauerer Blick 🚨';
+      teaser = 'Dein Ergebnis zeigt deutlichen Handlungsbedarf. Wichtig: Das ist keine Diagnose – nur eine erste Einordnung. Lass uns persönlich draufschauen.';
+    }
+
+    const symptome = (a.symptome || []).filter(function(s){ return s !== 'keine'; });
+    const symptomeLabels = symptome.map(function(s){ return FC_THEMEN_LABEL[s] || s; });
+
+    document.documentElement.style.setProperty('--fc-score', score.final);
+    const scoreColor = badgeClass === 'good' ? 'var(--chloro-hell)' : (badgeClass === 'mid' ? 'var(--kalk)' : 'var(--kristall)');
+    document.documentElement.style.setProperty('--fc-score-color', scoreColor);
+
+    let html = '<div class="fc-step">' +
+      '<div class="fc-result-head">' +
+      '<div class="fc-score-circle"><div class="fc-score-circle-inner"><span class="fc-score-num">' + score.final + '</span><span class="fc-score-max">von 100</span></div></div>' +
+      '<span class="fc-result-badge ' + badgeClass + '">' + profile + '</span>' +
+      '<h2>' + headline + '</h2>' +
+      '<p>' + teaser + '</p>' +
+      '</div>';
+
+    html += '<div class="fc-result-topics"><h3>Das bespreche ich gerne persönlich mit dir:</h3><ul>';
+    if (symptomeLabels.length) {
+      symptomeLabels.forEach(function(l){ html += '<li>• Thema: ' + l + '</li>'; });
+    }
+    html += '<li>• Passende Fütterung für ' + tiername + '’s aktuelle Lebensphase</li>';
+    html += '<li>• Konkrete, individuelle Empfehlung – keine Standardlösung</li>';
+    html += '</ul></div>';
+
+    const waMsg = 'Hallo Cedric, ich habe gerade den Futtercheck für ' + tiername +
+      ' gemacht (Score: ' + score.final + '/100' + (symptomeLabels.length ? ', Thema: ' + symptomeLabels.join(', ') : '') +
+      '). Magst du kurz mit mir draufschauen?';
+
+    html += '<div class="fc-result-cta">' +
+      '<a href="https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waMsg) + '" target="_blank" rel="noopener" class="btn btn-primary"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Jetzt per WhatsApp beraten lassen</a>' +
+      '<p class="fc-result-note">Deine ausführliche Auswertung habe ich zusätzlich erhalten und melde mich persönlich bei dir. Das ist keine tierärztliche Diagnose.</p>' +
+      '</div></div>';
+
+    fcStepArea.innerHTML = html;
+    document.getElementById('fcProgressWrap').style.display = 'none';
+  }
+
+  fcRenderStep();
+
+  // Lead-Formulare (Kundenzugang sichern / Produkthandbuch anfordern)
+  // TODO: Trage hier deine eigene Formspree-Endpoint-URL ein.
+  // 1) Kostenloser Account auf https://formspree.io anlegen
+  // 2) Neues Formular erstellen, die Endpoint-URL kopieren (Format: https://formspree.io/f/xxxxxxxx)
+  // 3) Unten bei FORM_ENDPOINT einsetzen -- fertig, Anfragen landen dann direkt in deinem E-Mail-Postfach.
+  const FORM_ENDPOINT = "https://formspree.io/f/DEINE-FORM-ID";
+
+  function setupLeadForm(formId, successId, errorId){
+    const form = document.getElementById(formId);
+    if (!form) return;
+    const successEl = document.getElementById(successId);
+    const errorEl = document.getElementById(errorId);
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      errorEl.classList.remove('show');
+
+      if (FORM_ENDPOINT.indexOf('DEINE-FORM-ID') !== -1) {
+        // Endpoint noch nicht eingerichtet -- Formular kann so nicht verschickt werden.
+        errorEl.classList.add('show');
+        return;
+      }
+
+      const data = new FormData(form);
+      fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(function(response){
+        if (response.ok) {
+          form.reset();
+          form.style.display = 'none';
+          successEl.classList.add('show');
+        } else {
+          errorEl.classList.add('show');
+        }
+      }).catch(function(){
+        errorEl.classList.add('show');
+      });
+    });
+  }
+
+  setupLeadForm('kundenzugangForm', 'kzSuccess', 'kzError');
+  setupLeadForm('handbuchForm', 'hbSuccess', 'hbError');
+</script>
+
+</body>
+</html>
