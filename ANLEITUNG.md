@@ -1,196 +1,147 @@
-# Anleitung & Änderungsprotokoll
+# Was du tun musst
 
 ## 1. Dateien ins Repo
 
 ```
 website/
-├── index.html            ← ERSETZEN
-├── partner.html          ← ERSETZEN
-├── impressum.html        ← ERSETZEN
-├── datenschutz.html      ← ERSETZEN
-├── 404.html              ← NEU
-├── robots.txt            ← NEU
-├── sitemap.xml           ← NEU (Domain vorher prüfen, siehe Punkt 5)
+├── index.html          ← ERSETZEN
+├── partner.html        ← NEU
+├── impressum.html      ← NEU
+├── datenschutz.html    ← NEU
 ├── assets/
-│   ├── css/style.css     ← ERSETZEN
-│   ├── js/nav.js         ← unverändert
-│   ├── js/futtercheck.js ← ERSETZEN
-│   └── fonts/            ← noch leer, siehe Punkt 4
-└── img/                  ← KOMPLETT ERSETZEN (neue Dateien, alte löschen)
+│   ├── css/
+│   │   └── style.css   ← NEU
+│   ├── js/
+│   │   ├── nav.js      ← NEU
+│   │   └── futtercheck.js  ← NEU
+│   └── fonts/          ← noch leer, siehe Punkt 4
+└── img/                ← bleibt unverändert
 ```
 
-> **Achtung beim `img/`-Ordner:** Die alten `hero-hund.png`, `about-portrait.png` und
-> `handbuch-cover.png` werden nicht mehr gebraucht und sollten gelöscht werden — sie sind
-> zusammen über 4 MB groß. Die neuen Dateien heißen `.jpg` und `.webp`.
-
 ---
 
-## 2. Was sich in dieser Runde geändert hat
-
-### Kritisch
-
-| Punkt | Vorher | Jetzt |
-|---|---|---|
-| **Bildgrößen** | 4,1 MB für drei Fotos | 430 KB als JPG, 160 KB als WebP — Faktor 10 |
-| **Kontrast Korall auf Weiß** | 2,08 : 1 (durchgefallen) | neue Textfarbe `#A8341C`, 6,62 : 1 |
-| **Gedämpfter Text auf Kalk** | 4,08 : 1 (durchgefallen) | `#5F6136`, 5,03 : 1 |
-| **Weiße Texte auf Dunkel** | teils 4,13 : 1 | alle Deckkraft-Werte auf ≥ 0,72 angehoben, ≥ 6,4 : 1 |
-| **Touch-Targets** | Nav 36 px, kleine Buttons 40 px | alle ≥ 44 px, automatisch geprüft |
-| **Firmenlogo** | REiCO-Firmenlogo im Header | **VP-Signet „REiCO PARTNER"** (Richtlinien Ziff. 6a) |
-| **Platzhalter im Livetext** | zwei sichtbare `[...]` | beide durch echten Text ersetzt |
-
-### Conversion
-
-- **Handbuch-Formular verschlankt.** Pflicht sind nur noch Name und E-Mail. Straße,
-  Ort und Telefon sind in ein aufklappbares „Lieber gedruckt per Post?" gewandert.
-  Von fünf Pflichtfeldern auf zwei.
-- **Handbuch als hürdenfreier Einstieg positioniert**, das Kontaktformular als
-  bewusster zweiter Schritt („Lieber direkt beraten werden?").
-- **Kundenschutz-Checkbox erklärt.** Statt einer unkommentierten Negativ-Abfrage steht
-  jetzt darunter, warum sie da ist.
-- **Neuer Vertrauensabschnitt** auf beiden Seiten mit belegbaren Unternehmensdaten
-  (1992, zweite Generation, BDD seit 2006, 8 Länder / 8.500+ Partnerschaften) — jeweils
-  mit Quellenangabe. Dazu drei **deutlich markierte Platzhalter** für echte Kundenstimmen.
-- **Futtercheck zählt jetzt ehrlich.** Vorher „Frage 13 von 13" auf dem Kontaktformular,
-  das keine Frage ist. Jetzt: 12 Fragen, danach „Alle 12 Fragen beantwortet".
-
-### Technik
-
-- WebP mit JPG-Fallback über `<picture>`, `loading="lazy"` für alles unterhalb der Falte,
-  `fetchpriority="high"` fürs Hero-Bild, `width`/`height` überall (verhindert Layout-Sprünge)
-- `404.html`, `robots.txt`, `sitemap.xml` ergänzt
-- Alle internen Links automatisch auf tote Ziele geprüft — keine gefunden
-
----
-
-## 3. Was du noch ausfüllen musst
+## 2. Drei Stellen, die du noch ausfüllen musst
 
 | Datei | Stelle | Was fehlt |
 |---|---|---|
-| `assets/js/futtercheck.js` | ganz oben | **Brevo-URL** — ohne die geht keine Anfrage durch (Punkt 4) |
-| `index.html` | Abschnitt „Vertrauen" | **drei echte Kundenstimmen** statt der Platzhalter |
-| `impressum.html` | „Angaben zum Hersteller" | vollständige Anschrift der REiCO GmbH |
-
-**Zu den Kundenstimmen — bitte unbedingt lesen:** Die Platzhalter sind absichtlich
-auffällig gestaltet (gestrichelter Rahmen, kursiv, rot), damit sie nicht versehentlich
-live gehen. Ersetze `class="voice placeholder"` durch `class="voice"`, sobald ein echtes
-Zitat drin steht.
-
-Nimm **keine Wirkungsaussagen** wie „nach vier Wochen kein Juckreiz mehr" — das ist eine
-Gesundheitsaussage und nach Ziff. 8 der Richtlinien nicht zulässig, unabhängig davon, ob
-es als Zitat formuliert ist. Ein Zitat wird dem Werbenden zugerechnet.
-
-Was funktioniert und erlaubt ist, sind Aussagen über den **Beratungsablauf**:
-
-> „Cedric hat sich am Telefon 40 Minuten Zeit genommen und mir am Ende von einem
-> Produkt abgeraten, das ich eigentlich kaufen wollte."
-
-Das transportiert mehr Vertrauen als jede Wirkungsbehauptung — und ist rechtlich sauber.
+| `impressum.html` | Abschnitt „Angaben zum Hersteller" | Vollständige Anschrift der REiCO & Partner Vertriebs GmbH. Ich habe sie **bewusst nicht aus dem Gedächtnis eingesetzt** – bitte aus dem offiziellen Reico-Impressum übernehmen. |
+| `index.html` | Telefon-Kontaktkarte | `[Sprechzeiten, z. B. Mo–Fr 9–18 Uhr]` |
+| `index.html` | „Über mich" | `[Kurzer persönlicher Satz zu deinem eigenen Hund …]` |
 
 ---
 
-## 4. Brevo einrichten (ca. 5 Minuten)
+## 3. Brevo einrichten (ca. 5 Minuten)
 
-Ohne diesen Schritt geht **jede Anfrage verloren**. Das ist der wichtigste Punkt vor
-jedem Werbe-Euro.
+Solange das nicht gemacht ist, läuft der Futtercheck normal durch, die Daten landen
+aber noch nicht in Brevo, und die Formulare zeigen eine Fehlermeldung mit Verweis auf
+WhatsApp.
 
-**Wichtig vorweg:** Ein Brevo-API-Key darf nicht in die Website — der wäre im Quelltext
-für jeden lesbar. Deshalb läuft es über ein Brevo-Formular.
+**Wichtig vorweg:** Ein Brevo-API-Key darf **nicht** in die Website. Der wäre für jeden
+im Quelltext lesbar. Deshalb läuft die Anbindung über ein Brevo-Formular – der Weg,
+der ohne eigenen Server funktioniert und trotzdem sicher ist.
 
-1. **Liste anlegen** — Brevo → *Kontakte* → *Listen*, z. B. `Futtercheck Hund`.
+1. **Liste anlegen** – Brevo → *Kontakte* → *Listen*, z. B. `Futtercheck Hund`.
 
-2. **Kontakt-Attribute anlegen** — Brevo → *Kontakte* → *Einstellungen* →
+2. **Kontakt-Attribute anlegen** – Brevo → *Kontakte* → *Einstellungen* →
    *Kontakt-Attribute*, jeweils Typ **Text**, exakt in dieser Schreibweise:
 
    | Attribut | Inhalt |
    |---|---|
-   | `VORNAME` | Vorname |
-   | `TELEFON` | Telefon / WhatsApp |
+   | `VORNAME` | Vorname aus dem Check |
+   | `TELEFON` | Telefon / WhatsApp (optional) |
    | `TIERART` | Hund oder Katze |
    | `TIERNAME` | Name des Tieres |
    | `SCORE` | Punktzahl 0–100 |
    | `THEMEN` | angekreuzte Auffälligkeiten |
    | `PROFIL` | Gute Basis / Verbesserungspotenzial / Handlungsbedarf |
    | `PARTNERINTERESSE` | Antwort auf die Partner-Frage |
-   | `STRASSE` | nur beim Handbuch-Formular, jetzt optional |
-   | `ORT` | nur beim Handbuch-Formular, jetzt optional |
+   | `STRASSE` | nur beim Produkthandbuch-Formular |
+   | `ORT` | nur beim Produkthandbuch-Formular |
 
-3. **Formular erstellen** — *Kontakte* → *Formulare* → *Neues Formular*, Liste wählen,
-   alle Attribute als Felder hinzufügen, speichern.
+3. **Formular erstellen** – Brevo → *Kontakte* → *Formulare* → *Neues Formular*.
+   Liste aus Schritt 1 wählen, alle Attribute als Felder hinzufügen, speichern.
 
-4. **URL kopieren** — im Schritt *Teilen* den HTML-Code anzeigen lassen, darin steht
-   `action="https://sibforms.com/serve/XXXXXXXX"`.
+4. **URL kopieren** – im Schritt *Teilen* den HTML-Code anzeigen lassen. Darin steht
+   `action="https://sibforms.com/serve/XXXXXXXX"` – genau diese URL kopieren.
 
-5. **URL eintragen** — in `assets/js/futtercheck.js` ganz oben:
+5. **URL eintragen** – in `assets/js/futtercheck.js` ganz oben:
 
    ```js
    const BREVO_FORM_URL = "https://sibforms.com/serve/DEINE-BREVO-URL";
    ```
 
-6. **Auswertungs-Mail automatisieren** — *Automation* → Auslöser
-   *„Ein Kontakt wird einer Liste hinzugefügt"* → E-Mail senden. Personalisieren mit
-   `{{ contact.VORNAME }}`, `{{ contact.TIERNAME }}`, `{{ contact.SCORE }}`,
-   `{{ contact.PROFIL }}`, `{{ contact.THEMEN }}`.
+   Das ist die einzige Stelle, die du anfassen musst.
 
-7. **Testen.** Beide Formulare und den Futtercheck einmal mit einer echten Adresse
-   ausfüllen und prüfen, ob die Mail ankommt und der Kontakt in Brevo steht. Erst
-   danach ist die Seite bereit für Werbebudget.
+6. **Auswertungs-Mail automatisieren** – Brevo → *Automation* → Auslöser
+   *„Ein Kontakt wird einer Liste hinzugefügt"* → E-Mail senden. Im Template
+   personalisieren mit `{{ contact.VORNAME }}`, `{{ contact.TIERNAME }}`,
+   `{{ contact.SCORE }}`, `{{ contact.PROFIL }}`, `{{ contact.THEMEN }}`.
 
 ---
 
-## 5. Google Fonts abstellen
+## 4. Google Fonts abstellen (wichtig)
 
-Die Seite lädt Poppins noch von Googles Servern; die IP jedes Besuchers geht damit in
-die USA. Das LG München I hat genau das 2022 (Az. 3 O 17493/20) als DSGVO-Verstoß
-gewertet — seitdem ein beliebtes Abmahnthema. Die Datenschutzerklärung deckt es ab,
-solange es so bleibt, aber sauberer ist Selbst-Hosten:
+Die Seite lädt die Schrift Poppins aktuell von Googles Servern. Dabei geht die
+IP-Adresse jedes Besuchers an Google in die USA. Das **LG München I** hat genau das
+2022 (Az. 3 O 17493/20) als DSGVO-Verstoß gewertet und dem Kläger Schadenersatz
+zugesprochen – seitdem ist das ein beliebtes Abmahnthema.
+
+Die Datenschutzerklärung deckt das ab, solange es so bleibt. Besser ist aber, es
+abzustellen. Dauert ca. 10 Minuten und macht die Seite nebenbei schneller:
 
 1. https://gwfh.mranftl.com/fonts/poppins öffnen
-2. Stärken **300, 400, 500, 600, 700, 800**, Charsets **latin + latin-ext**
+2. Stärken **300, 400, 500, 600, 700, 800** auswählen, Charsets **latin + latin-ext**
 3. „Download files" → ZIP entpacken
-4. Alle `.woff2`-Dateien nach `assets/fonts/`
-5. In `index.html`, `partner.html`, `impressum.html`, `datenschutz.html` und `404.html`
+4. Alle `.woff2`-Dateien nach `assets/fonts/` legen
+5. In `index.html`, `partner.html`, `impressum.html` und `datenschutz.html`
    die drei `<link>`-Zeilen zu `fonts.googleapis.com` / `fonts.gstatic.com` löschen
 6. In `assets/css/style.css` den vorbereiteten `@font-face`-Block auskommentieren
-7. In `datenschutz.html` **Abschnitt 9 „Google Fonts"** löschen, samt Eintrag im
-   Inhaltsverzeichnis
-
-Nebeneffekt: die Seite wird spürbar schneller, weil zwei zusätzliche Verbindungen
-zu fremden Servern wegfallen.
+   (die `/*` davor und `*/` dahinter entfernen) – die Anleitung steht direkt dort
+7. In `datenschutz.html` **Abschnitt 9 „Google Fonts"** komplett löschen, samt
+   Eintrag im Inhaltsverzeichnis
 
 ---
 
-## 6. Umzug auf cedricnitsch.de
+## 5. Zu den Rechtstexten
 
-Die Datei `CNAME_ZUM_UMZUG.txt` enthält nur eine Zeile: `cedricnitsch.de`.
+Ich habe die Angaben aus deinem bestehenden Impressum und deiner Datenschutzerklärung
+auf cedricnitsch.de übernommen und dabei folgendes aktualisiert bzw. ergänzt:
 
-**Lade sie noch nicht hoch.** Sobald eine Datei namens `CNAME` (ohne Endung) im Repo
-liegt, stellt GitHub Pages sofort auf die eigene Domain um — und die Seite ist unter
-`kintox.github.io` nicht mehr erreichbar, bis das DNS steht.
+**Aktualisiert:**
+- `§ 5 TMG` → `§ 5 DDG`. Das Telemediengesetz wurde im Mai 2024 durch das
+  Digitale-Dienste-Gesetz ersetzt; dein altes Impressum verweist noch aufs TMG.
+- `§ 55 Abs. 2 RStV` → `§ 18 Abs. 2 MStV`. Der Rundfunkstaatsvertrag ist seit
+  November 2020 durch den Medienstaatsvertrag ersetzt.
+- Der Verweis auf die EU-Plattform zur Online-Streitbeilegung. Die wurde zum
+  20. Juli 2025 eingestellt; ein Link darauf geht heute ins Leere.
 
-Richtige Reihenfolge:
+**Neu, weil diese Seite mehr macht als die alte:**
+- **Brevo** als Auftragsverarbeiter (Abschnitt 8) – ohne diesen Abschnitt darf der
+  Futtercheck nicht live gehen
+- **GitHub Pages** als Hoster mit US-Drittlandbezug (Abschnitt 3)
+- **Futtercheck** mit genauer Auflistung der abgefragten Daten (Abschnitt 6)
+- **WhatsApp** mit dem Hinweis, dass beim bloßen Seitenaufruf noch nichts übertragen
+  wird (Abschnitt 10)
+- **Weitergabe an Reico** nur bei aktiver Entscheidung zur Registrierung (Abschnitt 11)
+- Eine Übersichtstabelle ganz oben, damit Besucher nicht 16 Abschnitte lesen müssen
+- Zuständige Aufsichtsbehörde (LDI NRW)
 
-1. Beim Domain-Anbieter für `cedricnitsch.de` die GitHub-Pages-DNS-Einträge setzen
-   (vier A-Records auf `185.199.108–111.153`, plus ein CNAME für `www` auf
-   `kintox.github.io`)
-2. Warten, bis die DNS-Änderung greift
-3. Datei in `CNAME` umbenennen (ohne Endung) und ins Repo legen
-4. In den Repo-Einstellungen unter *Pages* „Enforce HTTPS" aktivieren
-5. In `robots.txt` und `sitemap.xml` die Domain prüfen
-6. Alte Seite abschalten und die alten URLs per 301 auf die neuen weiterleiten
+**Weggelassen:** die Cookie-Passagen aus deiner alten Erklärung. Diese Seite setzt
+keine Cookies und speichert nichts im Browser – ein Cookie-Banner brauchst du hier
+also nicht. Wenn du später Meta-Pixel oder Google Analytics einbaust, ändert sich
+das und du brauchst beides: Banner und neuen Abschnitt.
+
+> **Ich bin kein Anwalt.** Die Texte sind sorgfältig auf deine tatsächliche
+> Datenverarbeitung zugeschnitten, ersetzen aber keine Rechtsberatung. Lass am besten
+> einmal jemanden mit Fachkunde drüberschauen, bevor du mit dem Futtercheck live gehst
+> – das ist der Teil mit dem größten Risiko, weil dort E-Mail-Adressen erhoben werden.
 
 ---
 
-## 7. Was ich nicht anfassen konnte
+## 6. Reihenfolge vor dem Livegang
 
-- **Die alte cedricnitsch.de** liegt in einem anderen Repo (`Kintox/mentor`). Die dort
-  in der Analyse genannten Punkte — „90 % aller Tierprobleme", das Wirkungs-Testimonial,
-  „Begrenzte Plätze", „100 Mio. € Umsatz", „ab 83,30 €/Jahr" in der Kunden-Hero — sind
-  hier nicht enthalten. Sag Bescheid, wenn ich das Repo auch überarbeiten soll.
-- **Brand-Bidding auf „Reico" bei Google Ads.** Die Richtlinien regeln nur die Domain
-  und verbieten „Preis"/„Online Shop" als Keywords, äußern sich aber nicht zum
-  Marken-Keyword. Die Richtlinien verweisen für Zweifelsfälle selbst auf die Zentrale —
-  eine kurze schriftliche Anfrage dort ist die billigste Absicherung im ganzen Projekt.
-
-> **Ich bin kein Anwalt.** Die Rechtstexte sind auf deine tatsächliche Datenverarbeitung
-> zugeschnitten, ersetzen aber keine Rechtsberatung.
+1. Reico-Anschrift im Impressum ergänzen
+2. Brevo einrichten und die URL eintragen
+3. Testdurchlauf: Futtercheck ausfüllen → kommt die Mail an? steht der Kontakt in Brevo?
+4. Google Fonts abstellen (Punkt 4)
+5. Rechtstexte prüfen lassen

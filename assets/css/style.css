@@ -5,9 +5,7 @@
     --chloro-dunkel: #E7F191;
     --weiss: #FFFFFF;
     --kristall: #FF9888;
-    --alge-70: #5F6136;            /* gedaempfter Text, 6.46:1 auf Weiss, 5.03:1 auf Kalk */
-    --kristall-text: #A8341C;      /* Korall als TEXTfarbe, 6.62:1 auf Weiss */
-    --alge-55: rgba(58,61,12,0.55); /* nur fuer Linien/Deko, nie fuer Text */
+    --alge-70: rgba(58,61,12,0.7);
     --alge-10: rgba(58,61,12,0.08);
     --radius: 18px;
     --maxw: 1180px;
@@ -107,11 +105,11 @@
   .btn-primary:hover{ box-shadow: 0 8px 22px rgba(255,152,136,0.6); transform: translateY(-1px); }
   .btn-outline{
     background:transparent;
-    border-color: var(--kristall-text);
-    color: var(--kristall-text);
+    border-color: var(--kristall);
+    color: var(--kristall);
   }
   .btn-outline:hover{ background: var(--kristall); color: var(--alge); }
-  .btn-small{ padding: 12px 18px; font-size:0.82rem; min-height:44px; }
+  .btn-small{ padding: 9px 16px; font-size:0.8rem; }
 
 
   /* ---------- HERO ---------- */
@@ -163,7 +161,7 @@
   }
   .hero p.lead{
     font-size: clamp(1rem, 2vw, 1.2rem);
-    color: rgba(255,255,255,0.88);
+    color: rgba(255,255,255,0.82);
     max-width: 46ch;
     margin-bottom:32px;
     font-weight:300;
@@ -182,7 +180,7 @@
 
   .trustline{
     font-size:0.85rem;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255,255,255,0.65);
     display:flex;
     align-items:center;
     gap:10px;
@@ -432,7 +430,7 @@
     font-weight:700;
   }
   .kontakt-card h3{ font-size:1rem; }
-  .kontakt-card p{ font-size:0.88rem; color: rgba(255,255,255,0.78); }
+  .kontakt-card p{ font-size:0.88rem; color: rgba(255,255,255,0.65); }
   .kontakt-card .btn{ margin-top:auto; align-self:flex-start; }
 
   .kontakt-form{
@@ -442,10 +440,10 @@
     padding: 32px 26px;
   }
   .kontakt-form h3{ margin-bottom:6px; font-size:1.1rem; }
-  .kontakt-form p.hint{ font-size:0.85rem; color: rgba(255,255,255,0.78); margin-bottom:22px; }
+  .kontakt-form p.hint{ font-size:0.85rem; color: rgba(255,255,255,0.6); margin-bottom:22px; }
   .form-row{ display:grid; gap:16px; margin-bottom:16px; }
   @media(min-width:640px){ .form-row.two{ grid-template-columns: 1fr 1fr; } }
-  label{ display:block; font-size:0.8rem; margin-bottom:6px; color: rgba(255,255,255,0.85); }
+  label{ display:block; font-size:0.8rem; margin-bottom:6px; color: rgba(255,255,255,0.75); }
   input, select, textarea{
     width:100%;
     padding:12px 14px;
@@ -456,13 +454,13 @@
     font-family:inherit;
     font-size:0.92rem;
   }
-  input::placeholder, textarea::placeholder{ color: rgba(255,255,255,0.62); }
+  input::placeholder, textarea::placeholder{ color: rgba(255,255,255,0.4); }
   textarea{ resize:vertical; min-height:90px; }
 
   /* ---------- FOOTER ---------- */
   footer{
     background: var(--alge);
-    color: rgba(255,255,255,0.72);
+    color: rgba(255,255,255,0.55);
     padding: 28px 0 110px;
     font-size:0.8rem;
     border-top:1px solid rgba(255,255,255,0.12);
@@ -548,7 +546,7 @@
 
   .lead-form-note{
     font-size:0.8rem;
-    color: rgba(255,255,255,0.72);
+    color: rgba(255,255,255,0.55);
     margin-top:12px;
   }
   .checkbox-row{
@@ -621,7 +619,7 @@
   }
   @media(min-width:600px){ .handbuch-form-card{ padding:40px 36px; } }
   .handbuch-form-card h3{ font-size:1.3rem; margin-bottom:8px; }
-  .handbuch-form-card p.hint{ font-size:0.9rem; color: rgba(255,255,255,0.78); margin-bottom:24px; }
+  .handbuch-form-card p.hint{ font-size:0.9rem; color: rgba(255,255,255,0.65); margin-bottom:24px; }
 
 
   /* ---------- FUTTERCHECK ---------- */
@@ -649,7 +647,7 @@
   }
   .fc-progress-label{
     font-size:0.78rem;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255,255,255,0.6);
   }
   .fc-progress-pct{
     font-size:0.78rem;
@@ -692,16 +690,16 @@
     font-size:1rem;
     margin-bottom:26px;
   }
-  .fc-text-input::placeholder{ color: rgba(255,255,255,0.62); }
+  .fc-text-input::placeholder{ color: rgba(255,255,255,0.4); }
   .fc-nav{ display:flex; justify-content:space-between; align-items:center; gap:12px; }
   .fc-back{
-    background:none; border:none; color: rgba(255,255,255,0.75);
+    background:none; border:none; color: rgba(255,255,255,0.55);
     font-family:inherit; font-size:0.85rem; cursor:pointer; padding:10px 4px;
   }
   .fc-back:hover{ color: var(--weiss); }
   .fc-next{ margin-left:auto; }
   .fc-next:disabled{ opacity:0.4; cursor:not-allowed; }
-  .fc-hint{ font-size:0.8rem; color: rgba(255,255,255,0.72); margin-top:-14px; margin-bottom:22px; }
+  .fc-hint{ font-size:0.8rem; color: rgba(255,255,255,0.5); margin-top:-14px; margin-bottom:22px; }
 
   /* Lead-Formular als letzter Schritt */
   .fc-lead-fields{ display:grid; gap:16px; margin-bottom:20px; }
@@ -726,7 +724,7 @@
     color: var(--weiss);
   }
   .fc-score-circle-inner .fc-score-num{ font-size:2rem; font-weight:800; line-height:1; }
-  .fc-score-circle-inner .fc-score-max{ font-size:0.75rem; color: rgba(255,255,255,0.72); }
+  .fc-score-circle-inner .fc-score-max{ font-size:0.75rem; color: rgba(255,255,255,0.5); }
   .fc-result-badge{
     display:inline-flex; align-items:center; gap:8px;
     padding:8px 18px; border-radius:999px;
@@ -750,7 +748,7 @@
   .fc-result-cta{ text-align:center; }
   .fc-result-cta .btn{ width:100%; justify-content:center; }
   @media(min-width:480px){ .fc-result-cta .btn{ width:auto; } }
-  .fc-result-note{ font-size:0.8rem; color: rgba(255,255,255,0.72); margin-top:14px; }
+  .fc-result-note{ font-size:0.8rem; color: rgba(255,255,255,0.5); margin-top:14px; }
 
   .disclosure-strip{
     background: var(--chloro-hell);
@@ -772,10 +770,7 @@
   gap:6px;
 }
 .nav-link{
-  padding:12px 14px;
-  min-height:44px;
-  display:inline-flex;
-  align-items:center;
+  padding:9px 14px;
   border-radius:999px;
   font-size:0.88rem;
   font-weight:500;
@@ -864,7 +859,7 @@ header{ position:sticky; }
 .page-hero h1 em{ font-style:normal; color: var(--chloro-dunkel); }
 .page-hero p.lead{
   font-size: clamp(1rem, 2vw, 1.18rem);
-  color: rgba(255,255,255,0.88);
+  color: rgba(255,255,255,0.82);
   max-width: 52ch;
   font-weight:300;
   margin-bottom:32px;
@@ -996,7 +991,7 @@ header{ position:sticky; }
 .legal ul{ margin:0 0 16px 0; padding-left:20px; }
 .legal li{ margin-bottom:7px; color: var(--alge-70); font-size:0.94rem; }
 .legal a{ color: var(--alge); text-decoration:underline; text-underline-offset:2px; }
-.legal a:hover{ color: var(--kristall-text); }
+.legal a:hover{ color: var(--kristall); }
 
 .legal-box{
   background: var(--kalk);
@@ -1033,137 +1028,3 @@ header{ position:sticky; }
 .legal-toc li{ margin-bottom:5px; font-size:0.9rem; }
 .legal-toc a{ text-decoration:none; }
 .legal-toc a:hover{ text-decoration:underline; }
-
-
-/* ============================================================
-   VP-SIGNET (statt Firmenlogo, siehe Richtlinien Ziff. 6a)
-   ============================================================ */
-.vp-signet{ height:34px !important; width:auto; display:block; border-radius:5px; }
-.vp-signet-sm{ height:30px !important; width:auto; display:block; border-radius:4px; }
-@media(max-width:400px){ .vp-signet-sm{ height:26px !important; } }
-
-/* Im Hero sitzt das Signet auf der Alge-Flaeche und braucht deshalb
-   keinen zusaetzlichen Pill-Hintergrund - der wuerde als Kasten sichtbar. */
-.hero-logo-badge{
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  gap: 14px !important;
-}
-.hero-logo-badge .vp-signet-sm{ height:38px !important; }
-.handbuch-cover{ height:auto; }
-
-/* Bilder: Seitenverhaeltnis reservieren, damit beim Laden nichts springt.
-   Gilt bewusst nur fuer Inhaltsbilder, nicht fuer Logos/Signets. */
-.hero-photo-img, .about-photo-img, .handbuch-cover{ height:auto; }
-picture{ display:block; line-height:0; }
-
-/* ============================================================
-   VERTRAUENSBELEGE
-   ============================================================ */
-.proof{ background: var(--weiss); }
-.facts-grid{
-  display:grid;
-  gap:14px;
-  grid-template-columns: repeat(2, 1fr);
-  margin-bottom:34px;
-}
-@media(min-width:760px){ .facts-grid{ grid-template-columns: repeat(4, 1fr); } }
-.fact{
-  background: var(--kalk);
-  border-radius:14px;
-  padding:22px 18px;
-  text-align:center;
-}
-.fact .num{
-  display:block;
-  font-size:1.6rem;
-  font-weight:800;
-  line-height:1.1;
-  margin-bottom:6px;
-  color: var(--alge);
-}
-.fact .lbl{ font-size:0.82rem; color: var(--alge-70); }
-.facts-source{
-  font-size:0.78rem;
-  color: var(--alge-70);
-  margin-top:-22px;
-  margin-bottom:38px;
-}
-
-.voices-grid{
-  display:grid;
-  gap:18px;
-  grid-template-columns:1fr;
-}
-@media(min-width:820px){ .voices-grid{ grid-template-columns: repeat(3, 1fr); } }
-.voice{
-  background: var(--weiss);
-  border:1px solid var(--alge-10);
-  border-radius:16px;
-  padding:26px 24px;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-.voice .quote{
-  font-size:0.96rem;
-  line-height:1.55;
-  color: var(--alge);
-}
-.voice .who{
-  font-size:0.82rem;
-  color: var(--alge-70);
-  margin-top:auto;
-}
-.voice .mark{
-  font-size:1.8rem;
-  line-height:1;
-  color: var(--chloro-dunkel);
-  font-weight:800;
-}
-.voice.placeholder{
-  border-style:dashed;
-  border-color: var(--kristall-text);
-  background: rgba(255,152,136,0.06);
-}
-.voice.placeholder .quote{ color: var(--kristall-text); font-style:italic; }
-
-/* ============================================================
-   OPTIONALE FORMULARFELDER
-   ============================================================ */
-.optional-fields{
-  border:1px solid rgba(255,255,255,0.2);
-  border-radius:12px;
-  padding:0;
-  margin: 4px 0 18px;
-  overflow:hidden;
-}
-.optional-fields > summary{
-  cursor:pointer;
-  padding:14px 18px;
-  font-size:0.88rem;
-  color: rgba(255,255,255,0.85);
-  list-style:none;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-height:44px;
-}
-.optional-fields > summary::-webkit-details-marker{ display:none; }
-.optional-fields > summary::before{
-  content:"+";
-  font-weight:700;
-  font-size:1.1rem;
-  color: var(--kristall);
-}
-.optional-fields[open] > summary::before{ content:"–"; }
-.optional-fields .inner{ padding: 4px 18px 18px; }
-
-.field-note{
-  font-size:0.8rem;
-  color: rgba(255,255,255,0.72);
-  margin-top:-8px;
-  margin-bottom:16px;
-  line-height:1.5;
-}
