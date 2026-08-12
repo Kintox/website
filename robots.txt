@@ -1,0 +1,11 @@
+# robots.txt – Cedric Nitsch, selbstständiger REiCO Vertriebspartner
+# HINWEIS: Nach dem Umzug auf die eigene Domain die Sitemap-Zeile anpassen.
+
+User-agent: *
+Allow: /
+
+# Rechtstexte müssen nicht in den Index
+Disallow: /impressum.html
+Disallow: /datenschutz.html
+
+Sitemap: https://cedricnitsch.de/sitemap.xml

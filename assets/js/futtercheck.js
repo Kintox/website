@@ -194,16 +194,22 @@
   const fcProgressLabel = document.getElementById('fcProgressLabel');
   const fcProgressPct = document.getElementById('fcProgressPct');
   const FC_TOTAL = FC_QUESTIONS.length;
+  // Der letzte Schritt ist das Kontaktformular, keine Frage.
+  // Deshalb zaehlt die Anzeige nur die echten Fragen.
+  const FC_FRAGEN = FC_QUESTIONS.filter(function(q){ return q.type !== 'lead'; }).length;
 
   function fcResolve(val, answers){
     return typeof val === 'function' ? val(answers) : val;
   }
 
   function fcUpdateProgress(){
-    const current = Math.min(fcState.step + 1, FC_TOTAL);
+    const isLead = FC_QUESTIONS[fcState.step] && FC_QUESTIONS[fcState.step].type === 'lead';
+    const current = Math.min(fcState.step + 1, FC_FRAGEN);
     const pct = Math.round((fcState.step / FC_TOTAL) * 100);
     fcProgressBar.style.width = pct + '%';
-    fcProgressLabel.textContent = 'Frage ' + current + ' von ' + FC_TOTAL;
+    fcProgressLabel.textContent = isLead
+      ? 'Alle ' + FC_FRAGEN + ' Fragen beantwortet'
+      : 'Frage ' + current + ' von ' + FC_FRAGEN;
     fcProgressPct.textContent = pct + '%';
   }
 
@@ -332,7 +338,7 @@
       '<div><label for="fcEmail">E-Mail-Adresse *</label><input type="email" class="fc-text-input" id="fcEmail" autocomplete="email" required></div>' +
       '<div><label for="fcTelefon">Telefon / WhatsApp (optional)</label><input type="tel" class="fc-text-input" id="fcTelefon" autocomplete="tel"></div>' +
       '</div>' +
-      '<div class="checkbox-row"><input type="checkbox" id="fcDsgvo" required><label for="fcDsgvo">Ja, ich m\u00f6chte mein Ergebnis per E-Mail erhalten und bin mit der Verarbeitung meiner Daten zu diesem Zweck einverstanden. Die Einwilligung kann ich jederzeit widerrufen. *</label></div>' +
+      '<div class="checkbox-row"><input type="checkbox" id="fcDsgvo" required><label for="fcDsgvo">Ja, ich m\u00f6chte mein Ergebnis per E-Mail erhalten und bin mit der Verarbeitung meiner Daten zu diesem Zweck einverstanden. Die Einwilligung kann ich jederzeit widerrufen. Mehr dazu in der <a href=\'datenschutz.html\' target=\'_blank\' style=\'color:var(--chloro-dunkel);text-decoration:underline;\'>Datenschutzerkl\u00e4rung</a>. *</label></div>' +
       '<div class="form-error" id="fcLeadError"></div>' +
       '<div class="fc-nav"><button type="button" class="fc-back" id="fcBackBtn">\u2190 Zur\u00fcck</button>' +
       '<button type="submit" class="btn btn-primary fc-next">Ergebnis anzeigen \u2192</button></div>' +
