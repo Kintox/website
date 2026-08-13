@@ -52,12 +52,40 @@
   //   * form.submit() ueberspringt die Validierung und postet direkt.
   // Das Ziel ist ein verstecktes iframe, damit die Seite stehen
   // bleibt und der Besucher sein Ergebnis sieht.
+  // Erzeugt fuer jedes Absenden ein frisches, eigenes Ziel-iframe statt immer
+  // dasselbe "brevo_sink" wiederzuverwenden.
+  //
+  // Grund: Alle drei Formulare (Futtercheck, Handbuch, Kundenzugang) teilen
+  // sich ein gemeinsames iframe-Ziel. Wenn zwei Formulare kurz hintereinander
+  // abgeschickt werden (z.B. beim Testen), startet die zweite Navigation im
+  // selben iframe, waehrend die erste Anfrage noch unterwegs ist - der
+  // Browser bricht die erste dann einfach ab, ohne Fehler, ohne Konsolen-
+  // Meldung. Genau das erklaert ein "kommt manchmal an, manchmal nicht".
+  // Mit einem eigenen iframe pro Absenden kann sich das nicht mehr
+  // gegenseitig ins Gehege kommen.
+  function brevoNeuesZielIframe(){
+    const name = 'brevo_sink_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+    const iframe = document.createElement('iframe');
+    iframe.name = name;
+    iframe.title = 'Brevo-Uebermittlung';
+    iframe.style.display = 'none';
+    iframe.setAttribute('aria-hidden', 'true');
+    iframe.tabIndex = -1;
+    document.body.appendChild(iframe);
+    // Nach 20s wieder entfernen, genug Zeit fuer eine langsame Verbindung.
+    setTimeout(function(){
+      if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+    }, 20000);
+    return name;
+  }
+
   function brevoSubmit(data){
     const form = document.getElementById('brevoForm');
     if (!form) {
       console.error('[Brevo] Formular #brevoForm fehlt auf dieser Seite.');
       return false;
     }
+    form.target = brevoNeuesZielIframe();
 
     const werte = {
       EMAIL:                  data.email,
@@ -106,6 +134,16 @@
 
   function fcValidEmail(value){
     return /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test((value || "").trim());
+  }
+
+  // Echte Telefonnummer-Pruefung statt "irgendwas eingetragen":
+  // Leerzeichen/Bindestriche/Schraegstriche/Klammern werden entfernt, danach
+  // muss ein optionales fuehrendes + und 6-15 Ziffern uebrig bleiben. Das
+  // laesst "0176 12345678", "+49 176 12345678" oder "0170-1234567" durch,
+  // blockiert aber "1" oder "ASDF".
+  function fcValidPhone(value){
+    const bereinigt = (value || '').trim().replace(/[\s\-\/()]/g, '');
+    return /^\+?[0-9]{6,15}$/.test(bereinigt);
   }
 
   const FC_GEWICHT_HUND = [
@@ -392,8 +430,8 @@
         document.getElementById('fcEmail').focus();
         return;
       }
-      if (!tel) {
-        showErr('Bitte gib noch deine Telefonnummer ein, damit ich dich bei R\u00fcckfragen erreichen kann.');
+      if (!fcValidPhone(tel)) {
+        showErr('Bitte gib eine g\u00fcltige Telefonnummer ein (mindestens 6 Ziffern), damit ich dich bei R\u00fcckfragen erreichen kann.');
         document.getElementById('fcTelefon').focus();
         return;
       }
@@ -588,6 +626,13 @@
         const wert = (data.get(feld.name) || '').toString().trim();
         if (!wert) {
           errorEl.textContent = 'Bitte trag noch ' + feld.label + ' ein.';
+          errorEl.classList.add('show');
+          const input = form.querySelector('[name="' + feld.name + '"]');
+          if (input) input.focus();
+          return;
+        }
+        if (feld.name === 'Telefon' && !fcValidPhone(wert)) {
+          errorEl.textContent = 'Bitte gib eine gültige Telefonnummer ein (mindestens 6 Ziffern).';
           errorEl.classList.add('show');
           const input = form.querySelector('[name="' + feld.name + '"]');
           if (input) input.focus();

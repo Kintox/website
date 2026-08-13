@@ -1,3 +1,50 @@
+# Update 13.08. (sechste Runde): "Kommt manchmal nicht an" + echte Telefonprüfung
+
+## Vermutete Ursache für die unregelmäßigen Ausfälle
+
+Alle drei Formulare haben sich bisher ein einziges, immer gleich benanntes
+verstecktes iframe (`brevo_sink`) als Absende-Ziel geteilt. Wenn zwei
+Formulare kurz hintereinander abgeschickt werden – genau das passiert beim
+Testen typischerweise –, startet die zweite Absende-Anfrage im selben iframe,
+während die erste noch unterwegs ist. Der Browser bricht die erste Anfrage
+dabei einfach ab, ohne Fehler und ohne Konsolenmeldung. Das erklärt ein
+"manchmal kommt's an, manchmal nicht" sehr gut, vor allem beim Durchtesten
+mehrerer Formulare nacheinander.
+
+**Fix:** Jedes Absenden bekommt jetzt sein eigenes, frisches iframe statt das
+gemeinsame `brevo_sink` wiederzuverwenden. Damit können sich zwei Absendungen
+nicht mehr gegenseitig unterbrechen. Mit Playwright geprüft: zwei Formulare
+kurz hintereinander abgeschickt bekommen jetzt garantiert unterschiedliche
+Ziel-iframes.
+
+**Zweite mögliche Teilursache, die ich nicht per Code beheben kann:** Bei
+Double-Opt-in zählt ein Kontakt in Brevo oft erst als "in der Liste", wenn
+die Bestätigungs-Mail angeklickt wurde. Schau in Brevo mal unter *Kontakte*
+nach, ob es dort eine Ansicht für "unbestätigte" bzw. "nicht bestätigte"
+Kontakte gibt – falls ja, könnten dort Anfragen auftauchen, die technisch
+angekommen sind, aber nie bestätigt wurden (z. B. weil die Mail im Spam
+landete). Das wäre kein Website-Bug, sondern ein Brevo-Listen-Thema.
+
+Falls es nach diesem Fix immer noch vereinzelt ausbleibt: am hilfreichsten
+wäre, wenn du dir beim nächsten Fall notierst, welches Formular, welches
+Gerät/Browser und ob evtl. ein Werbeblocker/Tracking-Blocker aktiv war – ein
+Adblocker, der `sibforms.com` als Marketing-Domain einstuft, kann eine
+Anfrage ebenfalls unbemerkt blockieren, ohne dass die Website das merkt (die
+Erfolgsmeldung wird ja rein optimistisch angezeigt, weil wir aus dem
+iframe keine Antwort auslesen können).
+
+## Telefonnummer-Prüfung verschärft
+
+Bisher reichte irgendein nicht-leerer Text ("1", "ASDF" ...). Jetzt gibt es
+eine echte Prüfung (`fcValidPhone`): Leerzeichen/Bindestriche/Schrägstriche/
+Klammern werden ignoriert, danach müssen mindestens 6 und höchstens 15
+Ziffern übrig bleiben, optional mit führendem `+`. Gilt jetzt einheitlich für
+alle drei Formulare (Futtercheck, Handbuch, Kundenzugang). Getestet: "1" und
+"ASDF" werden abgelehnt, "0176 12345678" und "+49 176 12345678" werden
+akzeptiert.
+
+---
+
 # Update 13.08. (fünfte Runde): Pflichtfelder in allen drei Formularen
 
 Bisher standen zwar `required`-Attribute im HTML, aber alle drei Formulare laufen
