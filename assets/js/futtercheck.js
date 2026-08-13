@@ -11,20 +11,17 @@
   // ============================================================
   // BREVO-ANBINDUNG
   // ------------------------------------------------------------
-  // Baugleich zur funktionierenden Version auf cedricnitsch.de:
-  // Auf der Seite liegt ein verstecktes, natives Brevo-Formular
-  // (siehe Ende von index.html). Wir fuellen dessen Felder und
-  // loesen den Submit aus. Brevo eigenes main.js faengt den Submit
-  // ab, schickt ihn per AJAX und verschickt die Double-Opt-in-Mail.
+  // Am Ende von index.html liegt ein verstecktes Formular mit den
+  // Brevo-Feldnamen. Es wird hier befuellt und per form.submit()
+  // in ein verstecktes iframe geschickt. Brevo antwortet mit
+  // {"success":true} und verschickt die Double-Opt-in-Mail.
   //
-  // Warum so und nicht per API-Key: Ein API-Key im Quelltext waere
-  // fuer jeden lesbar. Dieser Weg braucht keinen.
+  // Kein API-Key im Quelltext, kein Fremdskript, kein Fremd-CSS.
   //
-  // Die Feldnamen muessen exakt den Kontakt-Attributen in Brevo
-  // entsprechen:
+  // Feldnamen = Kontakt-Attribute in Brevo:
   //   EMAIL, VORNAME, HUND_KATZE, TIERNAME, FUTTERCHECK_SCORE,
   //   FUTTERCHECK_FARB_SCORE, FUTTERCHECK_FUTTER, PARTNER_INTERESSE,
-  //   SMS + SMS__COUNTRY_CODE, email_address_check (Honeypot), locale
+  //   SMS, SMS__COUNTRY_CODE, email_address_check, locale
   // ============================================================
 
   // Uebersetzt die internen Futter-Werte in lesbaren Text fuer Brevo
@@ -45,57 +42,50 @@
     nein:         'Kunde'
   };
 
-  // Fuellt ein Feld im versteckten Brevo-Formular.
-  // Die SMS-Felder werden von Brevo main.js ausgetauscht, deshalb
-  // werden sie ueber das name-Attribut statt ueber die id gesucht.
-  function brevoSetField(form, selector, value){
-    const el = form.querySelector(selector);
-    if (!el) {
-      console.warn('[Brevo] Feld nicht gefunden:', selector);
-      return false;
-    }
-    el.value = value == null ? '' : String(value);
-    return true;
-  }
-
-  // Uebergibt einen Datensatz an Brevo. Gibt true zurueck, wenn der
-  // Submit ausgeloest werden konnte.
+  // Uebergibt einen Datensatz an Brevo.
+  //
+  // Bewusst form.submit() und nicht submitBtn.click():
+  //   * click() loest zuerst die HTML5-Validierung aus. Bei einem
+  //     ausgeblendeten Formular bricht Chrome dann mit
+  //     "not focusable" ab und sendet gar nichts - genau daran ist
+  //     die vorherige Fassung gescheitert.
+  //   * form.submit() ueberspringt die Validierung und postet direkt.
+  // Das Ziel ist ein verstecktes iframe, damit die Seite stehen
+  // bleibt und der Besucher sein Ergebnis sieht.
   function brevoSubmit(data){
-    const form = document.getElementById('sib-form');
+    const form = document.getElementById('brevoForm');
     if (!form) {
-      console.error('[Brevo] Verstecktes Formular #sib-form fehlt auf dieser Seite.');
+      console.error('[Brevo] Formular #brevoForm fehlt auf dieser Seite.');
       return false;
     }
 
-    const felder = [
-      ['#sib-email',                 data.email],
-      ['#sib-vorname',               data.vorname],
-      ['#sib-hund-katze',            data.tierart],
-      ['#sib-tiername',              data.tiername],
-      ['#sib-score',                 data.score],
-      ['#sib-farb-score',            data.farbe],
-      ['#sib-futter',                data.futter],
-      ['#sib-interesse',             data.interesse],
-      ['[name="SMS"]',               data.telefon],
-      ['[name="SMS__COUNTRY_CODE"]', '+49']
-    ];
-    felder.forEach(function(f){ brevoSetField(form, f[0], f[1]); });
+    const werte = {
+      EMAIL:                  data.email,
+      VORNAME:                data.vorname,
+      HUND_KATZE:             data.tierart,
+      TIERNAME:               data.tiername,
+      FUTTERCHECK_SCORE:      data.score,
+      FUTTERCHECK_FARB_SCORE: data.farbe,
+      FUTTERCHECK_FUTTER:     data.futter,
+      PARTNER_INTERESSE:      data.interesse,
+      SMS:                    data.telefon,
+      SMS__COUNTRY_CODE:      '+49',
+      email_address_check:    ''
+    };
 
-    // Honeypot muss leer bleiben, sonst wertet Brevo es als Bot
-    const honeypot = form.querySelector('[name="email_address_check"]');
-    if (honeypot) honeypot.value = '';
-
-    const submitBtn = form.querySelector('[type="submit"]');
-    if (!submitBtn) {
-      console.error('[Brevo] Submit-Button im versteckten Formular fehlt.');
-      return false;
-    }
+    let fehlend = [];
+    Object.keys(werte).forEach(function(name){
+      const feld = form.querySelector('[name="' + name + '"]');
+      if (!feld) { fehlend.push(name); return; }
+      feld.value = werte[name] == null ? '' : String(werte[name]);
+    });
+    if (fehlend.length) console.warn('[Brevo] Felder fehlen im Formular:', fehlend.join(', '));
 
     try {
-      submitBtn.click();
+      form.submit();
       return true;
     } catch (err) {
-      console.error('[Brevo] Submit fehlgeschlagen:', err);
+      console.error('[Brevo] Absenden fehlgeschlagen:', err);
       return false;
     }
   }

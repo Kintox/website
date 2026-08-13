@@ -393,164 +393,46 @@
 <script src="assets/js/futtercheck.js" defer></script>
 
 
+
+
 <!-- ============================================================
-     VERSTECKTES BREVO-FORMULAR (Double-Opt-in)
+     BREVO-ANBINDUNG (Double-Opt-in)
      ------------------------------------------------------------
-     Wird von assets/js/futtercheck.js programmatisch befuellt und
-     abgesendet. Brevos main.js (unten) faengt den Submit ab,
-     schickt ihn per AJAX an Brevo, und Brevo verschickt die
-     Bestaetigungsmail.
+     Bewusst NUR dieses schlanke Formular - kein Brevo-Skript und
+     kein Brevo-CSS. Getestet gegen den Endpunkt: ein normaler
+     Formular-POST wird mit {"success":true} beantwortet und loest
+     die Double-Opt-in-Mail aus. Brevos main.js macht nichts
+     anderes, es verpackt den Post nur in AJAX.
 
-     BITTE NICHTS AENDERN ausser der action-URL, falls du in Brevo
-     ein neues Formular anlegst. Die id-Attribute (sib-...) und die
-     name-Attribute muessen exakt so bleiben - die name-Attribute
-     entsprechen den Kontakt-Attributen in deinem Brevo-Konto.
+     Vorteile dieser Loesung:
+       * Brevos sib-styles.css wuerde input, button und .input
+         ueberschreiben - hier wird sie gar nicht erst geladen,
+         das Seitendesign bleibt unberuehrt.
+       * Kein Fremdskript beim Seitenaufruf, also auch keine
+         IP-Uebertragung an Brevo, bevor jemand etwas eintraegt.
+       * Funktioniert auch mit Adblocker, der sibforms.com sperrt.
 
-     Bewusst NICHT eingebunden: Brevos sib-styles.css. Die braucht
-     nur das sichtbare Brevo-Formular, und dieses hier ist
-     unsichtbar. Geladen wuerde sie das Design der Seite stoeren.
+     Das Formular wird von assets/js/futtercheck.js befuellt und
+     per form.submit() in das iframe darunter abgeschickt. Die
+     name-Attribute entsprechen exakt den Kontakt-Attributen in
+     deinem Brevo-Konto - bitte nicht umbenennen.
      ============================================================ -->
-<div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
-  <div class="sib-form">
-    <div id="sib-form-container" class="sib-form-container">
-      <div id="error-message" class="sib-form-message-panel" style="display:none;"></div>
-      <div id="success-message" class="sib-form-message-panel" style="display:none;"></div>
-      <div id="sib-container" class="sib-container--medium sib-container--vertical">
-        <iframe name="brevo_sink" title="Brevo" style="display:none" tabindex="-1"></iframe>
-        <form id="sib-form" target="brevo_sink" method="POST" action="https://527052f3.sibforms.com/serve/MUIFAEsoUsu2lQEwZbEGWqu3v6u9wL2SIPPUymK-A_Vc0QPh5brKiyc__E3MTjN9YYhO3Tqv-YtqYTJeAH6h3IV0Mt5ECrXtrWv73icuhdF0rgKNrVbQDxNTrQLccP0-cvUBbw9TcGjJobMlR1757jpWbQmfb6FPlxkFczQhk0UQ5mCi5IIPD5GZPTV7gIyGgCy2PSFGJ-ObCxEZ1g==" data-type="subscription">
-          <div class="sib-input sib-form-block">
-            <div class="form__entry entry_block">
-              <div class="form__label-row">
-                <div class="entry__field">
-                  <input class="input" type="text" id="sib-email" name="EMAIL" autocomplete="off" data-required="true" required />
-                </div>
-              </div>
-              <label class="entry__error entry__error--primary"></label>
-            </div>
-          </div>
-          <div class="sib-input sib-form-block">
-            <div class="form__entry entry_block">
-              <div class="form__label-row">
-                <div class="entry__field">
-                  <input class="input" maxlength="200" type="text" id="sib-vorname" name="VORNAME" autocomplete="off" data-required="true" required />
-                </div>
-              </div>
-              <label class="entry__error entry__error--primary"></label>
-            </div>
-          </div>
-          <div class="sib-input sib-form-block">
-            <div class="form__entry entry_block">
-              <div class="form__label-row">
-                <div class="entry__field">
-                  <input class="input" maxlength="200" type="text" id="sib-hund-katze" name="HUND_KATZE" autocomplete="off" data-required="true" required />
-                </div>
-              </div>
-              <label class="entry__error entry__error--primary"></label>
-            </div>
-          </div>
-          <div class="sib-input sib-form-block">
-            <div class="form__entry entry_block">
-              <div class="form__label-row">
-                <div class="entry__field">
-                  <input class="input" maxlength="200" type="text" id="sib-tiername" name="TIERNAME" autocomplete="off" data-required="true" required />
-                </div>
-              </div>
-              <label class="entry__error entry__error--primary"></label>
-            </div>
-          </div>
-          <div class="sib-input sib-form-block">
-            <div class="form__entry entry_block">
-              <div class="form__label-row">
-                <div class="entry__field">
-                  <input class="input" maxlength="200" type="text" id="sib-score" name="FUTTERCHECK_SCORE" data-numeric="true" autocomplete="off" data-required="true" required />
-                </div>
-              </div>
-              <label class="entry__error entry__error--primary"></label>
-            </div>
-          </div>
-          <div class="sib-input sib-form-block">
-            <div class="form__entry entry_block">
-              <div class="form__label-row">
-                <div class="entry__field">
-                  <input class="input" maxlength="200" type="text" id="sib-farb-score" name="FUTTERCHECK_FARB_SCORE" autocomplete="off" data-required="true" required />
-                </div>
-              </div>
-              <label class="entry__error entry__error--primary"></label>
-            </div>
-          </div>
-          <div class="sib-input sib-form-block">
-            <div class="form__entry entry_block">
-              <div class="form__label-row">
-                <div class="entry__field">
-                  <input class="input" maxlength="200" type="text" id="sib-futter" name="FUTTERCHECK_FUTTER" autocomplete="off" data-required="true" required />
-                </div>
-              </div>
-              <label class="entry__error entry__error--primary"></label>
-            </div>
-          </div>
-          <div class="sib-input sib-form-block">
-            <div class="form__entry entry_block">
-              <div class="form__label-row">
-                <div class="entry__field">
-                  <input class="input" maxlength="200" type="text" id="sib-interesse" name="PARTNER_INTERESSE" autocomplete="off" data-required="true" required />
-                </div>
-              </div>
-              <label class="entry__error entry__error--primary"></label>
-            </div>
-          </div>
-          <div class="sib-sms-field sib-form-block">
-            <div class="form__entry entry_block">
-              <div class="form__label-row">
-                <div class="sib-sms-input-wrapper" style="direction:ltr">
-                  <div class="sib-sms-input" data-placeholder="WhatsApp" data-country-code="DE" data-value="" data-attributename="SMS">
-                    <div class="entry__field">
-                      <select class="input" id="sib-sms-country" name="SMS__COUNTRY_CODE">
-                        <option value="+49" selected>+49 DE</option>
-                        <option value="+43">+43 AT</option>
-                        <option value="+41">+41 CH</option>
-                      </select>
-                    </div>
-                    <div class="entry__field" style="width:100%">
-                      <input type="tel" class="input" id="sib-sms" name="SMS" autocomplete="off" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <label class="entry__error entry__error--primary"></label>
-              <label class="entry__error entry__error--secondary"></label>
-            </div>
-          </div>
-          <div style="text-align:center">
-            <button class="sib-form-block__button sib-form-block__button-with-loader" form="sib-form" type="submit">Absenden</button>
-          </div>
-          <input type="text" name="email_address_check" value="" class="input--hidden">
-          <input type="hidden" name="locale" value="de">
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  window.REQUIRED_CODE_ERROR_MESSAGE = 'Waehle bitte eine Laendervorwahl aus.';
-  window.LOCALE = 'de';
-  window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Die eingegebenen Informationen sind nicht gueltig.";
-  window.REQUIRED_ERROR_MESSAGE = "Dieses Feld darf nicht leer sein. ";
-  window.GENERIC_INVALID_MESSAGE = "Die eingegebenen Informationen sind nicht gueltig.";
-  window.INVALID_NUMBER = "Die eingegebenen Informationen sind nicht gueltig.";
-  window.INVALID_DATE = "Bitte gib ein gueltiges Datum ein";
-  window.REQUIRED_MULTISELECT_MESSAGE = 'Waehle bitte mindestens eine Option aus';
-  window.translation = {
-    common: {
-      selectedList: '{quantity} Liste ausgewaehlt',
-      selectedLists: '{quantity} Listen ausgewaehlt',
-      selectedOption: '{quantity} ausgewaehlt',
-      selectedOptions: '{quantity} ausgewaehlt'
-    }
-  };
-  var AUTOHIDE = Boolean(0);
-</script>
-<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+<iframe name="brevo_sink" title="Brevo-Uebermittlung" style="display:none" tabindex="-1" aria-hidden="true"></iframe>
+<form id="brevoForm" method="POST" target="brevo_sink" action="https://527052f3.sibforms.com/serve/MUIFAEsoUsu2lQEwZbEGWqu3v6u9wL2SIPPUymK-A_Vc0QPh5brKiyc__E3MTjN9YYhO3Tqv-YtqYTJeAH6h3IV0Mt5ECrXtrWv73icuhdF0rgKNrVbQDxNTrQLccP0-cvUBbw9TcGjJobMlR1757jpWbQmfb6FPlxkFczQhk0UQ5mCi5IIPD5GZPTV7gIyGgCy2PSFGJ-ObCxEZ1g==" hidden aria-hidden="true">
+  <input type="hidden" name="EMAIL" value="">
+  <input type="hidden" name="VORNAME" value="">
+  <input type="hidden" name="HUND_KATZE" value="">
+  <input type="hidden" name="TIERNAME" value="">
+  <input type="hidden" name="FUTTERCHECK_SCORE" value="">
+  <input type="hidden" name="FUTTERCHECK_FARB_SCORE" value="">
+  <input type="hidden" name="FUTTERCHECK_FUTTER" value="">
+  <input type="hidden" name="PARTNER_INTERESSE" value="">
+  <input type="hidden" name="SMS" value="">
+  <input type="hidden" name="SMS__COUNTRY_CODE" value="+49">
+  <!-- Honeypot gegen Bots: muss leer bleiben -->
+  <input type="hidden" name="email_address_check" value="">
+  <input type="hidden" name="locale" value="de">
+</form>
 
 </body>
 </html>

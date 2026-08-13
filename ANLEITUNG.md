@@ -1,98 +1,84 @@
-# Futtercheck laeuft jetzt ueber Brevo (Stand 13.08., zweite Runde)
+# Futtercheck laeuft (Stand 13.08., dritte Runde) — jetzt echt getestet
 
-## Was der Fehler war
+## Was diesmal anders ist: ich habe es gegen deinen Endpunkt geprueft
 
-Nichts kam an, weil zwei Dinge nicht stimmten:
+Ich hatte zweimal geraten und zweimal danebengelegen. Diesmal habe ich einen
+echten POST an deine Brevo-URL geschickt und die Antwort angesehen:
 
-1. **Die Formular-URL war ein Platzhalter.** Da stand woertlich `DEINE-BREVO-URL`.
-2. **Wichtiger: Die Feldnamen passten nicht zu deinem Brevo-Konto.** Ich hatte auf
-   gut Glueck `SCORE`, `TIERART`, `PROFIL`, `THEMEN` verwendet. Deine Attribute
-   heissen aber `FUTTERCHECK_SCORE`, `HUND_KATZE`, `FUTTERCHECK_FARB_SCORE`,
-   `FUTTERCHECK_FUTTER`. Selbst mit richtiger URL waeren die Daten in leeren
-   Feldern gelandet.
+```
+HTTP 200  {"success":true}
+```
 
-Beides ist jetzt aus deiner funktionierenden Version uebernommen — **du musst
-nichts mehr eintragen.**
+Getestet wurden auch die Grenzfaelle — Telefonnummer wie getippt (015678…),
+international (4915678…), Telefon ganz weggelassen, Pflichtfelder leer, nur
+E-Mail und Vorname. **Alle fuenf: `{"success":true}`.** Brevos Server nimmt
+einen ganz normalen Formular-POST an.
 
-## Wie es jetzt funktioniert
+## Was der eigentliche Fehler war
 
-Baugleich zu cedricnitsch.de: Am Ende von `index.html` liegt ein verstecktes,
-natives Brevo-Formular. Das Skript befuellt dessen Felder und loest den Submit
-aus, Brevos `main.js` faengt ihn ab und schickt ihn per AJAX. Brevo verschickt
-daraufhin die Double-Opt-in-Mail.
+Meine letzte Fassung hat den Brevo-Submit-Button per `click()` ausgeloest —
+so wie es deine alte Seite macht. Ein Klick loest aber zuerst die
+HTML5-Validierung aus. Und weil das Formular ausgeblendet ist, bricht Chrome
+mit *"An invalid form control is not focusable"* ab und sendet **gar nichts**.
+Kein Fehler in der Konsole, keine Meldung — es passiert einfach nichts.
 
-Getestet wird uebergeben:
+Jetzt wird `form.submit()` benutzt. Das ueberspringt die Validierung und
+postet direkt.
 
-| Brevo-Feld | Beispielwert |
-|---|---|
-| `EMAIL` | test@example.de |
-| `VORNAME` | Cedric |
-| `HUND_KATZE` | hund |
-| `TIERNAME` | Balu |
-| `FUTTERCHECK_SCORE` | 36 |
-| `FUTTERCHECK_FARB_SCORE` | rot |
-| `FUTTERCHECK_FUTTER` | Trockenfutter (Standard) |
-| `PARTNER_INTERESSE` | Stark |
-| `SMS` / `SMS__COUNTRY_CODE` | 015678516818 / +49 |
-| `email_address_check` | leer (Honeypot) |
-| `locale` | de |
+## Dein Design bleibt unberuehrt
 
-## Zwei Dinge, die ich anders gemacht habe als auf der alten Seite
+Genau das war deine Sorge, und sie war berechtigt: Brevos `sib-styles.css`
+enthaelt Regeln fuer `input`, `button` und `.input` — die haetten dein Design
+ueberschrieben.
 
-**Brevos `sib-styles.css` ist bewusst nicht eingebunden.** Die brauchst du nur,
-wenn das Brevo-Formular sichtbar ist — hier ist es unsichtbar. Wuerde man sie
-laden, koennte sie mit dem Seitendesign kollidieren (sie enthaelt Regeln fuer
-`input`, `button`, `.input`). Nur `main.js` wird geladen, und das macht die
-Arbeit.
+**Es wird jetzt weder Brevos CSS noch Brevos JavaScript geladen.** Beides
+braucht nur das sichtbare Brevo-Formular. Da wir den POST selbst machen,
+faellt beides ersatzlos weg. Uebrig bleibt ein schlankes Formular aus
+`<input type="hidden">`-Feldern am Ende von `index.html`.
 
-**Ein Sicherheitsnetz gegen Adblocker.** Wenn `main.js` nicht laedt — Adblocker,
-Netzproblem —, wuerde der Klick auf den Submit-Button die Seite zu sibforms.com
-wegnavigieren, und dein Besucher saehe sein Ergebnis nie. Das Formular schickt
-deshalb in ein verstecktes iframe. Getestet mit blockiertem sibforms.com: Die
-Seite bleibt stehen, das Ergebnis erscheint, die Daten gehen trotzdem raus.
+Drei Nebeneffekte, alle positiv:
 
-## Nebenbei einen Fehler gefunden
+1. **Adblocker-fest.** Wer sibforms.com blockt, konnte vorher nichts absenden.
+2. **Schneller.** Zwei Verbindungen zu fremden Servern weniger.
+3. **Datenschutzfreundlicher.** Vorher wurde beim blossen Aufruf der Startseite
+   die IP jedes Besuchers an Brevo uebertragen. Jetzt entsteht die Verbindung
+   erst beim Absenden. Ich habe den entsprechenden Absatz in der
+   Datenschutzerklaerung wieder zurueckgenommen und richtig gestellt.
 
-Die Erfolgsmeldung der beiden Formulare („Danke dir! …") lag **innerhalb** des
-Formulars — und das Skript blendet das Formular nach dem Absenden aus. Damit
-verschwand die Bestaetigung mit. Aufgefallen ist das erst jetzt, weil vorher
-immer die Fehlermeldung kam. Beide Meldungen stehen jetzt ausserhalb, getestet:
-sichtbar.
+## Getestet im Browser, mit abgefangenem POST
 
-## Handbuch- und Kontaktformular
+Alle drei Formulare senden nachweislich:
 
-Die laufen ueber dasselbe Brevo-Formular, weil deine Attribute Pflichtfelder
-sind. Sie fuellen die Futtercheck-Felder mit Markern, an denen du sie in Brevo
-erkennst:
+**Futtercheck**
+```
+EMAIL=kunde@example.de · VORNAME=Cedric · HUND_KATZE=hund · TIERNAME=Balu
+FUTTERCHECK_SCORE=36 · FUTTERCHECK_FARB_SCORE=rot
+FUTTERCHECK_FUTTER=Trockenfutter (Standard) · PARTNER_INTERESSE=Stark
+SMS=015678516818 · SMS__COUNTRY_CODE=+49 · email_address_check= · locale=de
+```
+Ergebnis bleibt sichtbar, Seite navigiert nicht weg.
 
-- `FUTTERCHECK_FARB_SCORE` = `handbuch` bzw. `kundenzugang`
-- `FUTTERCHECK_FUTTER` = „Produkthandbuch angefordert" bzw. „Kundenzugang angefragt"
-- `FUTTERCHECK_SCORE` = `0`, `TIERNAME` = `-`
+**Produkthandbuch** — `FUTTERCHECK_FARB_SCORE=handbuch`, Bestaetigung sichtbar
+**Kundenzugang** — `FUTTERCHECK_FARB_SCORE=kundenzugang`, Bestaetigung sichtbar
 
-**Bitte einmal testen.** Falls `HUND_KATZE` in Brevo kein freies Textfeld,
-sondern eine Auswahlliste ist, koennte Brevo diese beiden Formulare ablehnen.
-Dann legst du in Brevo ein zweites Formular ohne Pflichtfelder an und traegst
-dessen URL in `assets/js/futtercheck.js` ein — die Stelle ist kommentiert.
+An diesen beiden Markern kannst du die Anfragen in Brevo auseinanderhalten
+und getrennte Automationen darauf bauen.
+
+## Bitte in Brevo aufraeumen
+
+Fuer den Test sind **sechs Kontakte** in deiner Liste gelandet:
+
+```
+futtercheck-test@example.com
+t2@example.com  t3@example.com  t4@example.com  t5@example.com  t6@example.com
+```
+
+Die kannst du loeschen. Die Bestaetigungsmails gehen an example.com und
+kommen nirgends an — das ist eine reservierte Testdomain.
 
 ## Sprechzeiten
 
-Telefon-Kachel auf Startseite und Partnerseite: „Erreichbar von 9:30 bis
-20:00 Uhr." Der Platzhalter `[Sprechzeiten, z. B. Mo–Fr 9–18 Uhr]` ist damit weg.
-
-## Datenschutzerklaerung nachgezogen
-
-Das Brevo-Skript laedt beim **Aufruf** der Startseite, nicht erst beim Absenden.
-Damit geht die IP jedes Besuchers an Brevo, bevor er irgendetwas eingegeben hat.
-Das steht jetzt in Abschnitt 8 und in der Uebersichtstabelle. Ohne diesen Zusatz
-waere die Erklaerung unvollstaendig gewesen.
-
-## Testreihenfolge fuer dich
-
-1. Dateien hochladen
-2. Futtercheck komplett durchklicken, echte E-Mail eintragen
-3. Kommt die Double-Opt-in-Mail? Steht der Kontakt in Brevo mit allen Feldern?
-4. Handbuch- und Kontaktformular genauso testen
-5. Erst danach Werbebudget
+Startseite und Partnerseite: „Erreichbar von 9:30 bis 20:00 Uhr."
 
 ---
 
