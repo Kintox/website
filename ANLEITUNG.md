@@ -1,3 +1,35 @@
+# Update 13.08. (neunte Runde): Landesvorwahl wurde doppelt gezählt
+
+Du hast es mit deiner echten Nummer in mehreren Varianten getestet – sehr
+hilfreich, damit kam der letzte Fehler klar zum Vorschein:
+
+| Eingabe | Ergebnis |
+|---|---|
+| `017631204407` | ✅ ging |
+| `+4917631204407` | ❌ ging nicht |
+| `+49 17631204407` | ❌ ging nicht |
+| `+49 176 31204407` | ❌ ging nicht |
+| `+49 176 312 044 07` | ❌ ging nicht |
+
+Der Grund: Wir schicken die Landesvorwahl immer separat als eigenes Feld
+mit (`SMS__COUNTRY_CODE = "+49"`), fest einprogrammiert. Wenn du die
+Vorwahl zusätzlich selbst in die Telefonnummer eintippst, hat Brevo sie am
+Ende zweimal bekommen (einmal aus dem Vorwahl-Feld, einmal aus deiner
+Eingabe) – daraus wird keine gültige Nummer mehr, und Brevo lehnt ab. Nur
+wenn du sie mit führender `0` und *ohne* `+49` eingetragen hast, hat es
+zufällig gepasst.
+
+**Fix:** Die Telefonnummer wird jetzt vor dem Absenden normalisiert
+(`fcNormalizePhone`): alles außer Ziffern wird entfernt, eine eventuell
+mitgetippte Vorwahl `49` am Anfang wird entfernt, eine führende `0` wird
+entfernt. Alle fünf Varianten aus deinem Test ergeben danach exakt denselben,
+korrekten Wert (`17631204407`) – getestet, inklusive eines erneuten
+Live-Checks gegen den echten Brevo-Endpunkt mit `{"success":true}`. Damit ist
+es jetzt egal, in welchem gängigen Format du oder deine Besucher die Nummer
+eintragen.
+
+---
+
 # Update 13.08. (achte Runde, WICHTIG): Echte Ursache gefunden – Brevo lehnte ab, wir haben es nie gesehen
 
 ## Der eigentliche Grund für "kommt manchmal/gar nicht an"

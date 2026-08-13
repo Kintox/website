@@ -81,7 +81,7 @@
       FUTTERCHECK_FARB_SCORE: data.farbe,
       FUTTERCHECK_FUTTER:     data.futter,
       PARTNER_INTERESSE:      data.interesse,
-      SMS:                    data.telefon,
+      SMS:                    fcNormalizePhone(data.telefon),
       SMS__COUNTRY_CODE:      '+49',
       email_address_check:    '',
       // Sauberes Quell-Attribut (futtercheck / handbuch / kundenzugang) fuer
@@ -131,6 +131,28 @@
   function fcValidPhone(value){
     const bereinigt = (value || '').trim().replace(/[\s\-\/()]/g, '');
     return /^\+?[0-9]{6,15}$/.test(bereinigt);
+  }
+
+  // Bringt eine Telefonnummer auf die Form, die Brevo im SMS-Feld erwartet:
+  // NUR die nationale Nummer, ohne Laendervorwahl und ohne fuehrende 0 -
+  // weil wir SMS__COUNTRY_CODE ("+49") schon separat mitschicken. Ohne
+  // diese Normalisierung wird die Vorwahl doppelt gezaehlt, sobald jemand
+  // sie selbst mit eintippt ("+49 176 ...", "0049 176 ...", "+49-176-..."),
+  // und Brevo lehnt die entstehende Nummer als ungueltig ab - das war der
+  // Grund, warum "017631204407" ging, aber "+4917631204407" nicht.
+  //
+  // "017631204407"        -> "17631204407"
+  // "+4917631204407"      -> "17631204407"
+  // "+49 176 312 044 07"  -> "17631204407"
+  function fcNormalizePhone(value){
+    let ziffern = (value || '').replace(/\D/g, '');
+    if (ziffern.slice(0, 2) === '49' && ziffern.length > 10) {
+      ziffern = ziffern.slice(2);
+    }
+    if (ziffern.charAt(0) === '0') {
+      ziffern = ziffern.slice(1);
+    }
+    return ziffern;
   }
 
   const FC_GEWICHT_HUND = [
