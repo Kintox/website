@@ -363,7 +363,7 @@
       '<form id="fcLeadForm" novalidate>' +
       '<div class="fc-lead-fields two">' +
       '<div><label for="fcEmail">E-Mail-Adresse *</label><input type="email" class="fc-text-input" id="fcEmail" autocomplete="email" required></div>' +
-      '<div><label for="fcTelefon">Telefon / WhatsApp (optional)</label><input type="tel" class="fc-text-input" id="fcTelefon" autocomplete="tel"></div>' +
+      '<div><label for="fcTelefon">Telefon / WhatsApp *</label><input type="tel" class="fc-text-input" id="fcTelefon" autocomplete="tel" required></div>' +
       '</div>' +
       '<div class="checkbox-row"><input type="checkbox" id="fcDsgvo" required><label for="fcDsgvo">Ja, ich m\u00f6chte mein Ergebnis per E-Mail erhalten und bin mit der Verarbeitung meiner Daten zu diesem Zweck einverstanden. Die Einwilligung kann ich jederzeit widerrufen. Mehr dazu in der <a href=\'datenschutz.html\' target=\'_blank\' style=\'color:var(--chloro-dunkel);text-decoration:underline;\'>Datenschutzerkl\u00e4rung</a>. *</label></div>' +
       '<div class="form-error" id="fcLeadError"></div>' +
@@ -390,6 +390,11 @@
       if (!fcValidEmail(email)) {
         showErr('Bitte gib eine g\u00fcltige E-Mail-Adresse ein \u2013 dorthin schicke ich dir die Auswertung.');
         document.getElementById('fcEmail').focus();
+        return;
+      }
+      if (!tel) {
+        showErr('Bitte gib noch deine Telefonnummer ein, damit ich dich bei R\u00fcckfragen erreichen kann.');
+        document.getElementById('fcTelefon').focus();
         return;
       }
       if (!dsgvo) {
@@ -539,6 +544,25 @@
   // Lead-Formulare (Kundenzugang sichern / Produkthandbuch anfordern)
   // laufen ueber dieselbe Brevo-Anbindung wie der Futtercheck.
 
+  // Pflichtfelder je Formular (Feldname im FormData -> Fehlertext).
+  // handbuchForm: Name, E-Mail, Straße, Ort, Telefon sind Pflicht, damit ein
+  // Handbuch ueberhaupt zugestellt werden kann.
+  // kundenzugangForm: Name, Tierart, E-Mail, Telefon sind Pflicht; die
+  // Nachricht bleibt bewusst optional.
+  const FC_LEAD_REQUIRED_FIELDS = {
+    handbuch: [
+      { name: 'Name',    label: 'deinen Namen' },
+      { name: 'Strasse', label: 'deine Straße & Hausnummer' },
+      { name: 'Ort',     label: 'PLZ & Ort' },
+      { name: 'Telefon', label: 'deine Telefonnummer' }
+    ],
+    kundenzugang: [
+      { name: 'Name',    label: 'deinen Namen' },
+      { name: 'Tierart', label: 'die Tierart' },
+      { name: 'Telefon', label: 'deine Telefonnummer' }
+    ]
+  };
+
   function setupLeadForm(formId, successId, errorId, anfrageart){
     const form = document.getElementById(formId);
     if (!form) return;
@@ -557,6 +581,20 @@
         errorEl.classList.add('show');
         return;
       }
+
+      const pflichtfelder = FC_LEAD_REQUIRED_FIELDS[anfrageart] || [];
+      for (let i = 0; i < pflichtfelder.length; i++) {
+        const feld = pflichtfelder[i];
+        const wert = (data.get(feld.name) || '').toString().trim();
+        if (!wert) {
+          errorEl.textContent = 'Bitte trag noch ' + feld.label + ' ein.';
+          errorEl.classList.add('show');
+          const input = form.querySelector('[name="' + feld.name + '"]');
+          if (input) input.focus();
+          return;
+        }
+      }
+
       if (!form.querySelector('input[type="checkbox"]').checked) {
         errorEl.textContent = 'Bitte bestätige noch kurz die Angabe darunter.';
         errorEl.classList.add('show');

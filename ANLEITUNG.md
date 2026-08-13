@@ -1,3 +1,25 @@
+# Update 13.08. (fünfte Runde): Pflichtfelder in allen drei Formularen
+
+Bisher standen zwar `required`-Attribute im HTML, aber alle drei Formulare laufen
+mit `novalidate` und eigener JavaScript-Prüfung – die hat bisher nur E-Mail und
+die Checkbox kontrolliert, alle anderen Felder waren de facto optional. Jetzt
+geprüft und blockiert das Absenden mit einer klaren Fehlermeldung, wenn eins der
+folgenden Felder fehlt:
+
+- **Produkthandbuch anfordern**: Name, E-Mail, Straße & Hausnummer, PLZ & Ort,
+  Telefonnummer – alle Pflicht (macht auch Sinn, ohne Adresse kein Versand).
+- **Kundenzugang sichern**: Name, Tierart (Dropdown hat jetzt "Bitte wählen" als
+  Platzhalter statt automatisch "Hund"), E-Mail, Telefonnummer – Pflicht. Die
+  Nachricht bleibt bewusst optional.
+- **Futtercheck**: Telefon/WhatsApp ist jetzt zusätzlich zur E-Mail Pflicht.
+
+Alle drei mit Playwright durchgetestet: fehlt ein Pflichtfeld, erscheint die
+Fehlermeldung und nichts wird an Brevo geschickt; sind alle Felder ausgefüllt,
+kommt weiterhin `{"success":true}` wie zuvor. Design unverändert, nur die
+Labels haben jetzt ein `*` bei Pflichtfeldern.
+
+---
+
 # Update 13.08. (vierte Runde): Über-mich-Text & Brevo-Segmentierung
 
 ## 1. Über-mich-Abschnitt aktualisiert

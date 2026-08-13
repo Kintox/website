@@ -257,27 +257,27 @@
         <form id="handbuchForm" novalidate>
           <div class="form-row two">
             <div>
-              <label for="hb-name">Vor- und Nachname</label>
+              <label for="hb-name">Vor- und Nachname *</label>
               <input type="text" id="hb-name" name="Name" placeholder="Dein Name" required>
             </div>
             <div>
-              <label for="hb-email">E-Mail-Adresse</label>
+              <label for="hb-email">E-Mail-Adresse *</label>
               <input type="email" id="hb-email" name="E-Mail" placeholder="du@beispiel.de" required>
             </div>
           </div>
           <div class="form-row two">
             <div>
-              <label for="hb-strasse">Straße &amp; Hausnummer</label>
+              <label for="hb-strasse">Straße &amp; Hausnummer *</label>
               <input type="text" id="hb-strasse" name="Strasse" placeholder="Musterstraße 1" required>
             </div>
             <div>
-              <label for="hb-ort">PLZ &amp; Ort</label>
+              <label for="hb-ort">PLZ &amp; Ort *</label>
               <input type="text" id="hb-ort" name="Ort" placeholder="12345 Musterstadt" required>
             </div>
           </div>
           <div class="form-row">
             <div>
-              <label for="hb-telefon">Telefonnummer</label>
+              <label for="hb-telefon">Telefonnummer *</label>
               <input type="tel" id="hb-telefon" name="Telefon" placeholder="Für Rückfragen zur Zustellung" required>
             </div>
           </div>
@@ -332,12 +332,13 @@
       <form id="kundenzugangForm" novalidate>
         <div class="form-row two">
           <div>
-            <label for="name">Dein Name</label>
+            <label for="name">Dein Name *</label>
             <input type="text" id="name" name="Name" placeholder="Vor- und Nachname" required>
           </div>
           <div>
-            <label for="tierart">Tierart</label>
-            <select id="tierart" name="Tierart">
+            <label for="tierart">Tierart *</label>
+            <select id="tierart" name="Tierart" required>
+              <option value="" disabled selected>Bitte wählen</option>
               <option>Hund</option>
               <option>Katze</option>
               <option>Pferd</option>
@@ -347,17 +348,17 @@
         </div>
         <div class="form-row two">
           <div>
-            <label for="kz-email">E-Mail-Adresse</label>
+            <label for="kz-email">E-Mail-Adresse *</label>
             <input type="email" id="kz-email" name="E-Mail" placeholder="du@beispiel.de" required>
           </div>
           <div>
-            <label for="kz-telefon">Telefon (optional)</label>
-            <input type="tel" id="kz-telefon" name="Telefon" placeholder="Für Rückruf">
+            <label for="kz-telefon">Telefonnummer *</label>
+            <input type="tel" id="kz-telefon" name="Telefon" placeholder="Für Rückruf" required>
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label for="nachricht">Deine Nachricht</label>
+            <label for="nachricht">Deine Nachricht (optional)</label>
             <textarea id="nachricht" name="Nachricht" placeholder="Erzähl mir kurz, worum es geht …"></textarea>
           </div>
         </div>
