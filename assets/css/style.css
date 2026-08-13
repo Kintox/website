@@ -1083,7 +1083,15 @@ header{ position:sticky; }
 }
 .page-hero-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
 @media(max-width:899px){
-  .page-hero-photo{ max-width:100%; aspect-ratio: 16/10; margin:0; }
+  /* Auf dem Handy bewusst nicht 16/10: bei einem hochformatigen Bild
+     wuerde cover die oberen 25 Prozent abschneiden - und damit genau
+     das Gesicht. 1/1 plus object-position haelt den Kopf im Bild. */
+  .page-hero-photo{ max-width:100%; aspect-ratio: 1/1; margin:0; }
+  .page-hero-photo img{ object-position: 50% 22%; }
+}
+@media(max-width:520px){
+  .page-hero-photo{ aspect-ratio: 4/5; }
+  .page-hero-photo img{ object-position: 50% 50%; }
 }
 
 /* Fuenfte Kachel fuellt die Reihe, sonst steht sie allein */

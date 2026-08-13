@@ -1,3 +1,101 @@
+# Futtercheck laeuft jetzt ueber Brevo (Stand 13.08., zweite Runde)
+
+## Was der Fehler war
+
+Nichts kam an, weil zwei Dinge nicht stimmten:
+
+1. **Die Formular-URL war ein Platzhalter.** Da stand woertlich `DEINE-BREVO-URL`.
+2. **Wichtiger: Die Feldnamen passten nicht zu deinem Brevo-Konto.** Ich hatte auf
+   gut Glueck `SCORE`, `TIERART`, `PROFIL`, `THEMEN` verwendet. Deine Attribute
+   heissen aber `FUTTERCHECK_SCORE`, `HUND_KATZE`, `FUTTERCHECK_FARB_SCORE`,
+   `FUTTERCHECK_FUTTER`. Selbst mit richtiger URL waeren die Daten in leeren
+   Feldern gelandet.
+
+Beides ist jetzt aus deiner funktionierenden Version uebernommen — **du musst
+nichts mehr eintragen.**
+
+## Wie es jetzt funktioniert
+
+Baugleich zu cedricnitsch.de: Am Ende von `index.html` liegt ein verstecktes,
+natives Brevo-Formular. Das Skript befuellt dessen Felder und loest den Submit
+aus, Brevos `main.js` faengt ihn ab und schickt ihn per AJAX. Brevo verschickt
+daraufhin die Double-Opt-in-Mail.
+
+Getestet wird uebergeben:
+
+| Brevo-Feld | Beispielwert |
+|---|---|
+| `EMAIL` | test@example.de |
+| `VORNAME` | Cedric |
+| `HUND_KATZE` | hund |
+| `TIERNAME` | Balu |
+| `FUTTERCHECK_SCORE` | 36 |
+| `FUTTERCHECK_FARB_SCORE` | rot |
+| `FUTTERCHECK_FUTTER` | Trockenfutter (Standard) |
+| `PARTNER_INTERESSE` | Stark |
+| `SMS` / `SMS__COUNTRY_CODE` | 015678516818 / +49 |
+| `email_address_check` | leer (Honeypot) |
+| `locale` | de |
+
+## Zwei Dinge, die ich anders gemacht habe als auf der alten Seite
+
+**Brevos `sib-styles.css` ist bewusst nicht eingebunden.** Die brauchst du nur,
+wenn das Brevo-Formular sichtbar ist — hier ist es unsichtbar. Wuerde man sie
+laden, koennte sie mit dem Seitendesign kollidieren (sie enthaelt Regeln fuer
+`input`, `button`, `.input`). Nur `main.js` wird geladen, und das macht die
+Arbeit.
+
+**Ein Sicherheitsnetz gegen Adblocker.** Wenn `main.js` nicht laedt — Adblocker,
+Netzproblem —, wuerde der Klick auf den Submit-Button die Seite zu sibforms.com
+wegnavigieren, und dein Besucher saehe sein Ergebnis nie. Das Formular schickt
+deshalb in ein verstecktes iframe. Getestet mit blockiertem sibforms.com: Die
+Seite bleibt stehen, das Ergebnis erscheint, die Daten gehen trotzdem raus.
+
+## Nebenbei einen Fehler gefunden
+
+Die Erfolgsmeldung der beiden Formulare („Danke dir! …") lag **innerhalb** des
+Formulars — und das Skript blendet das Formular nach dem Absenden aus. Damit
+verschwand die Bestaetigung mit. Aufgefallen ist das erst jetzt, weil vorher
+immer die Fehlermeldung kam. Beide Meldungen stehen jetzt ausserhalb, getestet:
+sichtbar.
+
+## Handbuch- und Kontaktformular
+
+Die laufen ueber dasselbe Brevo-Formular, weil deine Attribute Pflichtfelder
+sind. Sie fuellen die Futtercheck-Felder mit Markern, an denen du sie in Brevo
+erkennst:
+
+- `FUTTERCHECK_FARB_SCORE` = `handbuch` bzw. `kundenzugang`
+- `FUTTERCHECK_FUTTER` = „Produkthandbuch angefordert" bzw. „Kundenzugang angefragt"
+- `FUTTERCHECK_SCORE` = `0`, `TIERNAME` = `-`
+
+**Bitte einmal testen.** Falls `HUND_KATZE` in Brevo kein freies Textfeld,
+sondern eine Auswahlliste ist, koennte Brevo diese beiden Formulare ablehnen.
+Dann legst du in Brevo ein zweites Formular ohne Pflichtfelder an und traegst
+dessen URL in `assets/js/futtercheck.js` ein — die Stelle ist kommentiert.
+
+## Sprechzeiten
+
+Telefon-Kachel auf Startseite und Partnerseite: „Erreichbar von 9:30 bis
+20:00 Uhr." Der Platzhalter `[Sprechzeiten, z. B. Mo–Fr 9–18 Uhr]` ist damit weg.
+
+## Datenschutzerklaerung nachgezogen
+
+Das Brevo-Skript laedt beim **Aufruf** der Startseite, nicht erst beim Absenden.
+Damit geht die IP jedes Besuchers an Brevo, bevor er irgendetwas eingegeben hat.
+Das steht jetzt in Abschnitt 8 und in der Uebersichtstabelle. Ohne diesen Zusatz
+waere die Erklaerung unvollstaendig gewesen.
+
+## Testreihenfolge fuer dich
+
+1. Dateien hochladen
+2. Futtercheck komplett durchklicken, echte E-Mail eintragen
+3. Kommt die Double-Opt-in-Mail? Steht der Kontakt in Brevo mit allen Feldern?
+4. Handbuch- und Kontaktformular genauso testen
+5. Erst danach Werbebudget
+
+---
+
 # Änderungen dieser Runde (Feedback vom 13.08.)
 
 ## Partner-Seite

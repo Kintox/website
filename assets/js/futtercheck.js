@@ -11,71 +11,93 @@
   // ============================================================
   // BREVO-ANBINDUNG
   // ------------------------------------------------------------
-  // So kommst du an die URL (dauert ca. 5 Minuten):
-  //  1. In Brevo einloggen -> Kontakte -> Listen -> neue Liste
-  //     anlegen, z. B. "Futtercheck Hund".
-  //  2. Kontakte -> Einstellungen -> Kontakt-Attribute: folgende
-  //     Attribute vom Typ TEXT anlegen (Schreibweise exakt so):
-  //     VORNAME, TELEFON, TIERART, TIERNAME, SCORE, THEMEN,
-  //     PROFIL, PARTNERINTERESSE
-  //  3. Kontakte -> Formulare -> "Neues Formular", die Liste aus
-  //     Schritt 1 auswaehlen, alle Attribute als Felder hinzufuegen,
-  //     Double-Opt-In nach Wunsch aktivieren, speichern.
-  //  4. Im Schritt "Teilen" den HTML-Code anzeigen lassen. Darin
-  //     steht: action="https://sibforms.com/serve/XXXXXXXX"
-  //     Genau diese URL unten einsetzen.
-  //  5. Automation -> "Kontakt wird einer Liste hinzugefuegt" ->
-  //     E-Mail mit der Auswertung senden. Im Template kannst du
-  //     {{ contact.VORNAME }}, {{ contact.TIERNAME }},
-  //     {{ contact.SCORE }} usw. verwenden.
+  // Baugleich zur funktionierenden Version auf cedricnitsch.de:
+  // Auf der Seite liegt ein verstecktes, natives Brevo-Formular
+  // (siehe Ende von index.html). Wir fuellen dessen Felder und
+  // loesen den Submit aus. Brevo eigenes main.js faengt den Submit
+  // ab, schickt ihn per AJAX und verschickt die Double-Opt-in-Mail.
   //
-  // Solange hier "DEINE-BREVO-URL" steht, wird nichts gesendet -
-  // der Futtercheck funktioniert trotzdem, die Daten landen nur
-  // noch nicht in Brevo.
+  // Warum so und nicht per API-Key: Ein API-Key im Quelltext waere
+  // fuer jeden lesbar. Dieser Weg braucht keinen.
+  //
+  // Die Feldnamen muessen exakt den Kontakt-Attributen in Brevo
+  // entsprechen:
+  //   EMAIL, VORNAME, HUND_KATZE, TIERNAME, FUTTERCHECK_SCORE,
+  //   FUTTERCHECK_FARB_SCORE, FUTTERCHECK_FUTTER, PARTNER_INTERESSE,
+  //   SMS + SMS__COUNTRY_CODE, email_address_check (Honeypot), locale
   // ============================================================
-  const BREVO_FORM_URL = "https://sibforms.com/serve/DEINE-BREVO-URL";
 
-  function brevoIsConfigured(){
-    return BREVO_FORM_URL.indexOf("DEINE-BREVO-URL") === -1;
+  // Uebersetzt die internen Futter-Werte in lesbaren Text fuer Brevo
+  const FC_FUTTER_LABELS = {
+    premiumnass:     'Hochwertiges Nassfutter',
+    barf:            'BARF / Rohfuetterung',
+    selbstgekocht:   'Selbstgekocht',
+    premiumtrocken:  'Trockenfutter (Premium)',
+    standardtrocken: 'Trockenfutter (Standard)',
+    misch:           'Mischfuetterung (Nass + Trocken)',
+    unsicher:        'Unsicher / wechselt oft'
+  };
+
+  // Quiz-Antwort auf die Partnerfrage -> Brevo-Wert
+  const FC_PARTNER_MAP = {
+    ja_interesse: 'Stark',
+    vielleicht:   'Leicht',
+    nein:         'Kunde'
+  };
+
+  // Fuellt ein Feld im versteckten Brevo-Formular.
+  // Die SMS-Felder werden von Brevo main.js ausgetauscht, deshalb
+  // werden sie ueber das name-Attribut statt ueber die id gesucht.
+  function brevoSetField(form, selector, value){
+    const el = form.querySelector(selector);
+    if (!el) {
+      console.warn('[Brevo] Feld nicht gefunden:', selector);
+      return false;
+    }
+    el.value = value == null ? '' : String(value);
+    return true;
   }
 
-  // Sendet die Daten per verstecktem Formular an Brevo. Der Umweg
-  // ueber ein iframe vermeidet CORS-Probleme und braucht keinen
-  // API-Key im Quelltext (der waere oeffentlich einsehbar).
-  function brevoSubmit(fields){
-    if (!brevoIsConfigured()) return false;
-
-    var frameName = "brevo_target";
-    var frame = document.getElementById(frameName);
-    if (!frame) {
-      frame = document.createElement("iframe");
-      frame.id = frameName;
-      frame.name = frameName;
-      frame.style.display = "none";
-      document.body.appendChild(frame);
+  // Uebergibt einen Datensatz an Brevo. Gibt true zurueck, wenn der
+  // Submit ausgeloest werden konnte.
+  function brevoSubmit(data){
+    const form = document.getElementById('sib-form');
+    if (!form) {
+      console.error('[Brevo] Verstecktes Formular #sib-form fehlt auf dieser Seite.');
+      return false;
     }
 
-    var form = document.createElement("form");
-    form.method = "POST";
-    form.action = BREVO_FORM_URL;
-    form.target = frameName;
-    form.style.display = "none";
+    const felder = [
+      ['#sib-email',                 data.email],
+      ['#sib-vorname',               data.vorname],
+      ['#sib-hund-katze',            data.tierart],
+      ['#sib-tiername',              data.tiername],
+      ['#sib-score',                 data.score],
+      ['#sib-farb-score',            data.farbe],
+      ['#sib-futter',                data.futter],
+      ['#sib-interesse',             data.interesse],
+      ['[name="SMS"]',               data.telefon],
+      ['[name="SMS__COUNTRY_CODE"]', '+49']
+    ];
+    felder.forEach(function(f){ brevoSetField(form, f[0], f[1]); });
 
-    fields.locale = "de";
-    fields.email_address_check = "";
+    // Honeypot muss leer bleiben, sonst wertet Brevo es als Bot
+    const honeypot = form.querySelector('[name="email_address_check"]');
+    if (honeypot) honeypot.value = '';
 
-    Object.keys(fields).forEach(function(key){
-      var input = document.createElement("input");
-      input.type = "hidden";
-      input.name = key;
-      input.value = fields[key] == null ? "" : String(fields[key]);
-      form.appendChild(input);
-    });
+    const submitBtn = form.querySelector('[type="submit"]');
+    if (!submitBtn) {
+      console.error('[Brevo] Submit-Button im versteckten Formular fehlt.');
+      return false;
+    }
 
-    document.body.appendChild(form);
-    form.submit();
-    setTimeout(function(){ form.remove(); }, 2000);
-    return true;
+    try {
+      submitBtn.click();
+      return true;
+    } catch (err) {
+      console.error('[Brevo] Submit fehlgeschlagen:', err);
+      return false;
+    }
   }
 
   function fcValidEmail(value){
@@ -381,22 +403,25 @@
   function fcSubmitLead(){
     const a = fcState.answers;
     const score = fcComputeScore();
-    const themen = (a.symptome || [])
-      .filter(function(x){ return x !== 'keine'; })
-      .map(function(x){ return FC_THEMEN_LABEL[x] || x; })
-      .join(', ');
 
-    brevoSubmit({
-      EMAIL: a.email || '',
-      VORNAME: a.vorname || '',
-      TELEFON: a.telefon || '',
-      TIERART: a.tierart === 'katze' ? 'Katze' : 'Hund',
-      TIERNAME: a.tiername || '',
-      SCORE: String(score.final),
-      THEMEN: themen || 'keine Auffälligkeiten angegeben',
-      PROFIL: fcProfileLabel(score.final),
-      PARTNERINTERESSE: a.partner || ''
+    return brevoSubmit({
+      email:     a.email || '',
+      vorname:   a.vorname || '',
+      tierart:   a.tierart === 'katze' ? 'katze' : 'hund',
+      tiername:  a.tiername || '-',
+      score:     String(score.final),
+      farbe:     fcFarbScore(score.final),
+      futter:    FC_FUTTER_LABELS[a.futter] || a.futter || '-',
+      interesse: FC_PARTNER_MAP[a.partner] || 'Kunde',
+      telefon:   a.telefon || ''
     });
+  }
+
+  // Brevo erwartet in FUTTERCHECK_FARB_SCORE gruen / gelb / rot
+  function fcFarbScore(score){
+    if (score >= 75) return 'gruen';
+    if (score >= 40) return 'gelb';
+    return 'rot';
   }
 
   function fcProfileLabel(score){
@@ -533,19 +558,27 @@
         return;
       }
 
+      // Tierart aus dem Formular, sonst Hund als neutraler Standard.
+      // Brevo verlangt in HUND_KATZE einen Wert; leer wuerde abgelehnt.
+      const tierartRoh = (data.get('Tierart') || '').toString().toLowerCase();
+      const tierart = tierartRoh.indexOf('katze') !== -1 ? 'katze' : 'hund';
+
       const sent = brevoSubmit({
-        EMAIL: email,
-        VORNAME: (data.get('Name') || '').toString(),
-        TELEFON: (data.get('Telefon') || '').toString(),
-        TIERART: (data.get('Tierart') || '').toString(),
-        THEMEN: (data.get('Nachricht') || '').toString(),
-        PROFIL: anfrageart,
-        STRASSE: (data.get('Strasse') || '').toString(),
-        ORT: (data.get('Ort') || '').toString()
+        email:     email,
+        vorname:   (data.get('Name') || '').toString() || '-',
+        tierart:   tierart,
+        tiername:  '-',
+        score:     '0',
+        farbe:     anfrageart,
+        futter:    anfrageart === 'handbuch'
+                     ? 'Produkthandbuch angefordert'
+                     : 'Kundenzugang angefragt',
+        interesse: 'Kunde',
+        telefon:   (data.get('Telefon') || '').toString()
       });
 
       if (!sent) {
-        errorEl.textContent = 'Der Versand ist noch nicht eingerichtet. Schreib mir bitte kurz per WhatsApp.';
+        errorEl.textContent = 'Der Versand hat nicht geklappt. Schreib mir bitte kurz per WhatsApp.';
         errorEl.classList.add('show');
         return;
       }
@@ -556,7 +589,7 @@
     });
   }
 
-  setupLeadForm('kundenzugangForm', 'kzSuccess', 'kzError', 'Kundenzugang');
-  setupLeadForm('handbuchForm', 'hbSuccess', 'hbError', 'Produkthandbuch');
+  setupLeadForm('kundenzugangForm', 'kzSuccess', 'kzError', 'kundenzugang');
+  setupLeadForm('handbuchForm', 'hbSuccess', 'hbError', 'handbuch');
 
 })();
