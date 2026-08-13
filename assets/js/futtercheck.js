@@ -11,18 +11,41 @@
   // ============================================================
   // BREVO-ANBINDUNG
   // ------------------------------------------------------------
-  // Am Ende von index.html liegt ein verstecktes Formular mit den
-  // Brevo-Feldnamen. Es wird hier befuellt und per form.submit()
-  // in ein verstecktes iframe geschickt. Brevo antwortet mit
-  // {"success":true} und verschickt die Double-Opt-in-Mail.
+  // Frueher: verstecktes Formular per form.submit() in ein iframe posten.
+  // Problem, das dabei erst richtig auffiel: Ueber ein iframe kommt aus
+  // einer anderen Domain (sibforms.com) keine lesbare Antwort zurueck.
+  // Wenn Brevo eine Anfrage ablehnt - z.B. weil die Telefonnummer wie
+  // "12312312" fuer Brevos eigene Validierung nicht wie eine echte Nummer
+  // aussieht (Test bestaetigt: HTTP 400,
+  // {"success":false,"errors":{"SMS":"..."}}) - haben wir das nie gesehen.
+  // Die Seite hat trotzdem "Erfolg" angezeigt, und die Anfrage ist
+  // komplett verlorengegangen, inklusive aller anderen Felder.
+  //
+  // Jetzt: echter fetch()-Aufruf. Brevos Endpunkt liefert CORS-Header
+  // (Access-Control-Allow-Origin: <exakt unsere Domain>), das haben wir
+  // per curl geprueft. Damit koennen wir die Antwort tatsaechlich lesen
+  // und bei einer Ablehnung eine ehrliche Fehlermeldung zeigen, statt
+  // die Anfrage stillschweigend zu verlieren.
   //
   // Kein API-Key im Quelltext, kein Fremdskript, kein Fremd-CSS.
   //
   // Feldnamen = Kontakt-Attribute in Brevo:
   //   EMAIL, VORNAME, HUND_KATZE, TIERNAME, FUTTERCHECK_SCORE,
   //   FUTTERCHECK_FARB_SCORE, FUTTERCHECK_FUTTER, PARTNER_INTERESSE,
-  //   SMS, SMS__COUNTRY_CODE, email_address_check, locale
+  //   SMS, SMS__COUNTRY_CODE, email_address_check, locale, QUELLE
   // ============================================================
+
+  const BREVO_FORM_URL = "https://527052f3.sibforms.com/serve/MUIFAEsoUsu2lQEwZbEGWqu3v6u9wL2SIPPUymK-A_Vc0QPh5brKiyc__E3MTjN9YYhO3Tqv-YtqYTJeAH6h3IV0Mt5ECrXtrWv73icuhdF0rgKNrVbQDxNTrQLccP0-cvUBbw9TcGjJobMlR1757jpWbQmfb6FPlxkFczQhk0UQ5mCi5IIPD5GZPTV7gIyGgCy2PSFGJ-ObCxEZ1g==";
+
+  // Uebersetzt Brevos Feldnamen in ein verstaendliches deutsches Wort fuer
+  // die Fehlermeldung, falls Brevo ein bestimmtes Feld ablehnt.
+  const BREVO_FEHLERFELD_LABEL = {
+    EMAIL:     'deine E-Mail-Adresse',
+    VORNAME:   'deinen Namen',
+    SMS:       'deine Telefonnummer',
+    HUND_KATZE:'die Tierart',
+    TIERNAME:  'den Namen deines Tieres'
+  };
 
   // Uebersetzt die internen Futter-Werte in lesbaren Text fuer Brevo
   const FC_FUTTER_LABELS = {
@@ -42,43 +65,13 @@
     nein:         'Kunde'
   };
 
-  // Uebergibt einen Datensatz an Brevo.
-  //
-  // Bewusst form.submit() und nicht submitBtn.click():
-  //   * click() loest zuerst die HTML5-Validierung aus. Bei einem
-  //     ausgeblendeten Formular bricht Chrome dann mit
-  //     "not focusable" ab und sendet gar nichts - genau daran ist
-  //     die vorherige Fassung gescheitert.
-  //   * form.submit() ueberspringt die Validierung und postet direkt.
-  // Das Ziel ist ein verstecktes iframe, damit die Seite stehen
-  // bleibt und der Besucher sein Ergebnis sieht.
-  // Jedes der drei Formulare hat ein eigenes, fest im HTML stehendes
-  // Ziel-iframe (siehe index.html). Grund: Wenn zwei Formulare kurz
-  // hintereinander abgeschickt werden (z.B. beim Testen) und sich ein
-  // iframe-Ziel teilen, startet die zweite Navigation im selben iframe,
-  // waehrend die erste Anfrage noch unterwegs ist - der Browser bricht die
-  // erste dann einfach ab, ohne Fehler, ohne Konsolen-Meldung. Mit einem
-  // eigenen, dauerhaften iframe pro Formular kann das nicht mehr passieren.
-  //
-  // Bewusst NICHT zur Laufzeit per JavaScript neu erzeugt: ein frisch
-  // erstelltes, unsichtbares iframe kann von manchen Werbe-/Tracking-
-  // Blockern als verdaechtiges Muster erkannt und blockiert werden. Diese
-  // drei iframes stehen von Anfang an im Quelltext, genau wie das urspruengliche,
-  // nachweislich funktionierende einzelne iframe.
-  const BREVO_ZIEL_IFRAME = {
-    futtercheck:   'brevo_sink_futtercheck',
-    handbuch:      'brevo_sink_handbuch',
-    kundenzugang:  'brevo_sink_kundenzugang'
-  };
-
-  function brevoSubmit(data){
-    const form = document.getElementById('brevoForm');
-    if (!form) {
-      console.error('[Brevo] Formular #brevoForm fehlt auf dieser Seite.');
-      return false;
-    }
-    form.target = BREVO_ZIEL_IFRAME[data.quelle] || 'brevo_sink_futtercheck';
-
+  // Uebergibt einen Datensatz an Brevo und liefert ein Promise mit dem
+  // TATSAECHLICHEN Ergebnis zurueck: { ok: true } bei Erfolg,
+  // { ok: false, message: '...' } bei Ablehnung durch Brevo oder bei einem
+  // Netzwerkfehler (z.B. durch einen Werbeblocker). Die aufrufende Stelle
+  // MUSS dieses Ergebnis auswerten, statt wie frueher blind "Erfolg"
+  // anzuzeigen.
+  async function brevoSubmit(data){
     const werte = {
       EMAIL:                  data.email,
       VORNAME:                data.vorname,
@@ -91,36 +84,38 @@
       SMS:                    data.telefon,
       SMS__COUNTRY_CODE:      '+49',
       email_address_check:    '',
-      // Zusaetzliches, sauberes Quell-Attribut (futtercheck / handbuch /
-      // kundenzugang). Existiert das Brevo-Attribut QUELLE noch nicht, wird
-      // dieses Feld von Brevo einfach ignoriert - das Absenden bleibt davon
-      // unberuehrt (getestet: unbekannte/leere Felder liefern weiterhin
-      // {"success":true}). Sobald QUELLE in Brevo angelegt ist, greift die
-      // Segmentierung automatisch, ganz ohne Code-Aenderung.
+      // Sauberes Quell-Attribut (futtercheck / handbuch / kundenzugang) fuer
+      // die Segmentierung innerhalb der einen gemeinsamen Liste. Existiert
+      // das Attribut QUELLE (noch) nicht in Brevo, wird der Wert einfach
+      // ignoriert - der Rest der Anfrage ist davon unberuehrt.
       QUELLE:                 data.quelle || ''
     };
 
+    const body = new URLSearchParams();
     Object.keys(werte).forEach(function(name){
-      let feld = form.querySelector('[name="' + name + '"]');
-      if (!feld) {
-        // Feld (noch) nicht im Formular vorhanden - z.B. QUELLE, solange das
-        // Attribut in Brevo nicht angelegt ist. Wird dynamisch ergaenzt,
-        // damit es automatisch mitgesendet wird, sobald Brevo das Attribut
-        // kennt; schadet nicht, falls nicht.
-        feld = document.createElement('input');
-        feld.type = 'hidden';
-        feld.name = name;
-        form.appendChild(feld);
-      }
-      feld.value = werte[name] == null ? '' : String(werte[name]);
+      body.set(name, werte[name] == null ? '' : String(werte[name]));
     });
 
     try {
-      form.submit();
-      return true;
+      const res = await fetch(BREVO_FORM_URL, { method: 'POST', mode: 'cors', body: body });
+      let json = null;
+      try { json = await res.json(); } catch (parseErr) { /* unten abgefangen */ }
+
+      if (res.ok && json && json.success) {
+        return { ok: true };
+      }
+
+      console.error('[Brevo] Anfrage abgelehnt:', res.status, json);
+      let message = 'Bitte überprüfe deine Angaben – etwas daran hat Brevo nicht akzeptiert.';
+      if (json && json.errors && Object.keys(json.errors).length) {
+        const feld = Object.keys(json.errors)[0];
+        const label = BREVO_FEHLERFELD_LABEL[feld] || feld;
+        message = 'Bitte überprüfe ' + label + ' – das Format scheint nicht zu passen.';
+      }
+      return { ok: false, message: message };
     } catch (err) {
-      console.error('[Brevo] Absenden fehlgeschlagen:', err);
-      return false;
+      console.error('[Brevo] Netzwerkfehler beim Absenden:', err);
+      return { ok: false, message: 'Der Versand hat gerade nicht geklappt (evtl. Netzwerk oder Werbeblocker). Schreib mir stattdessen bitte kurz per WhatsApp.' };
     }
   }
 
@@ -409,7 +404,7 @@
       errEl.classList.add('show');
     }
 
-    document.getElementById('fcLeadForm').addEventListener('submit', function(e){
+    document.getElementById('fcLeadForm').addEventListener('submit', async function(e){
       e.preventDefault();
       errEl.classList.remove('show');
 
@@ -434,7 +429,18 @@
 
       fcState.answers.email = email;
       fcState.answers.telefon = tel;
-      fcSubmitLead();
+
+      const submitBtn = document.querySelector('#fcLeadForm button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet \u2026'; }
+
+      const ergebnis = await fcSubmitLead();
+
+      if (!ergebnis.ok) {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Ergebnis anzeigen \u2192'; }
+        showErr(ergebnis.message);
+        return;
+      }
+
       fcShowResult();
     });
   }
@@ -599,7 +605,7 @@
     const successEl = document.getElementById(successId);
     const errorEl = document.getElementById(errorId);
 
-    form.addEventListener('submit', function(e){
+    form.addEventListener('submit', async function(e){
       e.preventDefault();
       errorEl.classList.remove('show');
 
@@ -643,7 +649,11 @@
       const tierartRoh = (data.get('Tierart') || '').toString().toLowerCase();
       const tierart = tierartRoh.indexOf('katze') !== -1 ? 'katze' : 'hund';
 
-      const sent = brevoSubmit({
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const submitBtnText = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet …'; }
+
+      const ergebnis = await brevoSubmit({
         email:     email,
         vorname:   (data.get('Name') || '').toString() || '-',
         tierart:   tierart,
@@ -658,8 +668,9 @@
         quelle:    anfrageart
       });
 
-      if (!sent) {
-        errorEl.textContent = 'Der Versand hat nicht geklappt. Schreib mir bitte kurz per WhatsApp.';
+      if (!ergebnis.ok) {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitBtnText; }
+        errorEl.textContent = ergebnis.message;
         errorEl.classList.add('show');
         return;
       }

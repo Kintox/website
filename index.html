@@ -408,56 +408,15 @@
 <!-- ============================================================
      BREVO-ANBINDUNG (Double-Opt-in)
      ------------------------------------------------------------
-     Bewusst NUR dieses schlanke Formular - kein Brevo-Skript und
-     kein Brevo-CSS. Getestet gegen den Endpunkt: ein normaler
-     Formular-POST wird mit {"success":true} beantwortet und loest
-     die Double-Opt-in-Mail aus. Brevos main.js macht nichts
-     anderes, es verpackt den Post nur in AJAX.
-
-     Vorteile dieser Loesung:
-       * Brevos sib-styles.css wuerde input, button und .input
-         ueberschreiben - hier wird sie gar nicht erst geladen,
-         das Seitendesign bleibt unberuehrt.
-       * Kein Fremdskript beim Seitenaufruf, also auch keine
-         IP-Uebertragung an Brevo, bevor jemand etwas eintraegt.
-       * Funktioniert auch mit Adblocker, der sibforms.com sperrt.
-
-     Das Formular wird von assets/js/futtercheck.js befuellt und
-     per form.submit() in das iframe darunter abgeschickt. Die
-     name-Attribute entsprechen exakt den Kontakt-Attributen in
-     deinem Brevo-Konto - bitte nicht umbenennen.
+     Kein Brevo-Skript, kein Brevo-CSS, kein verstecktes Formular/iframe
+     mehr (siehe ANLEITUNG.md fuer die Vorgeschichte). Die drei Formulare
+     (Futtercheck, Handbuch, Kundenzugang) werden komplett aus
+     assets/js/futtercheck.js per fetch() direkt an Brevo geschickt - das
+     laesst sich Brevos tatsaechliche Antwort auslesen (CORS ist auf
+     Brevo-Seite offen), sodass eine echte Ablehnung durch Brevo (z.B. eine
+     ungueltige Telefonnummer) als Fehlermeldung angezeigt wird, statt
+     stillschweigend als "Erfolg" durchzugehen.
      ============================================================ -->
-<!-- Drei feste, immer vorhandene Ziel-iframes statt einem einzigen
-     gemeinsamen: jedes der drei Formulare bekommt sein eigenes, damit sich
-     zwei kurz hintereinander abgeschickte Formulare (z.B. beim Testen) nicht
-     gegenseitig die noch laufende Anfrage abbrechen. Bewusst statisch im
-     HTML und nicht per JavaScript zur Laufzeit erzeugt: ein zur Laufzeit neu
-     angelegtes, unsichtbares iframe kann von manchen Werbe-/Tracking-
-     Blockern als verdaechtiges Muster erkannt und blockiert werden - ein
-     von Anfang an im Quelltext stehendes iframe nicht. -->
-<iframe name="brevo_sink_futtercheck" title="Brevo-Uebermittlung (Futtercheck)" style="display:none" tabindex="-1" aria-hidden="true"></iframe>
-<iframe name="brevo_sink_handbuch" title="Brevo-Uebermittlung (Handbuch)" style="display:none" tabindex="-1" aria-hidden="true"></iframe>
-<iframe name="brevo_sink_kundenzugang" title="Brevo-Uebermittlung (Kundenzugang)" style="display:none" tabindex="-1" aria-hidden="true"></iframe>
-<form id="brevoForm" method="POST" target="brevo_sink_futtercheck" action="https://527052f3.sibforms.com/serve/MUIFAEsoUsu2lQEwZbEGWqu3v6u9wL2SIPPUymK-A_Vc0QPh5brKiyc__E3MTjN9YYhO3Tqv-YtqYTJeAH6h3IV0Mt5ECrXtrWv73icuhdF0rgKNrVbQDxNTrQLccP0-cvUBbw9TcGjJobMlR1757jpWbQmfb6FPlxkFczQhk0UQ5mCi5IIPD5GZPTV7gIyGgCy2PSFGJ-ObCxEZ1g==" hidden aria-hidden="true">
-  <input type="hidden" name="EMAIL" value="">
-  <input type="hidden" name="VORNAME" value="">
-  <input type="hidden" name="HUND_KATZE" value="">
-  <input type="hidden" name="TIERNAME" value="">
-  <input type="hidden" name="FUTTERCHECK_SCORE" value="">
-  <input type="hidden" name="FUTTERCHECK_FARB_SCORE" value="">
-  <input type="hidden" name="FUTTERCHECK_FUTTER" value="">
-  <input type="hidden" name="PARTNER_INTERESSE" value="">
-  <input type="hidden" name="SMS" value="">
-  <input type="hidden" name="SMS__COUNTRY_CODE" value="+49">
-  <!-- Honeypot gegen Bots: muss leer bleiben -->
-  <input type="hidden" name="email_address_check" value="">
-  <input type="hidden" name="locale" value="de">
-  <!-- Sauberer Quell-Marker (futtercheck / handbuch / kundenzugang) fuer die
-       Segmentierung innerhalb dieser einen Liste. Erst wirksam, sobald das
-       Kontakt-Attribut QUELLE (Typ Text) im Brevo-Konto angelegt ist -
-       siehe ANLEITUNG.md. Bis dahin ignoriert Brevo dieses Feld einfach. -->
-  <input type="hidden" name="QUELLE" value="">
-</form>
 
 </body>
 </html>

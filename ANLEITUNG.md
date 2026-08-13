@@ -1,3 +1,71 @@
+# Update 13.08. (achte Runde, WICHTIG): Echte Ursache gefunden – Brevo lehnte ab, wir haben es nie gesehen
+
+## Der eigentliche Grund für "kommt manchmal/gar nicht an"
+
+Du hast in Chrome (Inkognito, ganz ohne Erweiterungen) eine zufällige Ziffernfolge
+wie `12312312` als Telefonnummer eingetragen. Ich konnte das direkt nachstellen:
+Brevo lehnt so eine Nummer serverseitig ab, weil sie für Brevos eigene
+Telefonnummer-Prüfung nicht wie eine echte Nummer aussieht:
+
+```
+HTTP 400
+{"success":false,"errors":{"SMS":"Die eingegebenen Informationen sind nicht gültig..."}}
+```
+
+Das Kernproblem war aber nicht die Telefonnummer selbst, sondern die **gesamte
+bisherige Architektur**: Wir haben blind in ein verstecktes iframe gepostet und
+nie geprüft, was Brevo tatsächlich geantwortet hat – aus einem iframe einer
+fremden Domain kommt normalerweise keine lesbare Antwort zurück. Die Seite hat
+deshalb *immer* "Erfolg" angezeigt, egal was Brevo wirklich gemacht hat. Wenn
+Brevo eine Anfrage ablehnt (falsches Telefonformat, aber theoretisch auch andere
+Gründe), ist die komplette Anfrage verlorengegangen – lautlos, ohne dass du oder
+der Besucher je etwas gemerkt hätten.
+
+Die vorherigen zwei Runden (iframe-Race-Condition, dann drei feste iframes)
+waren beide reale, kleinere Verbesserungen, haben aber diese eigentliche
+Ursache nicht angefasst.
+
+## Die Lösung: `fetch()` statt blindem iframe-Post
+
+Ich habe geprüft, ob Brevos Formular-Endpunkt CORS erlaubt – tut er:
+
+```
+access-control-allow-origin: https://kintox.github.io
+```
+
+Das heißt, wir können ganz normal per `fetch()` an Brevo senden und die Antwort
+*tatsächlich lesen*. Die drei Formulare laufen jetzt so:
+
+- Erfolgreich → Erfolgsmeldung wie bisher.
+- Von Brevo abgelehnt (z. B. ungültige Telefonnummer) → **echte, konkrete
+  Fehlermeldung** ("Bitte überprüfe deine Telefonnummer – das Format scheint
+  nicht zu passen."), das Formular bleibt ausgefüllt stehen, nichts geht
+  verloren, der Besucher kann korrigieren und nochmal absenden.
+- Netzwerkfehler (z. B. durch einen Werbeblocker) → Fehlermeldung mit
+  Aufforderung, stattdessen per WhatsApp zu schreiben.
+- Der Absenden-Button zeigt "Wird gesendet …" und ist kurz deaktiviert, damit
+  klar ist, dass etwas passiert.
+
+Die drei versteckten iframes und das versteckte Formular in `index.html` sind
+komplett entfernt – die Formulardaten werden jetzt direkt in JavaScript
+zusammengebaut und per `fetch()` verschickt, kein DOM-Trick mehr nötig.
+
+**Getestet:**
+- Direkt in einem echten Browser gegen deine Live-Seite (nicht simuliert):
+  eine erfundene Nummer wie `12312312` liefert jetzt sichtbar `success:false`
+  mit der SMS-Fehlermeldung; eine echte Nummer liefert `success:true`.
+- Lokal mit Playwright (fetch simuliert): Ablehnung durch Brevo zeigt jetzt
+  eine echte Fehlermeldung statt fälschlicher Erfolgsmeldung; gültige Eingabe
+  zeigt weiterhin Erfolg. Getestet für Kundenzugang-Formular und den
+  kompletten 12-Fragen-Futtercheck-Flow.
+
+**Bitte nochmal mit der zufälligen Telefonnummer testen, die vorher
+fehlgeschlagen ist** – jetzt solltest du eine klare Fehlermeldung statt
+Stille bekommen, und mit einer echten Nummer sollte es ganz normal
+durchgehen.
+
+---
+
 # Update 13.08. (siebte Runde, WICHTIG): Fix aus Runde 6 zurückgebaut, robuster ersetzt
 
 Nach dem letzten Fix kam laut deiner Rückmeldung **gar nichts mehr** bei Brevo
