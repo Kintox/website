@@ -1,3 +1,51 @@
+# Update 13.08. (zehnte Runde): Mensch im Dropdown, Dropdown-Lesbarkeit, Anschrift bei Kundenzugang
+
+## 1. "Mensch" im Kundenzugang-Formular
+
+Die Tierart-Auswahl im Formular "Kundenzugang sichern" (`index.html`) hatte
+bisher nur Hund/Katze/Pferd/Sonstiges. "Mensch" ist jetzt als Option
+ergänzt, passend zu den anderen Stellen auf der Seite.
+
+## 2. Dropdown-Text nur beim Hover sichtbar – behoben
+
+Ursache gefunden: Das Formular ist bewusst hell auf dunklem Hintergrund
+gestaltet (`color: var(--weiss)` für alle Eingabefelder inkl. `<select>`).
+Die aufgeklappte Optionsliste rendert der Browser aber mit einem eigenen,
+meist hellen Hintergrund – darin war der weiße Text unsichtbar und wurde
+nur bei Hover (Systemfarbe des Browsers) kurz lesbar.
+
+Fix in `assets/css/style.css`: die `<option>`-Elemente bekommen jetzt
+explizit dunklen Text auf hellem Hintergrund, unabhängig vom umgebenden
+Formular-Design. Geprüft: `color: rgb(58, 61, 12)` (die dunkle Olivfarbe der
+Seite) auf `background: rgb(255, 255, 255)`.
+
+## 3. Anschrift beim Kundenzugang-Formular
+
+Straße & Hausnummer sowie PLZ & Ort sind jetzt auch im Formular
+"Kundenzugang sichern" enthalten und Pflichtfelder – genau wie beim
+Produkthandbuch-Formular.
+
+**Dabei einen bestehenden, bisher unbemerkten Fehler gefunden und mit
+behoben:** Beim Produkthandbuch-Formular wurden Straße und Ort zwar als
+Pflichtfelder abgefragt und geprüft, aber nie tatsächlich an Brevo
+übertragen – sie sind bisher im Formular verschwunden, statt bei dir
+anzukommen. Das ist jetzt für beide Formulare (Handbuch und Kundenzugang)
+behoben: Straße/Ort werden jetzt als `STRASSE`/`ORT` mit an Brevo
+geschickt.
+
+**Ein Schritt fehlt noch von deiner Seite** (genau wie bei `QUELLE`
+vorher): In Brevo unter Kontakte → Einstellungen → Kontakt-Attribute zwei
+neue Text-Attribute anlegen: `STRASSE` und `ORT`. Bis dahin werden die
+Felder zwar mitgeschickt, aber von Brevo ignoriert – der Rest der Anfrage
+funktioniert schon jetzt ganz normal (getestet, `{"success":true}`).
+Danach siehst du die Adresse direkt am Kontakt in Brevo.
+
+Getestet: Dropdown zeigt "Mensch", fehlende Adresse blockiert das Absenden
+mit Fehlermeldung, vollständig ausgefüllt kommt die Anfrage inklusive
+Adresse an.
+
+---
+
 # Update 13.08. (neunte Runde): Landesvorwahl wurde doppelt gezählt
 
 Du hast es mit deiner echten Nummer in mehreren Varianten getestet – sehr

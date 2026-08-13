@@ -88,7 +88,12 @@
       // die Segmentierung innerhalb der einen gemeinsamen Liste. Existiert
       // das Attribut QUELLE (noch) nicht in Brevo, wird der Wert einfach
       // ignoriert - der Rest der Anfrage ist davon unberuehrt.
-      QUELLE:                 data.quelle || ''
+      QUELLE:                 data.quelle || '',
+      // Anschrift (Handbuch + Kundenzugang). Genau wie QUELLE: falls die
+      // Attribute STRASSE/ORT in Brevo noch nicht angelegt sind, werden sie
+      // einfach ignoriert - siehe ANLEITUNG.md.
+      STRASSE:                data.strasse || '',
+      ORT:                    data.ort || ''
     };
 
     const body = new URLSearchParams();
@@ -605,7 +610,8 @@
   // Pflichtfelder je Formular (Feldname im FormData -> Fehlertext).
   // handbuchForm: Name, E-Mail, Straße, Ort, Telefon sind Pflicht, damit ein
   // Handbuch ueberhaupt zugestellt werden kann.
-  // kundenzugangForm: Name, Tierart, E-Mail, Telefon sind Pflicht; die
+  // kundenzugangForm: Name, Tierart, E-Mail, Telefon, Straße, Ort sind
+  // Pflicht (Anschrift wird fuer die Interessenten-Sicherung benoetigt); die
   // Nachricht bleibt bewusst optional.
   const FC_LEAD_REQUIRED_FIELDS = {
     handbuch: [
@@ -617,7 +623,9 @@
     kundenzugang: [
       { name: 'Name',    label: 'deinen Namen' },
       { name: 'Tierart', label: 'die Tierart' },
-      { name: 'Telefon', label: 'deine Telefonnummer' }
+      { name: 'Telefon', label: 'deine Telefonnummer' },
+      { name: 'Strasse', label: 'deine Straße & Hausnummer' },
+      { name: 'Ort',     label: 'PLZ & Ort' }
     ]
   };
 
@@ -666,10 +674,12 @@
         return;
       }
 
-      // Tierart aus dem Formular, sonst Hund als neutraler Standard.
-      // Brevo verlangt in HUND_KATZE einen Wert; leer wuerde abgelehnt.
-      const tierartRoh = (data.get('Tierart') || '').toString().toLowerCase();
-      const tierart = tierartRoh.indexOf('katze') !== -1 ? 'katze' : 'hund';
+      // Tierart aus dem Formular (Hund/Katze/Pferd/Mensch/Sonstiges), sonst
+      // "hund" als neutraler Standard. Brevo verlangt in HUND_KATZE einen
+      // Wert; leer wuerde abgelehnt. Der Feldname stammt noch aus der
+      // Futtercheck-Zeit, ist aber technisch Freitext - jeder Wert geht durch.
+      const tierartRoh = (data.get('Tierart') || '').toString().trim().toLowerCase();
+      const tierart = tierartRoh || 'hund';
 
       const submitBtn = form.querySelector('button[type="submit"]');
       const submitBtnText = submitBtn ? submitBtn.textContent : '';
@@ -687,7 +697,9 @@
                      : 'Kundenzugang angefragt',
         interesse: 'Kunde',
         telefon:   (data.get('Telefon') || '').toString(),
-        quelle:    anfrageart
+        quelle:    anfrageart,
+        strasse:   (data.get('Strasse') || '').toString(),
+        ort:       (data.get('Ort') || '').toString()
       });
 
       if (!ergebnis.ok) {

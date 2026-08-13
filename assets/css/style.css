@@ -457,6 +457,17 @@
   input::placeholder, textarea::placeholder{ color: rgba(255,255,255,0.4); }
   textarea{ resize:vertical; min-height:90px; }
 
+  /* Das <select> selbst ist bewusst weiss auf dunkel (passt zum Formular),
+     aber die aufgeklappte Optionsliste rendert der Browser mit einem
+     eigenen, meist hellen Hintergrund - darin wuerde weisser Text
+     verschwinden und war nur beim Hover (Systemfarbe) kurz zu erkennen.
+     Deshalb fuer die <option>-Elemente Text und Hintergrund explizit
+     dunkel-auf-hell setzen, unabhaengig vom umgebenden Formular. */
+  select option{
+    color: var(--alge);
+    background: var(--weiss);
+  }
+
   /* ---------- FOOTER ---------- */
   footer{
     background: var(--alge);
