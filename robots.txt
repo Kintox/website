@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /impressum.html
+Disallow: /datenschutz.html
+Allow: /
+
+Sitemap: https://cedricnitsch.de/sitemap.xml

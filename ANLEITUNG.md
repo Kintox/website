@@ -1,3 +1,78 @@
+# Update 13.08. (elfte Runde): Technische SEO-Grundlagen
+
+Betrifft `index.html`, `partner.html`, neu: `sitemap.xml`, `robots.txt`.
+Domain ist jetzt überall `https://cedricnitsch.de/` (du hast bestätigt, dass
+die Seite dort bereits live ist).
+
+## 1. Title & Description (nur index.html)
+
+Bewusst NICHT auf Katze/Pferd/Mensch erweitert, wie du gesagt hast – 95 %
+deiner Kunden sind Hundekunden, das bleibt der Fokus. Ergänzt habe ich
+**"Lippstadt"**, weil das für die Art von Suche, die du erreichen willst
+("Reico Berater in der Nähe", "Reico Vertriebspartner Lippstadt"), ein
+kostenloser, wirkungsvoller Zusatz ist:
+
+- Titel vorher: „Cedric Nitsch – Persönliche Reico-Futterberatung für deinen Hund"
+- Titel jetzt: „Reico Futterberatung für deinen Hund in Lippstadt | Cedric Nitsch"
+- Description jetzt: „Individuelle Reico-Futterberatung für deinen Hund in
+  Lippstadt und Umgebung – persönlich, unverbindlich, direkt per WhatsApp.
+  Selbstständiger Reico-Vertriebspartner Cedric Nitsch."
+
+`partner.html`, `impressum.html`, `datenschutz.html` unverändert gelassen.
+
+## 2. sitemap.xml (neu)
+
+Enthält nur `index.html` und `partner.html` – Impressum und Datenschutz
+bewusst NICHT drin, weil die schon `noindex` sind (kein Grund, sie Google
+zum Crawlen vorzuschlagen).
+
+## 3. robots.txt (neu)
+
+Erlaubt alles außer Impressum/Datenschutz zu crawlen, verweist auf die
+Sitemap.
+
+**Wichtig, nach dem Hochladen:** Beide neuen Dateien musst du in die
+Google Search Console eintragen (falls noch nicht eingerichtet: unter
+search.google.com/search-console mit `cedricnitsch.de` verifizieren, dann
+unter "Sitemaps" die URL `https://cedricnitsch.de/sitemap.xml` einreichen).
+Erst dadurch weiß Google verlässlich, dass es die Seite crawlen soll –
+sonst kann es Wochen dauern, bis sie zufällig gefunden wird.
+
+## 4. LocalBusiness-Schema (neu, in index.html)
+
+Strukturierte Daten (unsichtbar für Besucher, aber maschinenlesbar für
+Google) mit Name, Adresse, Telefon und Link zu deinem Google-Business-Profil.
+Bewusst **ohne** `priceRange` (kein Shop, siehe Richtlinien) und **ohne**
+eingebettete Sternebewertung (Google-Rezensionen gehören ins Google-Profil,
+nicht als selbst eingetragenes Snippet auf die eigene Seite – das würde
+gegen Googles Richtlinien für strukturierte Daten verstoßen).
+
+Ich habe die Adresse aus deinem Google-Business-Profil übernommen
+(Esbecker Str. 22, 59557 Lippstadt), weil sie dort ohnehin schon öffentlich
+sichtbar ist – konsistente Adressangaben zwischen Google-Profil und Website
+(„NAP" – Name, Address, Phone) sind selbst ein kleiner Ranking-Faktor.
+**Falls du das nicht auf der Website stehen haben willst**, sag Bescheid,
+dann ersetze ich es durch ein reines Servicegebiet ("Lippstadt und
+Umgebung") ohne genaue Adresse.
+
+Der `sameAs`-Link zeigt aktuell auf den `share.google`-Kurzlink deines
+Profils. Falls du in deinem Google-Business-Profil unter "Teilen" eine
+kanonische Maps-URL findest (sieht meist aus wie
+`https://www.google.com/maps/place/...`), ist die im `sameAs`-Feld noch
+etwas sauberer – nicht zwingend, aber falls du sie griffbereit hast, sag
+Bescheid.
+
+## Was aus der ursprünglichen Analyse noch offen bleibt (bewusst vertagt)
+
+Nicht heute angefasst, aber für später notiert: Google Business Profil
+selbst optimieren (Öffnungszeiten ergänzen, echte Fotos statt
+REiCO-Markenbild, aktiv um Rezensionen bitten – bei 268 Kundeninteraktionen
+und nur 3 Rezensionen ist da viel Potenzial), sowie die Frage
+Züchter-Seite/Content, die noch die Prüfung der "Anlage 5
+Besondere Vereinbarung Züchter" braucht, bevor da was gebaut wird.
+
+---
+
 # Update 13.08. (zehnte Runde): Mensch im Dropdown, Dropdown-Lesbarkeit, Anschrift bei Kundenzugang
 
 ## 1. "Mensch" im Kundenzugang-Formular
