@@ -1,3 +1,112 @@
+# Änderungen dieser Runde (Feedback vom 13.08.)
+
+## Partner-Seite
+
+**Ton beim Thema Einkommen.** Der Satz „du ein festes, planbares Gehalt brauchst –
+das gibt es hier nicht" war sachlich schief: Am Anfang stimmt er, mit Kundenstamm
+nicht mehr. Neu: *„du ab dem ersten Monat ein festes Gehalt brauchst – der Aufbau
+braucht am Anfang Geduld."* Dazu ist der Wiederkauf-Gedanke jetzt an drei Stellen
+positiv gesetzt, ohne eine einzige Zahl zu nennen:
+
+- Pro-Liste: „du dir lieber etwas aufbaust, das bleibt, statt jeden Monat bei null anzufangen"
+- neue Kachel „Kundschaft, die bleibt" bei den Rahmenbedingungen
+- FAQ „Wie viel kann ich verdienen": erklärt jetzt das Prinzip Verbrauchsprodukt →
+  Wiederbestellung → wachsende Basis, statt nur abzublocken
+
+**Der Satz mit den Produkten ist raus.** „…hinter denen du selbst nicht stehst" hat
+einen Zweifel gesät, den vorher niemand hatte.
+
+**Abschluss „Über mich" motivierend.** Statt „Deshalb verspreche ich dir hier nichts"
+jetzt: *„Der Unterschied lag selten am Talent, sondern fast immer an der Vorbereitung.
+… Mit einem realistischen Plan, Offenheit und etwas Engagement ist das absolut machbar.
+Und du musst es nicht alleine herausfinden."*
+
+**Ein Hinweis dazu, den ich dir schulde:** Einen klaren Satz „keine garantierten
+Einnahmen, provisionsbasiert" habe ich bewusst stehen lassen — jetzt aber nur noch
+**einmal** statt an drei Stellen, und in Kombination mit dem machbar-Teil. Der Satz
+ist deine rechtliche Absicherung: Bei Vertriebspartnergewinnung im Direktvertrieb ist
+das der Punkt, an dem man angreifbar wird, wenn er fehlt. Und laut deiner eigenen
+Analyse ist genau diese Ehrlichkeit das Differenzierungsmerkmal gegenüber den anderen
+Partnerseiten. Deine konkreten Zahlen (3.400–3.700 €) dürfen aus einem anderen Grund
+ohnehin nicht auf die Seite: Ziff. 4 der Richtlinien untersagt die Veröffentlichung von
+Marketingplan-Inhalten, dazu zählen Verdienstbeispiele. Im persönlichen Gespräch kannst
+du sie natürlich nennen.
+
+## Layout
+
+- **Vier Schritte stehen jetzt in einer Reihe.** Ursache war eine CSS-Regel mit drei
+  Spalten, die von der Startseite stammt. Neue Klasse `steps-4`: ab 1060 px vier
+  nebeneinander mit Pfeilen, darunter 2×2, auf dem Handy untereinander.
+- **Die Kacheln bei „Rahmenbedingungen" sind jetzt sichtbar.** Vorher weiße Karten auf
+  weißem Grund. Jetzt Kalk-Fläche mit dunklem Balken. Die neue fünfte Kachel läuft über
+  die volle Breite, damit unten keine einzelne Karte allein steht.
+- **Hero hat ein Bild.** Vorläufig das Foto der Startseite, damit die rechte Hälfte
+  nicht mehr leer ist. Empfehlung für ein eigenes Motiv unten.
+
+## Startseite
+
+**Der Futtercheck hat eine Überschrift bekommen.** Vorher stand da unvermittelt eine
+Frage nach dem Tier, ohne dass klar war, worum es geht:
+
+> **Kostenlos & unverbindlich**
+> **Der Futtercheck: Wie gut passt die aktuelle Fütterung zu deinem Tier?**
+> 12 kurze Fragen … Dauert etwa zwei Minuten, kostet nichts und verpflichtet zu nichts.
+
+Dabei ist mir aufgefallen, dass der Zähler „Frage 13 von 13" auf dem Kontaktformular
+stand, das gar keine Frage ist. Sonst hätte die neue Überschrift („12 Fragen") der
+Anzeige widersprochen. Jetzt: 12 Fragen, danach „Alle 12 Fragen beantwortet".
+
+---
+
+# Bildempfehlung für den Partner-Hero
+
+**Das aktuelle Foto ist ein Platzhalter.** Es zeigt dich mit Hund — das passt zur
+Kundenseite, aber auf der Partnerseite geht es nicht um Fütterung, sondern um die
+Frage „Kann ich das auch?".
+
+## Was das Bild leisten muss
+
+Der Besucher soll in einer Sekunde sehen, **was die Tätigkeit konkret ist**. Und die
+Tätigkeit ist: mit Menschen reden. Nicht verkaufen, nicht Pakete schleppen, nicht am
+Laptop sitzen.
+
+## Meine Empfehlung, in dieser Reihenfolge
+
+**1. Beratungsgespräch am Tisch (beste Wahl)**
+Du und eine zweite Person an einem Küchen- oder Cafétisch, seitlich fotografiert.
+Kaffeetassen, ein aufgeschlagenes Produkthandbuch, ein Hund liegt entspannt daneben.
+Ihr seid im Gespräch, nicht in die Kamera lächelnd. Tageslicht, warme Töne.
+
+Das zeigt exakt den Job und wirkt sofort machbar — jeder denkt „so ein Gespräch
+könnte ich auch führen". Genau das ist die Botschaft der Seite.
+
+**2. Zwei Menschen mit Hund draußen**
+Ihr geht zu zweit mit einem Hund spazieren und unterhaltet euch. Lockerer, weniger
+„Termin"-Anmutung, funktioniert gut für die nebenberufliche Zielgruppe.
+
+**3. Du am Infostand oder auf einem Markt**
+Falls du aus deiner Face-to-Face-Phase noch Fotos hast: Das belegt echte Praxis und
+ist der glaubwürdigste Beweis, dass du das wirklich machst.
+
+## Was ich vermeiden würde
+
+- **Geld, Münzen, Diagramme nach oben, Autoschlüssel.** Das ist die Bildsprache, vor
+  der deine Zielgruppe fliehen will — und der Grund, warum viele bei „Direktvertrieb"
+  sofort abschalten.
+- **Laptop am Strand / Homeoffice-Lifestyle.** Passt inhaltlich nicht: Der Job ist
+  persönliche Beratung, nicht Online-Business.
+- **Gestellte Handshakes und Stockfoto-Teams.** Erkennt jeder, kostet Vertrauen.
+- **Fremde Bilder aus dem Netz.** Ziff. 6g der Richtlinien verlangt, dass du die
+  Bildrechte hast. Entweder eigene Fotos oder lizenzierte Bilddatenbanken.
+
+## Technisch
+
+Hochformat oder quadratisch, mindestens 900 px breit, als `img/partner-hero.jpg`
+ablegen und im Hero den Dateinamen tauschen. Das Seitenverhältnis ist auf 4:5
+eingestellt, das Bild wird passend beschnitten.
+
+---
+
 # Was du tun musst
 
 ## 1. Dateien ins Repo

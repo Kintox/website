@@ -256,7 +256,7 @@
     display:none;
   }
   @media(min-width:800px){
-    .step:not(:last-child)::after{
+    .steps:not(.steps-4) .step:not(:last-child)::after{
       content:"→";
       position:absolute;
       right:-26px;
@@ -1028,3 +1028,67 @@ header{ position:sticky; }
 .legal-toc li{ margin-bottom:5px; font-size:0.9rem; }
 .legal-toc a{ text-decoration:none; }
 .legal-toc a:hover{ text-decoration:underline; }
+
+
+/* ============================================================
+   VIER SCHRITTE IN EINER REIHE (Partner-Seite)
+   Ohne diese Regel bricht der vierte Schritt in eine neue Zeile,
+   weil .steps standardmaessig auf drei Spalten steht.
+   ============================================================ */
+@media(min-width:640px) and (max-width:1059px){
+  .steps-4{ grid-template-columns: repeat(2, 1fr) !important; gap:20px; }
+}
+@media(min-width:1060px){
+  .steps-4{ grid-template-columns: repeat(4, 1fr) !important; gap:20px; }
+  .steps-4 .step{ padding:28px 22px; }
+  .steps-4 .step:not(:last-child)::after{
+    content:"→";
+    position:absolute;
+    right:-18px;
+    top:30px;
+    font-size:1.15rem;
+    color: var(--alge-70);
+  }
+}
+
+/* ============================================================
+   KACHELN AUF WEISSEM GRUND
+   Weisse Karten auf weissem Hintergrund verschwinden - auf hellen
+   Sektionen bekommen sie deshalb die Kalk-Flaeche.
+   ============================================================ */
+.section-on-white .theme-card{
+  background: var(--kalk);
+  border-left-color: var(--alge);
+}
+
+/* ============================================================
+   HERO MIT BILD (Partner-Seite)
+   ============================================================ */
+.page-hero .hero-grid{
+  display:grid;
+  gap:32px;
+  align-items:center;
+}
+@media(min-width:900px){
+  .page-hero .hero-grid{ grid-template-columns: 1.1fr 0.9fr; gap:52px; }
+}
+.page-hero h1{ max-width:none; }
+.page-hero-photo{
+  border-radius: var(--radius);
+  overflow:hidden;
+  border: 6px solid rgba(255,255,255,0.15);
+  aspect-ratio: 4/5;
+  max-width: 420px;
+  margin-left:auto;
+}
+.page-hero-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+@media(max-width:899px){
+  .page-hero-photo{ max-width:100%; aspect-ratio: 16/10; margin:0; }
+}
+
+/* Fuenfte Kachel fuellt die Reihe, sonst steht sie allein */
+@media(min-width:640px){
+  .section-on-white .theme-grid > .theme-card:last-child:nth-child(odd){
+    grid-column: 1 / -1;
+  }
+}

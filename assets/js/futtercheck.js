@@ -194,16 +194,23 @@
   const fcProgressLabel = document.getElementById('fcProgressLabel');
   const fcProgressPct = document.getElementById('fcProgressPct');
   const FC_TOTAL = FC_QUESTIONS.length;
+  // Der letzte Schritt ist das Kontaktformular, keine Frage.
+  // Die Anzeige zaehlt deshalb nur die echten Fragen - sonst steht
+  // ueber dem Formular "Frage 13 von 13", was schlicht nicht stimmt.
+  const FC_FRAGEN = FC_QUESTIONS.filter(function(q){ return q.type !== 'lead'; }).length;
 
   function fcResolve(val, answers){
     return typeof val === 'function' ? val(answers) : val;
   }
 
   function fcUpdateProgress(){
-    const current = Math.min(fcState.step + 1, FC_TOTAL);
+    const isLead = FC_QUESTIONS[fcState.step] && FC_QUESTIONS[fcState.step].type === 'lead';
+    const current = Math.min(fcState.step + 1, FC_FRAGEN);
     const pct = Math.round((fcState.step / FC_TOTAL) * 100);
     fcProgressBar.style.width = pct + '%';
-    fcProgressLabel.textContent = 'Frage ' + current + ' von ' + FC_TOTAL;
+    fcProgressLabel.textContent = isLead
+      ? 'Alle ' + FC_FRAGEN + ' Fragen beantwortet'
+      : 'Frage ' + current + ' von ' + FC_FRAGEN;
     fcProgressPct.textContent = pct + '%';
   }
 
