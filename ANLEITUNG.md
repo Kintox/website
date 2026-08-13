@@ -1,3 +1,44 @@
+# Update 13.08. (siebte Runde, WICHTIG): Fix aus Runde 6 zurückgebaut, robuster ersetzt
+
+Nach dem letzten Fix kam laut deiner Rückmeldung **gar nichts mehr** bei Brevo
+an – vorher war es nur unregelmäßig. Das ist ein starkes Indiz, dass mein
+letzter Ansatz selbst das Problem war, nicht gelöst hat.
+
+**Was ich in Runde 6 gemacht hatte:** für jedes Absenden per JavaScript ein
+brandneues, unsichtbares iframe erzeugt und das Formular dorthin geschickt.
+Technisch korrekt (mit Playwright bestätigt), aber genau dieses Muster –
+zur Laufzeit per Skript ein unsichtbares iframe erzeugen und sofort ein
+Formular hineinschicken – ist ein klassisches Erkennungsmerkmal, nach dem
+Werbe-/Tracking-Blocker (uBlock Origin, Brave Shields, manche
+Browser-eigenen Tracking-Schutzfunktionen) gezielt suchen. Ein iframe, das
+von Anfang an im Quelltext steht, wird von diesen Blockern meist nicht
+angetastet; eins, das erst zur Laufzeit "aus dem Nichts" auftaucht, eher
+schon. Das würde exakt erklären, warum es nach dem Fix bei dir komplett
+ausblieb.
+
+**Neuer Ansatz, ohne dieses Risiko:** Jedes der drei Formulare hat jetzt sein
+**eigenes, fest im HTML stehendes** Ziel-iframe (`brevo_sink_futtercheck`,
+`brevo_sink_handbuch`, `brevo_sink_kundenzugang`) – genau wie das
+ursprüngliche einzelne `brevo_sink`-iframe, nur dreimal, eins pro Formular.
+Kein JavaScript erzeugt zur Laufzeit irgendetwas Neues. Das löst weiterhin
+das ursprüngliche Problem (zwei Formulare, die sich ein Ziel teilen und sich
+beim schnellen Hintereinander-Testen gegenseitig abbrechen), ohne das neue
+Risiko einzugehen.
+
+Mit Playwright erneut geprüft: alle drei Formulare senden jetzt an ihr
+jeweils eigenes, dauerhaft vorhandenes iframe; kein iframe wird zur Laufzeit
+erzeugt oder entfernt. Zusätzlich per echtem `curl` gegen den produktiven
+Brevo-Endpunkt bestätigt: `{"success":true}`.
+
+**Bitte nochmal testen** und mir Bescheid geben, ob jetzt wieder alles
+ankommt. Falls es das immer noch nicht tut, wäre der nächste sinnvolle
+Schritt, einmal in den Chrome-DevTools (F12 → Netzwerk-Tab, Filter auf
+"sibforms") beim Absenden zu schauen, ob die Anfrage überhaupt rausgeht oder
+schon vorher blockiert wird – das würde zeigen, ob es doch ein
+Blocker-Thema auf deinem Testgerät ist statt ein Website-Bug.
+
+---
+
 # Update 13.08. (sechste Runde): "Kommt manchmal nicht an" + echte Telefonprüfung
 
 ## Vermutete Ursache für die unregelmäßigen Ausfälle

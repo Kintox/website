@@ -52,32 +52,24 @@
   //   * form.submit() ueberspringt die Validierung und postet direkt.
   // Das Ziel ist ein verstecktes iframe, damit die Seite stehen
   // bleibt und der Besucher sein Ergebnis sieht.
-  // Erzeugt fuer jedes Absenden ein frisches, eigenes Ziel-iframe statt immer
-  // dasselbe "brevo_sink" wiederzuverwenden.
+  // Jedes der drei Formulare hat ein eigenes, fest im HTML stehendes
+  // Ziel-iframe (siehe index.html). Grund: Wenn zwei Formulare kurz
+  // hintereinander abgeschickt werden (z.B. beim Testen) und sich ein
+  // iframe-Ziel teilen, startet die zweite Navigation im selben iframe,
+  // waehrend die erste Anfrage noch unterwegs ist - der Browser bricht die
+  // erste dann einfach ab, ohne Fehler, ohne Konsolen-Meldung. Mit einem
+  // eigenen, dauerhaften iframe pro Formular kann das nicht mehr passieren.
   //
-  // Grund: Alle drei Formulare (Futtercheck, Handbuch, Kundenzugang) teilen
-  // sich ein gemeinsames iframe-Ziel. Wenn zwei Formulare kurz hintereinander
-  // abgeschickt werden (z.B. beim Testen), startet die zweite Navigation im
-  // selben iframe, waehrend die erste Anfrage noch unterwegs ist - der
-  // Browser bricht die erste dann einfach ab, ohne Fehler, ohne Konsolen-
-  // Meldung. Genau das erklaert ein "kommt manchmal an, manchmal nicht".
-  // Mit einem eigenen iframe pro Absenden kann sich das nicht mehr
-  // gegenseitig ins Gehege kommen.
-  function brevoNeuesZielIframe(){
-    const name = 'brevo_sink_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
-    const iframe = document.createElement('iframe');
-    iframe.name = name;
-    iframe.title = 'Brevo-Uebermittlung';
-    iframe.style.display = 'none';
-    iframe.setAttribute('aria-hidden', 'true');
-    iframe.tabIndex = -1;
-    document.body.appendChild(iframe);
-    // Nach 20s wieder entfernen, genug Zeit fuer eine langsame Verbindung.
-    setTimeout(function(){
-      if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
-    }, 20000);
-    return name;
-  }
+  // Bewusst NICHT zur Laufzeit per JavaScript neu erzeugt: ein frisch
+  // erstelltes, unsichtbares iframe kann von manchen Werbe-/Tracking-
+  // Blockern als verdaechtiges Muster erkannt und blockiert werden. Diese
+  // drei iframes stehen von Anfang an im Quelltext, genau wie das urspruengliche,
+  // nachweislich funktionierende einzelne iframe.
+  const BREVO_ZIEL_IFRAME = {
+    futtercheck:   'brevo_sink_futtercheck',
+    handbuch:      'brevo_sink_handbuch',
+    kundenzugang:  'brevo_sink_kundenzugang'
+  };
 
   function brevoSubmit(data){
     const form = document.getElementById('brevoForm');
@@ -85,7 +77,7 @@
       console.error('[Brevo] Formular #brevoForm fehlt auf dieser Seite.');
       return false;
     }
-    form.target = brevoNeuesZielIframe();
+    form.target = BREVO_ZIEL_IFRAME[data.quelle] || 'brevo_sink_futtercheck';
 
     const werte = {
       EMAIL:                  data.email,
