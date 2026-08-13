@@ -70,16 +70,30 @@
       PARTNER_INTERESSE:      data.interesse,
       SMS:                    data.telefon,
       SMS__COUNTRY_CODE:      '+49',
-      email_address_check:    ''
+      email_address_check:    '',
+      // Zusaetzliches, sauberes Quell-Attribut (futtercheck / handbuch /
+      // kundenzugang). Existiert das Brevo-Attribut QUELLE noch nicht, wird
+      // dieses Feld von Brevo einfach ignoriert - das Absenden bleibt davon
+      // unberuehrt (getestet: unbekannte/leere Felder liefern weiterhin
+      // {"success":true}). Sobald QUELLE in Brevo angelegt ist, greift die
+      // Segmentierung automatisch, ganz ohne Code-Aenderung.
+      QUELLE:                 data.quelle || ''
     };
 
-    let fehlend = [];
     Object.keys(werte).forEach(function(name){
-      const feld = form.querySelector('[name="' + name + '"]');
-      if (!feld) { fehlend.push(name); return; }
+      let feld = form.querySelector('[name="' + name + '"]');
+      if (!feld) {
+        // Feld (noch) nicht im Formular vorhanden - z.B. QUELLE, solange das
+        // Attribut in Brevo nicht angelegt ist. Wird dynamisch ergaenzt,
+        // damit es automatisch mitgesendet wird, sobald Brevo das Attribut
+        // kennt; schadet nicht, falls nicht.
+        feld = document.createElement('input');
+        feld.type = 'hidden';
+        feld.name = name;
+        form.appendChild(feld);
+      }
       feld.value = werte[name] == null ? '' : String(werte[name]);
     });
-    if (fehlend.length) console.warn('[Brevo] Felder fehlen im Formular:', fehlend.join(', '));
 
     try {
       form.submit();
@@ -403,7 +417,8 @@
       farbe:     fcFarbScore(score.final),
       futter:    FC_FUTTER_LABELS[a.futter] || a.futter || '-',
       interesse: FC_PARTNER_MAP[a.partner] || 'Kunde',
-      telefon:   a.telefon || ''
+      telefon:   a.telefon || '',
+      quelle:    'futtercheck'
     });
   }
 
@@ -564,7 +579,8 @@
                      ? 'Produkthandbuch angefordert'
                      : 'Kundenzugang angefragt',
         interesse: 'Kunde',
-        telefon:   (data.get('Telefon') || '').toString()
+        telefon:   (data.get('Telefon') || '').toString(),
+        quelle:    anfrageart
       });
 
       if (!sent) {

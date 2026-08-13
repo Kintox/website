@@ -1,3 +1,59 @@
+# Update 13.08. (vierte Runde): Über-mich-Text & Brevo-Segmentierung
+
+## 1. Über-mich-Abschnitt aktualisiert
+
+`index.html`, Abschnitt „Über mich": mit deinem neuen Text ersetzt (Physiotherapie-
+Hintergrund, 2016 nebenberuflich → nach einem Jahr hauptberuflich, „keine Diagnosen,
+kein Verkaufsdruck"). Den alten Satz zur Mutter habe ich rausgenommen, da er in
+deinem neuen Text nicht mehr vorkam. Bewusst NICHT reingeschrieben: was genau sich
+bei dir persönlich verändert hat – dein Text sagt ja explizit, das sei besser ein
+Gesprächsthema als ein Website-Text. Das passt auch strategisch besser: es gibt den
+Leuten einen Grund, dich anzurufen statt nur zu lesen.
+
+Außerdem „Mensch" ergänzt, wo bisher nur Hund/Katze/Pferd stand: im Badge unter
+„Über mich" (`index.html`), im Badge auf `partner.html`, und in der Trustline im
+Hero oben auf der Startseite. Die Handbuch-Beschreibung („Alle REiCO Produkte für
+Hund, Katze & Pferd") habe ich unverändert gelassen – das Produkthandbuch selbst
+führt ja nur diese drei, das wäre sonst falsch.
+
+## 2. Deine Frage: Produkthandbuch & Kundenzugang – eigene Brevo-Formulare/Listen?
+
+**Meine Empfehlung: nein, bei der einen gemeinsamen Liste bleiben.** Gründe:
+
+- Du hast diese eine Anbindung gerade mühsam bis aufs Byte durchgetestet (die
+  `.click()`-vs-`.submit()`-Geschichte). Jedes weitere Formular ist eine weitere
+  Brevo-URL, ein weiterer DOI-Prozess, eine weitere Fehlerquelle – und bringt dir
+  keinen Vorteil, den du nicht auch mit einer Liste hättest.
+- Wenn jemand z. B. erst das Handbuch anfordert und später den Futtercheck macht,
+  landet er bei getrennten Listen doppelt (oder Brevo verschickt die
+  Bestätigungsmail zweimal) – bei einer Liste wird der bestehende Kontakt einfach
+  aktualisiert.
+- Segmentierung und unterschiedliche Automations-E-Mails brauchen keine getrennten
+  Listen. Brevo-Automationen können auch innerhalb einer Liste nach einem
+  Attributwert filtern („wenn QUELLE = handbuch, dann Automation A").
+
+**Was ich stattdessen gemacht habe:** ein sauberes, eigenes Attribut `QUELLE`
+ergänzt (`futtercheck` / `handbuch` / `kundenzugang`), statt wie bisher nur das
+zweckentfremdete Feld `FUTTERCHECK_FARB_SCORE` als Marker zu missbrauchen. Das alte
+Feld wird aus Kompatibilitätsgründen weiterhin mitgeschickt (falls du es schon in
+einer Automation nutzt), `QUELLE` kommt zusätzlich dazu.
+
+**Ein Schritt fehlt noch von deiner Seite, ist aber unkritisch:**
+Brevo → Kontakte → Einstellungen → Kontakt-Attribute → neues Attribut `QUELLE`,
+Typ Text, anlegen. Bis du das gemacht hast, schickt die Seite das Feld zwar mit,
+Brevo ignoriert es aber einfach – der Futtercheck und die beiden anderen Formulare
+funktionieren auch ohne diesen Schritt weiter ganz normal (getestet: unbekannte
+Felder ändern nichts am `{"success":true}`). Sobald das Attribut existiert, kannst
+du in *Automation* eine Bedingung „QUELLE ist gleich handbuch" (bzw. `kundenzugang`,
+`futtercheck`) bauen und jeweils eine passende Folge-Mail auslösen – z. B. beim
+Handbuch direkt den PDF-Link, bei Kundenzugang einen Hinweis, dass du dich meldest.
+
+Getestet mit Playwright: beide Formulare (Handbuch, Kundenzugang) übergeben jetzt
+korrekt alle Felder inkl. `QUELLE` ans versteckte Brevo-Formular, genau wie der
+Futtercheck. Kein Feld fehlt, keine Regression.
+
+---
+
 # Futtercheck laeuft (Stand 13.08., dritte Runde) — jetzt echt getestet
 
 ## Was diesmal anders ist: ich habe es gegen deinen Endpunkt geprueft
