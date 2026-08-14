@@ -289,12 +289,22 @@
         <form id="handbuchForm" novalidate>
           <div class="form-row two">
             <div>
-              <label for="hb-name">Vor- und Nachname *</label>
-              <input type="text" id="hb-name" name="Name" placeholder="Dein Name" required>
+              <label for="hb-vorname">Vorname *</label>
+              <input type="text" id="hb-vorname" name="Vorname" placeholder="Dein Vorname" required>
             </div>
+            <div>
+              <label for="hb-nachname">Nachname *</label>
+              <input type="text" id="hb-nachname" name="Nachname" placeholder="Dein Nachname" required>
+            </div>
+          </div>
+          <div class="form-row two">
             <div>
               <label for="hb-email">E-Mail-Adresse *</label>
               <input type="email" id="hb-email" name="E-Mail" placeholder="du@beispiel.de" required>
+            </div>
+            <div>
+              <label for="hb-telefon">Telefonnummer *</label>
+              <input type="tel" id="hb-telefon" name="Telefon" placeholder="Für Rückfragen zur Zustellung" required>
             </div>
           </div>
           <div class="form-row two">
@@ -305,12 +315,6 @@
             <div>
               <label for="hb-ort">PLZ &amp; Ort *</label>
               <input type="text" id="hb-ort" name="Ort" placeholder="12345 Musterstadt" required>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label for="hb-telefon">Telefonnummer *</label>
-              <input type="tel" id="hb-telefon" name="Telefon" placeholder="Für Rückfragen zur Zustellung" required>
             </div>
           </div>
           <input type="hidden" name="Anfrageart" value="Produkthandbuch-Anfrage">
@@ -364,9 +368,15 @@
       <form id="kundenzugangForm" novalidate>
         <div class="form-row two">
           <div>
-            <label for="name">Dein Name *</label>
-            <input type="text" id="name" name="Name" placeholder="Vor- und Nachname" required>
+            <label for="kz-vorname">Vorname *</label>
+            <input type="text" id="kz-vorname" name="Vorname" placeholder="Dein Vorname" required>
           </div>
+          <div>
+            <label for="kz-nachname">Nachname *</label>
+            <input type="text" id="kz-nachname" name="Nachname" placeholder="Dein Nachname" required>
+          </div>
+        </div>
+        <div class="form-row two">
           <div>
             <label for="tierart">Betrifft *</label>
             <select id="tierart" name="Tierart" required>
@@ -378,12 +388,12 @@
               <option>Sonstiges</option>
             </select>
           </div>
-        </div>
-        <div class="form-row two">
           <div>
             <label for="kz-email">E-Mail-Adresse *</label>
             <input type="email" id="kz-email" name="E-Mail" placeholder="du@beispiel.de" required>
           </div>
+        </div>
+        <div class="form-row">
           <div>
             <label for="kz-telefon">Telefonnummer *</label>
             <input type="tel" id="kz-telefon" name="Telefon" placeholder="Für Rückruf" required>

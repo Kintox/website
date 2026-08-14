@@ -1,3 +1,117 @@
+# Update 14.08. (zwölfte Runde): Überschreiben von Kontaktdaten, Anschrift in Brevo, Trigger-Problem
+
+Betrifft `index.html`, `assets/js/futtercheck.js`. Reagiert auf drei Probleme,
+die du nach dem Live-Test gemeldet hast.
+
+## 1. Überschreiben von Kontaktdaten
+
+**Problem:** Wenn jemand zuerst "Kundenzugang sichern" mit vollem Namen
+ausfüllt und danach noch den Futtercheck macht (der nur einen Vornamen
+abfragt), wurde der Nachname in Brevo überschrieben – übrig blieb nur noch
+der Vorname.
+
+**Ursache:** Beide Formulare haben denselben Wert unter demselben
+Brevo-Attribut `VORNAME` abgelegt – einmal "Vorname Nachname" komplett,
+einmal nur den Vornamen. Wer zuletzt sendet, gewinnt.
+
+**Fix:**
+- "Kunde werden"-Feld und "Produkthandbuch"-Formular fragen jetzt **Vorname
+  und Nachname getrennt** ab (zwei Felder statt einem).
+- Ein neues Brevo-Attribut `NACHNAME` wird zusätzlich zu `VORNAME` befüllt.
+- Der Futtercheck-Quiz kennt weiterhin nur einen Vornamen und schickt gar
+  kein `NACHNAME`-Feld mit – dadurch bleibt ein vorher eingetragener
+  Nachname unangetastet, egal in welcher Reihenfolge jemand die Formulare
+  ausfüllt.
+- Dasselbe Prinzip gilt jetzt auch für die Anschrift (`STRASSE`/`ORT`): Der
+  Futtercheck-Quiz schickt diese Felder gar nicht erst mit, statt sie (wie
+  vorher) als leeren Text zu senden. Vorher hätte ein Futtercheck NACH einem
+  Kundenzugang-Formular die zuvor eingetragene Adresse in Brevo wieder
+  gelöscht – das war ein zweiter, bisher unbemerkter Fall desselben
+  Überschreib-Problems.
+
+**Wichtig zu verstehen:** Ein leeres Feld im Formular überschreibt in Brevo
+IMMER den bestehenden Wert mit "leer", wenn es mitgesendet wird. Ein Feld,
+das gar nicht erst im Absende-Aufruf enthalten ist, lässt den bestehenden
+Wert dagegen unangetastet. Genau diesen Unterschied nutzt der Fix.
+
+**Score, Futterangaben, Tierart, Telefon** werden bei jedem Formular
+weiterhin immer überschrieben – das ist hier gewollt, ein neuer Futtercheck
+soll den alten Score ersetzen, eine neue Telefonnummer die alte.
+
+## 2. Anschrift kommt nicht in Brevo an
+
+Das liegt vermutlich daran, dass die Felder `STRASSE` und `ORT` in eurem
+Brevo-Formular (dasselbe, gemeinsam genutzte Formular für alle drei
+Website-Formulare) noch nicht als Formularfelder hinterlegt sind – genau
+wie bei `QUELLE` vorher, das erst funktioniert hat, nachdem du es im
+Brevo-Formular-Editor selbst als Feld hinzugefügt hattest. Zwei Schritte,
+die du in Brevo nachholen musst:
+
+1. **Kontaktattribute anlegen** (falls noch nicht vorhanden): Kontakte →
+   Kontaktattribute verwalten → Attribut hinzufügen → Typ "Text" →
+   `STRASSE` und `ORT` anlegen. Für den Namens-Fix zusätzlich `NACHNAME`
+   (Typ "Text").
+2. **Im Formular als Felder hinterlegen:** Kontakte → Formulare → das eine
+   Formular öffnen, dessen Serve-URL im Code steht (`BREVO_FORM_URL` in
+   `assets/js/futtercheck.js`) → bearbeiten → Feld hinzufügen → an die
+   Attribute `STRASSE`, `ORT` und `NACHNAME` binden → speichern. Das
+   Formular muss diese Felder "kennen", sonst verwirft Brevo sie beim
+   Empfang – unabhängig davon, dass wir es nie über die Brevo-eigene
+   Formularoberfläche ausfüllen, sondern per `fetch()` direkt an dieselbe
+   Adresse senden.
+
+Danach einmal testweise ein Kundenzugang-Formular ausfüllen und in Brevo
+prüfen, ob Straße/Ort/Nachname beim Kontakt ankommen.
+
+## 3. Automation feuert nicht, wenn der Kontakt schon in der Liste ist
+
+**Problem:** Dein Workflow feuert bei "Kontakt wird Liste hinzugefügt UND
+QUELLE = futtercheck". Wenn jemand aber schon vorher über Kundenzugang oder
+Handbuch in der Liste gelandet ist, wird er beim späteren Futtercheck nur
+noch aktualisiert, nicht neu hinzugefügt – der Trigger "Liste hinzugefügt"
+feuert dann nicht mehr, obwohl sich QUELLE auf "futtercheck" ändert.
+
+**Ursache, technisch:** Brevo bietet (Stand heute) keinen Trigger-Typ
+"Attribut wurde geändert", der sofort feuert. Es gibt aber eine saubere
+Lösung ohne neuen Code und ohne neue Cookies/Tracking (dazu unten mehr):
+
+**Fix – zusätzlicher Einstiegspunkt statt nur einem:** Brevo erlaubt
+mehrere Einstiegspunkte pro Automation, verknüpft mit ODER – ein Kontakt
+startet die Automation, sobald er **mindestens einen** davon erfüllt. Also:
+
+1. Einstiegspunkt 1 (bereits vorhanden): "Kontakt wird Liste #9
+   hinzugefügt" + Bedingung QUELLE = futtercheck. Deckt neue Kontakte ab.
+2. **Neuer Einstiegspunkt 2:** "Kontakt entspricht Filter" bzw. "Kontakt
+   ist in einem Segment" mit der Bedingung QUELLE = futtercheck. Das prüft
+   unabhängig davon, ob der Kontakt neu oder schon vorhanden ist – deckt
+   also genau den Fall ab, den Einstiegspunkt 1 verpasst.
+
+So bekommt jeder, dessen QUELLE-Attribut auf "futtercheck" steht, die Mail
+– egal ob er neu in der Liste ist oder vorher schon über ein anderes
+Formular drin war. Einziger Kompromiss: Ein filterbasierter Einstiegspunkt
+prüft je nach Brevo-Einstellung eventuell nicht "auf die Sekunde" wie ein
+Listen-Trigger, sondern in kurzen Abständen (die genaue Taktung zeigt dir
+Brevo direkt im Automation-Editor bei diesem Einstiegspunkt-Typ) – für eine
+Ergebnis-Mail, auf die man ohnehin ein bis einige Minuten wartet, sollte
+das in der Praxis kein Problem sein.
+
+**Bewusst NICHT umgesetzt:** Es gäbe eine Variante mit sofortiger,
+Sekunden-genauer Zustellung – Brevos eigenes Tracking-Skript (Website-
+Events), das bei Formular-Abschluss ein Event auslöst und die Automation
+darüber statt über Listen/Filter startet. Ich habe das bewusst nicht
+eingebaut, weil dieses Tracking-Skript typischerweise ein eigenes Cookie
+setzt, um Besucher wiederzuerkennen. Eure aktuelle Datenschutzerklärung
+sagt explizit "Diese Seite setzt keine Cookies und speichert nichts im
+Browser" – das wäre dann nicht mehr korrekt, und ein zusätzliches
+Marketing-Tracking-Cookie braucht in Deutschland in aller Regel eine aktive
+Einwilligung (Cookie-Banner), bevor es gesetzt werden darf. Das ist ein
+größerer Eingriff (neue Rechtstext-Passage plus Consent-Mechanismus), den
+ich nicht nebenbei einbauen wollte. Falls dir die Sekunden-Genauigkeit
+später wichtiger wird als der Aufwand für den Cookie-Banner, sag Bescheid
+– dann bauen wir das nach.
+
+---
+
 # Update 13.08. (elfte Runde): Technische SEO-Grundlagen
 
 Betrifft `index.html`, `partner.html`, neu: `sitemap.xml`, `robots.txt`.

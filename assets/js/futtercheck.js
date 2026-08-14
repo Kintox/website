@@ -41,7 +41,8 @@
   // die Fehlermeldung, falls Brevo ein bestimmtes Feld ablehnt.
   const BREVO_FEHLERFELD_LABEL = {
     EMAIL:     'deine E-Mail-Adresse',
-    VORNAME:   'deinen Namen',
+    VORNAME:   'deinen Vornamen',
+    NACHNAME:  'deinen Nachnamen',
     SMS:       'deine Telefonnummer',
     HUND_KATZE:'die Tierart',
     TIERNAME:  'den Namen deines Tieres'
@@ -72,6 +73,9 @@
   // MUSS dieses Ergebnis auswerten, statt wie frueher blind "Erfolg"
   // anzuzeigen.
   async function brevoSubmit(data){
+    // Felder, die IMMER mitgeschickt werden - jede der drei Formulare hat
+    // dafuer einen sinnvollen Wert, ein Ueberschreiben ist hier gewollt
+    // (z.B. soll ein neuer Futtercheck-Score immer den alten ersetzen).
     const werte = {
       EMAIL:                  data.email,
       VORNAME:                data.vorname,
@@ -88,13 +92,27 @@
       // die Segmentierung innerhalb der einen gemeinsamen Liste. Existiert
       // das Attribut QUELLE (noch) nicht in Brevo, wird der Wert einfach
       // ignoriert - der Rest der Anfrage ist davon unberuehrt.
-      QUELLE:                 data.quelle || '',
-      // Anschrift (Handbuch + Kundenzugang). Genau wie QUELLE: falls die
-      // Attribute STRASSE/ORT in Brevo noch nicht angelegt sind, werden sie
-      // einfach ignoriert - siehe ANLEITUNG.md.
-      STRASSE:                data.strasse || '',
-      ORT:                    data.ort || ''
+      QUELLE:                 data.quelle || ''
     };
+
+    // Felder, die NUR mitgeschickt werden, wenn dieser Aufruf tatsaechlich
+    // einen Wert dafuer hat (Handbuch/Kundenzugang: Nachname + Anschrift;
+    // der Futtercheck-Quiz kennt beides nicht). Wuerden wir NACHNAME/
+    // STRASSE/ORT immer mitschicken - notfalls als leeren String, wie
+    // frueher - wuerde ein spaeterer Futtercheck-Aufruf mit demselben
+    // E-Mail-Kontakt den zuvor eingetragenen Nachnamen bzw. die Anschrift
+    // in Brevo wieder LEEREN. Ein fehlender Schluessel im POST laesst den
+    // bestehenden Brevo-Wert dagegen unangetastet. Siehe ANLEITUNG.md,
+    // Abschnitt "Ueberschreiben von Kontaktdaten".
+    const optionaleWerte = {
+      NACHNAME: data.nachname,
+      STRASSE:  data.strasse,
+      ORT:      data.ort
+    };
+    Object.keys(optionaleWerte).forEach(function(name){
+      const wert = (optionaleWerte[name] || '').toString().trim();
+      if (wert) { werte[name] = wert; }
+    });
 
     const body = new URLSearchParams();
     Object.keys(werte).forEach(function(name){
@@ -615,17 +633,19 @@
   // Nachricht bleibt bewusst optional.
   const FC_LEAD_REQUIRED_FIELDS = {
     handbuch: [
-      { name: 'Name',    label: 'deinen Namen' },
-      { name: 'Strasse', label: 'deine Straße & Hausnummer' },
-      { name: 'Ort',     label: 'PLZ & Ort' },
-      { name: 'Telefon', label: 'deine Telefonnummer' }
+      { name: 'Vorname',  label: 'deinen Vornamen' },
+      { name: 'Nachname', label: 'deinen Nachnamen' },
+      { name: 'Strasse',  label: 'deine Straße & Hausnummer' },
+      { name: 'Ort',      label: 'PLZ & Ort' },
+      { name: 'Telefon',  label: 'deine Telefonnummer' }
     ],
     kundenzugang: [
-      { name: 'Name',    label: 'deinen Namen' },
-      { name: 'Tierart', label: 'die Tierart' },
-      { name: 'Telefon', label: 'deine Telefonnummer' },
-      { name: 'Strasse', label: 'deine Straße & Hausnummer' },
-      { name: 'Ort',     label: 'PLZ & Ort' }
+      { name: 'Vorname',  label: 'deinen Vornamen' },
+      { name: 'Nachname', label: 'deinen Nachnamen' },
+      { name: 'Tierart',  label: 'die Tierart' },
+      { name: 'Telefon',  label: 'deine Telefonnummer' },
+      { name: 'Strasse',  label: 'deine Straße & Hausnummer' },
+      { name: 'Ort',      label: 'PLZ & Ort' }
     ]
   };
 
@@ -687,7 +707,8 @@
 
       const ergebnis = await brevoSubmit({
         email:     email,
-        vorname:   (data.get('Name') || '').toString() || '-',
+        vorname:   (data.get('Vorname') || '').toString() || '-',
+        nachname:  (data.get('Nachname') || '').toString(),
         tierart:   tierart,
         tiername:  '-',
         score:     '0',
