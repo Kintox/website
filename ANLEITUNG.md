@@ -1,3 +1,83 @@
+# Update 25.08. (dreizehnte Runde): Favicon & Tonalität der Partnerseite
+
+## 1. Favicon (neu)
+
+**Ausgangslage:** Du hattest gar kein Favicon. In keiner HTML-Datei war eines
+deklariert, und `cedricnitsch.de/favicon.ico` lieferte 404. Was im Tab zu
+sehen war, war also das graue Standardsymbol des Browsers oder ein
+zwischengespeichertes Icon der alten Seite.
+
+**Warum nicht einfach das REiCO-Logo:** Das Logo ist ein breiter Schriftzug
+(4000 × 1050 px, also fast 4:1). In ein Quadrat von 16 px gequetscht wird
+daraus ein unleserlicher Fleck. Deshalb nur der Buchstabe **„R"** – und zwar
+direkt aus `logo-alge.png` herausgeschnitten, nicht nachgebaut, damit die
+Form exakt der Marke entspricht.
+
+**Richtlinien-Check:** Laut Vertriebspartner-Richtlinien (Abschnitt 2b) darf
+das REiCO-Logo auf Medien verwendet werden, die ausschließlich REiCO
+thematisieren – „Webseite die ausschließlich Reico thematisiert" wird dort
+wörtlich als Beispiel genannt. Das trifft auf diese Seite zu. Das Partner-
+Signet wäre nur nötig, wenn auf der Seite auch andere Tätigkeiten oder
+Produkte beworben würden.
+
+**Neue Dateien:**
+
+| Datei | Zweck |
+|---|---|
+| `favicon.ico` | Enthält 16/32/48/64 px in einer Datei (Browser-Tab, Lesezeichen) |
+| `img/favicon-96x96.png` | Moderne Browser, höhere Auflösung |
+| `img/apple-touch-icon.png` | 180 px, iOS-Homescreen |
+| `img/icon-192.png`, `img/icon-512.png` | Android / Web-App-Manifest |
+| `site.webmanifest` | Verweist auf die beiden Icon-Größen, setzt Theme-Farbe |
+
+Kleiner Kniff dabei: Die 16- und 32-px-Varianten haben bewusst etwas weniger
+Rand als die großen. Bei gleichem Rand wirkt ein Icon in Tab-Größe zu klein
+und das R „verschwindet" – so trägt es auch bei 16 px noch.
+
+**Eingebaut in alle vier Seiten** (`index`, `partner`, `impressum`,
+`datenschutz`). Die Pfade beginnen mit `/`, gehen also von der Domain-Wurzel
+aus – das passt, weil die Seite direkt unter `cedricnitsch.de/` liegt.
+
+**Nach dem Hochladen:** `favicon.ico` und `site.webmanifest` gehören ins
+Wurzelverzeichnis (neben `index.html`), die PNGs in den `img`-Ordner.
+Browser cachen Favicons sehr hartnäckig – wenn du das neue Icon nicht sofort
+siehst, einmal mit Strg+F5 neu laden oder den Tab schließen und neu öffnen.
+
+## 2. Tonalität der Partnerseite
+
+Die ehrliche Einordnung bleibt – sie ist ja der Kern dieser Seite und
+schützt dich auch vor falschen Erwartungen. Rausgenommen habe ich nur die
+unnötige Härte:
+
+| Vorher | Jetzt |
+|---|---|
+| „Warum ich das hier so nüchtern schreibe" | „Warum du von mir eine ehrliche Einschätzung bekommst" |
+| „In vier Schritten – ohne Überrumpeln" | „In vier Schritten – in deinem Tempo" |
+| „Alles andere wäre unglaubwürdig." | „Dann sprichst du aus eigener Erfahrung – und das merkt man in jedem Gespräch." |
+| „Deshalb male ich dir hier nichts schön" | „Deshalb erzähle ich dir lieber, wie es wirklich läuft – dann kannst du in Ruhe selbst entscheiden." |
+| „Damit du nicht erst nach drei Monaten merkst, ob es passt" | „Damit du von Anfang an einschätzen kannst, ob es zu dir passt" |
+| „Damit es gesagt ist: Es gibt keine garantierten Einnahmen …" | „Ganz offen gesagt: Garantierte Einnahmen gibt es nicht …" |
+| „⚠️ Das passt eher nicht, wenn …" | „🤔 Das passt eher nicht, wenn …" |
+| „du schnelles Geld ohne Aufwand erwartest" | „es schnell gehen und ohne Aufwand laufen soll" |
+| „du keine Lust auf Selbstständigkeit hast" | „Selbstständigkeit nichts für dich ist" |
+| „das gehört sich unter Kolleginnen und Kollegen so" | „das ist unter Kolleginnen und Kollegen einfach fair" |
+| „gebe dir dazu bewusst keine Auskunft" | „möchte dir dazu nichts Falsches sagen" |
+| „Leute, die nach drei Monaten wieder aufgehört haben" | „Menschen, für die es am Ende doch nicht das Richtige war" |
+
+Das Prinzip dahinter: Formulierungen, die dem Leser etwas unterstellen
+(„du erwartest", „du hast keine Lust"), wurden zu neutralen Bedingungen
+umgebaut („wenn es schnell gehen soll"). Und Sätze, die ein negatives Bild
+erst ins Spiel bringen, an das vorher niemand gedacht hat („Überrumpeln",
+„unglaubwürdig"), sind raus.
+
+**Bewusst NICHT geändert:** Der Absatz „selbstständige, gewerbliche
+Tätigkeit auf Provisionsbasis – kein Angestelltenverhältnis, kein
+garantiertes Einkommen …". Das ist die rechtlich schützende Pflichtangabe,
+die klingt zwangsläufig etwas trocken. Dasselbe gilt für den Hinweis, dass
+du keine Zahlen aus dem Vergütungsplan nennen darfst.
+
+---
+
 # Update 14.08. (zwölfte Runde): Überschreiben von Kontaktdaten, Anschrift in Brevo, Trigger-Problem
 
 Betrifft `index.html`, `assets/js/futtercheck.js`. Reagiert auf drei Probleme,

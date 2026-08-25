@@ -1,0 +1,12 @@
+{
+  "name": "Cedric Nitsch – Reico Futterberatung",
+  "short_name": "Cedric Nitsch",
+  "icons": [
+    { "src": "/img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/img/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#3A3D0C",
+  "background_color": "#FAFAF8",
+  "display": "browser",
+  "start_url": "/"
+}
