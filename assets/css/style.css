@@ -111,6 +111,25 @@
   .btn-outline:hover{ background: var(--kristall); color: var(--alge); }
   .btn-small{ padding: 9px 16px; font-size:0.8rem; }
 
+  /* Haupt-CTA: bewusst groesser als ein normaler Button, damit in der
+     Hero-Sektion eindeutig ist, was der erste Schritt sein soll. */
+  .btn-lg{ padding:17px 32px; font-size:1.02rem; }
+  .btn-lg .btn-icon{ width:20px; height:20px; }
+
+  /* Dezenter, langsamer Puls auf dem Schein des Buttons - zieht den Blick,
+     ohne zu zappeln. Beim Hovern haelt er an, damit der normale
+     Hover-Effekt sichtbar bleibt. Wer im Betriebssystem "Bewegung
+     reduzieren" eingestellt hat, bekommt gar keine Animation. */
+  @keyframes cta-puls{
+    0%, 100%{ box-shadow: 0 6px 18px rgba(255,152,136,0.45); }
+    50%     { box-shadow: 0 10px 30px rgba(255,152,136,0.85); }
+  }
+  .btn-puls{ animation: cta-puls 2.8s ease-in-out infinite; }
+  .btn-puls:hover{ animation:none; }
+  @media (prefers-reduced-motion: reduce){
+    .btn-puls{ animation:none; }
+  }
+
 
   /* ---------- HERO ---------- */
   .hero{
@@ -169,6 +188,10 @@
   .hero-ctas{
     display:flex;
     flex-wrap:wrap;
+    /* Ohne align-items werden alle Buttons auf die Hoehe des groessten
+       gestreckt - der Haupt-CTA waere dann nicht mehr sichtbar groesser
+       als die Nebenwege. */
+    align-items:center;
     gap:14px;
     margin-bottom:26px;
   }
@@ -513,8 +536,15 @@
   @keyframes pulse{
     0%{ opacity:1; } 50%{ opacity:0.3; } 100%{ opacity:1; }
   }
+  /* Zwei Beschriftungen, je nach Platz: bis 480px die Kurzform.
+     Vorher stand am kurzen Label ein "style=display:none" direkt im HTML -
+     das ueberstimmt jede CSS-Regel, dadurch war auf dem Handy gar kein Text
+     zu sehen, nur der pulsierende Punkt. Inline-Style ist raus, gesteuert
+     wird jetzt komplett hier. */
+  .sticky-wa span.wa-label-short{ display:none; }
   @media(max-width:480px){
     .sticky-wa span.wa-label-full{ display:none; }
+    .sticky-wa span.wa-label-short{ display:inline; }
   }
 
 

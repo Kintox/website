@@ -1,3 +1,70 @@
+# Update 25.08. (vierzehnte Runde): „Neukunde werden"-Button
+
+Betrifft `index.html` und `assets/css/style.css`. Dazu ein Handy-Fehler, der
+mir dabei aufgefallen ist (Punkt 3).
+
+## 1. Hero-Bereich
+
+Neu ist ein auffälliger Button **„Neukunde werden"**, der zum Formular
+„Kundenzugang sichern" (`#kontakt`) springt. Damit er wirklich heraussticht,
+habe ich drei Dinge kombiniert:
+
+- **Größer als die anderen** (neue CSS-Klasse `.btn-lg`): mehr Innenabstand,
+  größere Schrift.
+- **Als einziger in Kristall-Koralle gefüllt.** WhatsApp war vorher der
+  gefüllte Button und ist jetzt eine Outline-Variante. Grund: Zwei gleich
+  aussehende Buttons nebeneinander heben sich gegenseitig auf – dann gibt es
+  optisch keinen Hauptweg mehr. Die Richtlinie sieht Kristall ohnehin für
+  interaktive Elemente vor, deshalb bleibt der Hauptbutton in dieser Farbe.
+- **Dezenter, langsamer Puls** auf dem Schein des Buttons (Klasse
+  `.btn-puls`, 2,8 Sekunden pro Durchlauf). Beim Darüberfahren hält er an,
+  und wer im Betriebssystem „Bewegung reduzieren" eingestellt hat, bekommt
+  gar keine Animation.
+
+WhatsApp und Telefon bleiben unverändert erreichbar, treten aber optisch
+zurück. Die Reihenfolge entspricht jetzt der Wichtigkeit für genau die
+Zielgruppe dieser Seite: jemand, der REiCO schon kennt und einen
+Vertriebspartner sucht, will sich anmelden – nicht erst eine Frage stellen.
+
+**Nebenbei korrigiert:** `.hero-ctas` hatte kein `align-items`. Flexbox
+streckt Elemente dann standardmäßig auf die Höhe des größten – der neue
+große Button hätte also die beiden anderen mitgezogen und alle drei wären
+wieder gleich hoch gewesen. Mit `align-items:center` behält jeder Button
+seine eigene Höhe.
+
+## 2. Menü (Kopfzeile)
+
+- Der frühere Textlink **„Kunde werden"** ist jetzt ein gefüllter Button
+  **„Neukunde werden"**. Er zeigte ohnehin auf dasselbe Ziel (`#kontakt`)
+  wie der Link „Kontakt" direkt daneben – das war doppelt.
+- Der WhatsApp-Button im Menü ist zur Outline-Variante geworden, damit auch
+  hier klar ist, was der Hauptweg ist.
+- Auf dem Handy stehen beide Buttons im aufgeklappten Menü untereinander
+  über die volle Breite.
+
+**Nicht geändert: die Partnerseite.** Dort ist die Zielgruppe eine andere,
+und der WhatsApp-Button für Partneranfragen soll der lauteste bleiben. Wenn
+du möchtest, dass die Kopfzeile auf beiden Seiten identisch aussieht, sag
+Bescheid – dann ziehe ich das nach.
+
+## 3. Handy-Fehler beim schwebenden WhatsApp-Button (behoben)
+
+Beim Testen ist mir aufgefallen: Der schwebende WhatsApp-Button unten rechts
+zeigte **auf dem Handy gar keinen Text** – nur einen pulsierenden Punkt auf
+einer korallfarbenen Fläche.
+
+**Ursache:** Es gibt zwei Beschriftungen, eine lange („WhatsApp schreiben")
+und eine kurze („WhatsApp") für schmale Bildschirme. Am kurzen Label stand
+aber `style="display:none;"` direkt im HTML. So ein Inline-Style überstimmt
+jede CSS-Regel – die Kurzform konnte also nie eingeblendet werden, während
+die Langform unter 480 px korrekt ausgeblendet wurde. Ergebnis: beide weg.
+
+**Behoben** in `index.html` und `partner.html` (Inline-Style entfernt), die
+Steuerung sitzt jetzt vollständig im CSS. Geprüft bei 1366, 390 und 360 px
+Breite: Desktop zeigt „WhatsApp schreiben", Handy „WhatsApp".
+
+---
+
 # Update 25.08. (dreizehnte Runde): Favicon & Tonalität der Partnerseite
 
 ## 1. Favicon (neu)
