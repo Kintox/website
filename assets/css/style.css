@@ -966,41 +966,22 @@ header{ position:sticky; }
 }
 
 /* ============================================================
-   SELBSTGEHOSTETE SCHRIFT (DSGVO)
-   ------------------------------------------------------------
-   Aktuell wird Poppins von fonts.googleapis.com geladen. Dabei
-   wird die IP-Adresse der Besucher an Google in die USA
-   uebertragen - das LG Muenchen I hat das 2022 (Az. 3 O 17493/20)
-   als DSGVO-Verstoss gewertet und Schadenersatz zugesprochen.
-
-   So stellst du um (ca. 10 Minuten, danach ist das Thema erledigt
-   und die Seite laedt sogar schneller):
-     1. https://gwfh.mranftl.com/fonts/poppins  oeffnen
-     2. Staerken 300, 400, 500, 600, 700, 800 auswaehlen
-     3. Charsets: latin + latin-ext
-     4. "Download files" -> ZIP entpacken
-     5. Alle .woff2-Dateien nach assets/fonts/ legen
-     6. In index.html und partner.html die drei <link>-Zeilen zu
-        fonts.googleapis.com / fonts.gstatic.com loeschen
-     7. Den Block unten von Kommentar befreien (die Zeichen
-        Slash-Stern davor und Stern-Slash dahinter entfernen)
-     8. In der Datenschutzerklaerung den Abschnitt "Google Fonts"
-        loeschen - dann stimmt sie wieder.
+   SCHRIFTEN - Poppins, lokal ausgeliefert
+   Keine Verbindung zu Google-Servern, keine IP-Uebertragung.
+   Subset latin, bezogen ueber google-webfonts-helper.
    ============================================================ */
-/*
 @font-face{ font-family:'Poppins'; font-style:normal; font-weight:300; font-display:swap;
-  src:url('../fonts/poppins-v22-latin-300.woff2') format('woff2'); }
+  src:url('../fonts/poppins-v24-latin-300.woff2') format('woff2'); }
 @font-face{ font-family:'Poppins'; font-style:normal; font-weight:400; font-display:swap;
-  src:url('../fonts/poppins-v22-latin-regular.woff2') format('woff2'); }
+  src:url('../fonts/poppins-v24-latin-regular.woff2') format('woff2'); }
 @font-face{ font-family:'Poppins'; font-style:normal; font-weight:500; font-display:swap;
-  src:url('../fonts/poppins-v22-latin-500.woff2') format('woff2'); }
+  src:url('../fonts/poppins-v24-latin-500.woff2') format('woff2'); }
 @font-face{ font-family:'Poppins'; font-style:normal; font-weight:600; font-display:swap;
-  src:url('../fonts/poppins-v22-latin-600.woff2') format('woff2'); }
+  src:url('../fonts/poppins-v24-latin-600.woff2') format('woff2'); }
 @font-face{ font-family:'Poppins'; font-style:normal; font-weight:700; font-display:swap;
-  src:url('../fonts/poppins-v22-latin-700.woff2') format('woff2'); }
+  src:url('../fonts/poppins-v24-latin-700.woff2') format('woff2'); }
 @font-face{ font-family:'Poppins'; font-style:normal; font-weight:800; font-display:swap;
-  src:url('../fonts/poppins-v22-latin-800.woff2') format('woff2'); }
-*/
+  src:url('../fonts/poppins-v24-latin-800.woff2') format('woff2'); }
 
 /* ============================================================
    RECHTSTEXTE (Impressum / Datenschutz)
