@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-565697665"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-565697665');
-</script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 1. Cookiebot - muss das erste Script im head sein, sonst kann es die
+         folgenden Skripte nicht steuern -->
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="2bcd0408-1135-44f6-bfe4-588b4e80b0f3" data-blockingmode="auto" type="text/javascript"></script>
+
+    <!-- 2. Google Consent Mode v2 - alle vier Signale stehen bis zur
+         Einwilligung auf "denied" -->
+    <script data-cookieconsent="ignore">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("consent", "default", {
+        ad_personalization: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        analytics_storage: "denied",
+        functionality_storage: "denied",
+        personalization_storage: "denied",
+        security_storage: "granted",
+        wait_for_update: 500,
+      });
+      gtag("set", "ads_data_redaction", true);
+      gtag("set", "url_passthrough", false);
+    </script>
+
+    <!-- 3. Google Tag - laedt, haelt sich bis zur Einwilligung aber zurueck -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-565697665" data-cookieconsent="ignore"></script>
+    <script data-cookieconsent="ignore">
+      gtag('js', new Date());
+      gtag('config', 'AW-565697665');
+    </script>
+
 <title>Reico Futterberatung für deinen Hund in Lippstadt | Cedric Nitsch</title>
 <meta name="description" content="Individuelle Reico-Futterberatung für deinen Hund in Lippstadt und Umgebung – persönlich, unverbindlich, direkt per WhatsApp. Selbstständiger Reico-Vertriebspartner Cedric Nitsch.">
 <link rel="canonical" href="https://cedricnitsch.de/">
@@ -60,7 +82,6 @@
 
 <link rel="stylesheet" href="assets/css/style.css">
 
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="2bcd0408-1135-44f6-bfe4-588b4e80b0f3" data-blockingmode="auto" type="text/javascript"></script>
 </head>
 <body>
 
@@ -451,6 +472,7 @@
 </a>
 
 <script src="assets/js/nav.js" defer></script>
+<script src="assets/js/conversions.js" defer></script>
 <script src="assets/js/futtercheck.js" defer></script>
 
 
