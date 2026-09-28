@@ -1122,3 +1122,270 @@ header{ position:sticky; }
     grid-column: 1 / -1;
   }
 }
+
+
+
+
+
+/* ==========================================================================
+   COOKIEBOT-BANNER IM EIGENEN DESIGN
+   --------------------------------------------------------------------------
+   Anhaengen an das ENDE von assets/css/style.css.
+
+   Warum das funktioniert: Cookiebot rendert seinen Dialog direkt in das DOM
+   der Seite, nicht in ein iframe. Die Elemente sind also mit eigenem CSS
+   erreichbar. Cookiebot injiziert sein eigenes <style> zur Laufzeit in den
+   <head>, also NACH dieser Datei - deshalb hier durchgehend !important und
+   zusaetzlich ein vorangestelltes "html", um die Spezifitaet ueber die von
+   Cookiebot zu heben.
+
+   BEWUSST NICHT GEAENDERT:
+   - Layout, Groessen und Reihenfolge der Buttons. Nur Farbe, Schrift, Radius.
+   - "Ablehnen", "Auswahl erlauben" und "Alles zulassen" bekommen exakt
+     dieselbe Optik. Gleiche Groesse, gleiche Farbe, gleiches Gewicht.
+     Das ist keine Geschmacksfrage, sondern Voraussetzung dafuer, dass die
+     Einwilligung freiwillig ist (§ 25 TDDDG i.V.m. Art. 4 Nr. 11 DSGVO).
+   - Der "Powered by Cookiebot"-Link wird nur abgedunkelt, nicht versteckt.
+     Branding-Entfernung ist eine kostenpflichtige Funktion; Ausblenden per
+     CSS waere eine Umgehung.
+   - Das Korallrot (--kristall) wird NICHT fuer die Banner-Buttons benutzt.
+     Diese Farbe traegt auf der Seite die echten CTAs (WhatsApp, Futtercheck).
+     Ein Cookie-Banner soll damit nicht konkurrieren. Koralle taucht hier nur
+     als feiner Akzent auf: aktiver Tab und aktivierte Schalter.
+   ========================================================================== */
+
+/* ---------- Grundflaeche ---------- */
+
+html #CybotCookiebotDialogBodyUnderlay{
+  background: var(--alge) !important;
+  opacity: 0.55 !important;
+}
+
+html #CybotCookiebotDialog{
+  font-family: 'Poppins', sans-serif !important;
+  background: var(--kalk) !important;
+  color: var(--alge) !important;
+  border: 1px solid var(--alge-10) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 18px 50px rgba(58,61,12,0.18) !important;
+}
+
+html #CybotCookiebotDialog *{
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* ---------- Text ---------- */
+
+html #CybotCookiebotDialogBodyContentTitle,
+html #CybotCookiebotDialogDetailBodyContentTextOverviewTitle{
+  color: var(--alge) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.15 !important;
+}
+
+html #CybotCookiebotDialogBodyContentText,
+html #CybotCookiebotDialogDetailBodyContentTextAbout,
+html #CybotCookiebotDialogDetailBodyContentCookieContainerTypeDetails,
+html #CybotCookiebotDialog .CybotCookiebotDialogBodyLevelButtonDescription{
+  color: var(--alge-70) !important;
+  line-height: 1.6 !important;
+}
+
+html #CybotCookiebotDialog a,
+html #CybotCookiebotDialog a:visited{
+  color: var(--alge) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+}
+html #CybotCookiebotDialog a:hover{
+  color: var(--kristall) !important;
+}
+
+/* ---------- Reiter (Einwilligung / Details / Ueber Cookies) ---------- */
+
+html #CybotCookiebotDialogNav,
+html #CybotCookiebotDialogNav .CybotCookiebotDialogNavItemLink{
+  border-bottom-color: var(--alge-10) !important;
+}
+
+html #CybotCookiebotDialogNav .CybotCookiebotDialogNavItemLink{
+  color: var(--alge-70) !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+}
+
+html #CybotCookiebotDialogNav .CybotCookiebotDialogNavItemLink:hover,
+html #CybotCookiebotDialogNav .CybotCookiebotDialogNavItemLink.CybotCookiebotDialogActive{
+  color: var(--alge) !important;
+  border-bottom-color: var(--kristall) !important;
+  text-decoration: none !important;
+}
+
+/* ---------- Buttons: alle drei identisch ---------- */
+
+html #CybotCookiebotDialog .CybotCookiebotDialogBodyButton,
+html #CybotCookiebotDialogBodyButtonDecline,
+html #CybotCookiebotDialogBodyButtonAccept,
+html #CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection,
+html #CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll,
+html #CybotCookiebotDialogBodyLevelButtonAccept{
+  background: var(--alge) !important;
+  border: 2px solid var(--alge) !important;
+  color: var(--kalk) !important;
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  font-size: 0.92rem !important;
+  padding: 12px 22px !important;
+  cursor: pointer !important;
+  transition: transform .15s ease, opacity .15s ease !important;
+}
+
+html #CybotCookiebotDialog .CybotCookiebotDialogBodyButton:hover,
+html #CybotCookiebotDialogBodyButtonDecline:hover,
+html #CybotCookiebotDialogBodyButtonAccept:hover,
+html #CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection:hover,
+html #CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll:hover,
+html #CybotCookiebotDialogBodyLevelButtonAccept:hover{
+  opacity: 0.88 !important;
+  transform: translateY(-1px) !important;
+}
+
+html #CybotCookiebotDialog .CybotCookiebotDialogBodyButton:active{
+  transform: scale(0.97) !important;
+}
+
+/* "Anpassen" / "Details zeigen" ist keine Einwilligung, sondern ein
+   Navigationsschritt - deshalb als ruhige Outline-Variante. */
+html #CybotCookiebotDialogBodyLevelButtonCustomize,
+html #CybotCookiebotDialogBodyEdgeMoreDetailsLink,
+html #CybotCookiebotDialogBodyEdgeMoreDetails a{
+  background: transparent !important;
+  border: 2px solid var(--alge-10) !important;
+  color: var(--alge) !important;
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
+html #CybotCookiebotDialogBodyLevelButtonCustomize:hover{
+  border-color: var(--alge) !important;
+  background: transparent !important;
+}
+
+/* ---------- Kategorie-Schalter ---------- */
+
+html #CybotCookiebotDialogBodyLevelButtonsSelectPane{
+  background: transparent !important;
+  border: 1px solid var(--alge-10) !important;
+  border-radius: 12px !important;
+}
+
+html #CybotCookiebotDialog .CybotCookiebotDialogBodyLevelButtonSlider{
+  background-color: rgba(58,61,12,0.25) !important;
+}
+
+html #CybotCookiebotDialog input:checked + .CybotCookiebotDialogBodyLevelButtonSlider{
+  background-color: var(--kristall) !important;
+}
+
+html #CybotCookiebotDialog input:disabled + .CybotCookiebotDialogBodyLevelButtonSlider{
+  background-color: rgba(58,61,12,0.18) !important;
+}
+
+html #CybotCookiebotDialog .CybotCookiebotDialogBodyLevelButtonDescription,
+html #CybotCookiebotDialog .CybotCookiebotDialogDetailBodyContentCookieTypeTableHeader{
+  color: var(--alge) !important;
+}
+
+/* ---------- Tabellen in der Detailansicht ---------- */
+
+html #CybotCookiebotDialog .CybotCookiebotDialogDetailBodyContentCookieTypeTable th,
+html #CybotCookiebotDialog .CybotCookiebotDialogDetailBodyContentCookieTypeTable td{
+  border-color: var(--alge-10) !important;
+  color: var(--alge) !important;
+}
+
+/* ---------- Tastaturbedienung sichtbar halten ---------- */
+
+html #CybotCookiebotDialog button:focus-visible,
+html #CybotCookiebotDialog a:focus-visible,
+html #CybotCookiebotDialog input:focus-visible{
+  outline: 2px solid var(--kristall) !important;
+  outline-offset: 2px !important;
+}
+
+/* ---------- Cookiebot-Branding: gedaempft, nicht entfernt ---------- */
+
+html #CybotCookiebotDialogPoweredbyCybot,
+html #CybotCookiebotDialogPoweredByText,
+html #CybotCookiebotDialogPoweredbyLink{
+  opacity: 0.45 !important;
+}
+
+/* ---------- Schwebender Trigger, falls spaeter aktiviert ---------- */
+
+html #CookiebotWidget .CookiebotWidget-logo{
+  background: var(--alge) !important;
+  border-radius: 999px !important;
+}
+
+/* ---------- Cookie-Erklaerung auf datenschutz.html ---------- */
+
+html .CookieDeclaration{
+  font-family: 'Poppins', sans-serif !important;
+  color: var(--alge) !important;
+  background: var(--kalk) !important;
+  border: 1px solid var(--alge-10) !important;
+  border-radius: var(--radius) !important;
+  padding: 24px !important;
+  line-height: 1.6 !important;
+}
+
+html .CookieDeclarationType{
+  border: 1px solid var(--alge-10) !important;
+  border-radius: 12px !important;
+  background: var(--weiss) !important;
+}
+
+html .CookieDeclarationTypeHeader{
+  color: var(--alge) !important;
+  font-weight: 700 !important;
+}
+
+html .CookieDeclarationTypeDescription,
+html .CookieDeclarationDialogText{
+  color: var(--alge-70) !important;
+}
+
+html .CookieDeclarationTableHeader,
+html .CookieDeclarationTableCell{
+  border-color: var(--alge-10) !important;
+  color: var(--alge) !important;
+}
+
+html a.CookieDeclarationChangeConsentChange,
+html #CookieDeclarationChangeConsent a{
+  color: var(--alge) !important;
+  text-decoration: underline !important;
+}
+
+/* ---------- Bewegung reduzieren respektieren ---------- */
+
+@media (prefers-reduced-motion: reduce){
+  html #CybotCookiebotDialog .CybotCookiebotDialogBodyButton{
+    transition: none !important;
+    transform: none !important;
+  }
+  html #CybotCookiebotDialog .CybotCookiebotDialogBodyButton:hover{
+    transform: none !important;
+  }
+}
+
+/* ---------- Kleine Bildschirme ---------- */
+
+@media (max-width: 600px){
+  html #CybotCookiebotDialog .CybotCookiebotDialogBodyButton{
+    padding: 12px 16px !important;
+    font-size: 0.86rem !important;
+  }
+}
