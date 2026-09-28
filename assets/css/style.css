@@ -1389,3 +1389,100 @@ html #CookieDeclarationChangeConsent a{
     font-size: 0.86rem !important;
   }
 }
+
+/* ==========================================================================
+   COOKIEBOT PRIVACY TRIGGER (der Kreis unten links)
+   --------------------------------------------------------------------------
+   Ebenfalls an das ENDE von assets/css/style.css anhaengen, hinter den
+   bereits eingebauten Cookiebot-Block.
+
+   Die Farbe des Kreises steckt nicht in einem CSS-Hintergrund, sondern als
+   fill-Attribut im SVG. Deshalb wird hier das SVG direkt eingefaerbt - und
+   zur Sicherheit zusaetzlich der Hintergrund, falls Cookiebot die Markierung
+   in einer spaeteren Version umbaut.
+   ========================================================================== */
+
+/* ---------- Der Kreis selbst ---------- */
+
+html #CookiebotWidget .CookiebotWidget-logo,
+html #CookiebotWidget button.CookiebotWidget-logo{
+  background: transparent !important;
+  border-radius: 999px !important;
+}
+
+/* Aeusserer Kreis des Icons */
+html #CookiebotWidget .CookiebotWidget-logo svg circle,
+html #CookiebotWidget svg#CookiebotWidget-widgetIcon circle,
+html #CookiebotWidget .CookiebotWidget-main-logo circle{
+  fill: var(--alge) !important;
+}
+
+/* Innenzeichnung des Icons hell halten, damit der Kontrast stimmt */
+html #CookiebotWidget .CookiebotWidget-logo svg path,
+html #CookiebotWidget svg#CookiebotWidget-widgetIcon path,
+html #CookiebotWidget .CookiebotWidget-main-logo path{
+  fill: var(--kalk) !important;
+}
+
+/* ---------- Das Panel, das sich beim Klick oeffnet ---------- */
+
+html #CookiebotWidget #CookiebotWidget-widgetContent,
+html #CookiebotWidget .CookiebotWidget-body{
+  font-family: 'Poppins', sans-serif !important;
+  background: var(--kalk) !important;
+  color: var(--alge) !important;
+  border: 1px solid var(--alge-10) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 18px 50px rgba(58,61,12,0.18) !important;
+}
+
+html #CookiebotWidget #CookiebotWidget-widgetContent *{
+  font-family: 'Poppins', sans-serif !important;
+}
+
+html #CookiebotWidget .CookiebotWidget-header,
+html #CookiebotWidget .CookiebotWidget-consent-details,
+html #CookiebotWidget .CookiebotWidget-consents-list{
+  color: var(--alge) !important;
+  border-color: var(--alge-10) !important;
+}
+
+/* Haekchen in der Kategorieliste */
+html #CookiebotWidget .CookiebotWidget-consents-list li::before,
+html #CookiebotWidget .CookiebotWidget-consents-list svg{
+  fill: var(--kristall) !important;
+  color: var(--kristall) !important;
+}
+
+/* Buttons im Panel - wieder bewusst gleichwertig */
+html #CookiebotWidget #CookiebotWidget-btn-withdraw,
+html #CookiebotWidget #CookiebotWidget-btn-change,
+html #CookiebotWidget .CookiebotWidget-btn{
+  background: var(--alge) !important;
+  border: 2px solid var(--alge) !important;
+  color: var(--kalk) !important;
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  font-size: 0.88rem !important;
+  padding: 10px 18px !important;
+  transition: opacity .15s ease !important;
+}
+
+html #CookiebotWidget #CookiebotWidget-btn-withdraw:hover,
+html #CookiebotWidget #CookiebotWidget-btn-change:hover,
+html #CookiebotWidget .CookiebotWidget-btn:hover{
+  opacity: 0.88 !important;
+}
+
+/* Branding im Panel gedaempft, nicht entfernt */
+html #CookiebotWidget .CookiebotWidget-main-logo-wrapper,
+html #CookiebotWidget a[href*="cookiebot.com"]{
+  opacity: 0.45 !important;
+}
+
+/* Tastaturbedienung sichtbar halten */
+html #CookiebotWidget button:focus-visible,
+html #CookiebotWidget a:focus-visible{
+  outline: 2px solid var(--kristall) !important;
+  outline-offset: 2px !important;
+}
