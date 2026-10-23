@@ -1,3 +1,77 @@
+# Update 23.10. (fünfzehnte Runde): Futtercheck nach vorn, Mail-Hinweis im Ergebnis
+
+Betrifft `index.html`, `assets/css/style.css`, `assets/js/futtercheck.js`.
+Ausgangsbasis war der aktuelle Stand aus dem GitHub-Repository (inkl.
+Cookiebot, Google-Tag und `conversions.js`) – daran ist nichts verändert.
+
+## 1. Hero: Telefon-Button raus, Futtercheck-Button rein
+
+- Neuer großer Button **„Kostenloser Futtercheck"** mit kleinem Etikett
+  „2 Min.", springt direkt zum Futtercheck (`#futtercheck`).
+- **Bewusst in Chlorophyll (hellgrün), nicht in Koralle.** Zwei gleichfarbige
+  große Buttons nebeneinander heben sich gegenseitig auf – man sieht dann
+  zwei gleiche Flächen statt zwei Wege. So gibt es jetzt zwei klar
+  unterscheidbare Hauptwege: „Neukunde werden" (Koralle, für alle, die schon
+  wissen, was sie wollen) und den Futtercheck (Chlorophyll, der
+  niedrigschwellige Einstieg). Auf dem dunklen Hero ist Chlorophyll ohnehin
+  der kontrastreichste Ton der ganzen Seite.
+- WhatsApp bleibt als Outline-Button darunter.
+- Der **Telefon-Button ist aus dem Hero entfernt**. Die Nummer steht weiter im
+  Kontaktbereich (Karte „Telefon").
+
+**Achtung Auswertung:** Die Conversion „Klick auf Telefonnummer A" wird ab
+jetzt seltener auslösen, weil der prominenteste Telefon-Link weg ist. Das ist
+kein Tracking-Fehler, sondern eine Folge der Änderung – beim Vergleich mit
+den Vormonaten berücksichtigen.
+
+## 2. Menü: „Futtercheck" ganz vorn
+
+Als hervorgehobener Link mit hellgrünem Hintergrund, **nicht** als dritter
+Button. Zwei gefüllte Buttons plus ein dritter würden die Kopfzeile
+überladen und sich gegenseitig schwächen.
+
+## 3. Ergebnis-Seite: großer Hinweis auf die Mail
+
+Direkt unter dem Score steht jetzt ein auffälliger hellgrüner Kasten:
+
+> **Dein ausführlicher Futtercheck ist unterwegs**
+> In den nächsten Minuten bekommst du die vollständige Auswertung für
+> [Tiername] per E-Mail an [eingegebene Adresse] – mit allen Details zu
+> deinem Ergebnis.
+> *Nichts angekommen? Schau bitte kurz im Spam- oder Werbung-Ordner nach.*
+
+- Die **eingegebene E-Mail-Adresse wird angezeigt** – wer sich vertippt hat,
+  merkt es sofort und meldet sich, statt still auf eine Mail zu warten, die
+  nie kommt.
+- Der **Spam-Hinweis** ist bewusst drin: Eine erste Mail von einem
+  unbekannten Absender landet häufig in „Werbung" oder „Spam".
+- Der alte kleine Satz ganz unten („Die ausführliche Auswertung bekommst du
+  gleich per E-Mail") ist raus, damit nichts doppelt steht. Der
+  Tierarzt-Hinweis bleibt.
+- „In den nächsten Minuten" stimmt so, weil die Futtercheck-Mail
+  transaktional ohne Bestätigungsschritt verschickt wird. Sollte Brevo
+  irgendwann auf Double-Opt-in umgestellt werden, muss der Text angepasst
+  werden („Bestätige kurz die Mail in deinem Postfach …").
+
+Geprüft: Brevo-Versand und die Google-Ads-Conversion „Futtercheck
+abgeschlossen" lösen nach dem Umbau weiterhin korrekt aus.
+
+## 4. Nebenbei behoben
+
+- **Sprungmarken unter der Kopfzeile:** Die Kopfzeile bleibt beim Scrollen
+  stehen. Ohne zusätzlichen Abstand landete ein Sprung zu `#futtercheck`
+  oder `#kontakt` mit der Überschrift teilweise darunter. Jetzt
+  `scroll-padding-top: 84px`.
+- **Handy (360 px): Seite ließ sich seitlich verschieben.** Ursache war der
+  Produkthandbuch-Bereich: Der Button „Handbuch kostenlos anfordern" darf
+  nicht umbrechen und drückte dadurch den ganzen Bereich 12 px breiter als
+  den Bildschirm. Das war schon vor dieser Runde so. Behoben.
+- **Hero-Buttons auf dem Handy** sind jetzt alle gleich breit; unter 400 px
+  entfällt das „2 Min."-Etikett, damit der Futtercheck-Button einzeilig
+  bleibt.
+
+---
+
 # Update 25.08. (vierzehnte Runde): „Neukunde werden"-Button
 
 Betrifft `index.html` und `assets/css/style.css`. Dazu ein Handy-Fehler, der

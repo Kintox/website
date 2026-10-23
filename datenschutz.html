@@ -3,6 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 1. Cookiebot - muss das erste Script im head sein, sonst kann es die
+         folgenden Skripte nicht steuern -->
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="2bcd0408-1135-44f6-bfe4-588b4e80b0f3" data-blockingmode="auto" type="text/javascript"></script>
+
+    <!-- 2. Google Consent Mode v2 - alle vier Signale stehen bis zur
+         Einwilligung auf "denied" -->
+    <script data-cookieconsent="ignore">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("consent", "default", {
+        ad_personalization: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        analytics_storage: "denied",
+        functionality_storage: "denied",
+        personalization_storage: "denied",
+        security_storage: "granted",
+        wait_for_update: 500,
+      });
+      gtag("set", "ads_data_redaction", true);
+      gtag("set", "url_passthrough", false);
+    </script>
+
+    <!-- 3. Google Tag - laedt, haelt sich bis zur Einwilligung aber zurueck -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-565697665" data-cookieconsent="ignore"></script>
+    <script data-cookieconsent="ignore">
+      gtag('js', new Date());
+      gtag('config', 'AW-565697665');
+    </script>
+
 <title>Datenschutzerklärung | Cedric Nitsch – Selbstständiger REiCO Vertriebspartner</title>
 <meta name="description" content="Datenschutzerklärung nach DSGVO für die Website von Cedric Nitsch, selbstständiger Vertriebspartner der REiCO &amp; Partner Vertriebs GmbH.">
 <meta name="robots" content="noindex, follow">
@@ -17,9 +48,6 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#3A3D0C">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -49,7 +77,7 @@
   <div class="wrap legal-inner">
 
     <h1>Datenschutzerklärung</h1>
-    <p class="updated">Informationen zur Verarbeitung personenbezogener Daten nach Art. 13 DSGVO · Stand: August 2026</p>
+    <p class="updated">Informationen zur Verarbeitung personenbezogener Daten nach Art. 13 DSGVO · Stand: September 2026</p>
 
     <div class="legal-toc">
       <ol>
@@ -57,18 +85,18 @@
         <li><a href="#dse-2">Überblick: welche Daten wofür</a></li>
         <li><a href="#dse-3">Hosting (GitHub Pages)</a></li>
         <li><a href="#dse-4">Server-Log-Dateien</a></li>
-        <li><a href="#dse-5">Cookies und lokale Speicherung</a></li>
+        <li><a href="#dse-5">Cookies, lokale Speicherung und Einwilligungsverwaltung</a></li>
         <li><a href="#dse-6">Futtercheck</a></li>
         <li><a href="#dse-7">Kontakt- und Anforderungsformulare</a></li>
         <li><a href="#dse-8">E-Mail-Versand über Brevo</a></li>
-        <li><a href="#dse-9">Google Fonts</a></li>
+        <li><a href="#dse-9">Schriftarten</a></li>
         <li><a href="#dse-10">Kontaktaufnahme per WhatsApp, Telefon oder E-Mail</a></li>
         <li><a href="#dse-11">Weitergabe an die REiCO &amp; Partner Vertriebs GmbH</a></li>
         <li><a href="#dse-12">Speicherdauer</a></li>
         <li><a href="#dse-13">Ihre Rechte</a></li>
         <li><a href="#dse-14">Widerspruchsrecht (Art. 21 DSGVO)</a></li>
         <li><a href="#dse-15">SSL-/TLS-Verschlüsselung</a></li>
-        <li><a href="#dse-16">Analyse-Tools und Werbung</a></li>
+        <li><a href="#dse-16">Google Ads Conversion-Tracking und erweiterte Conversions</a></li>
       </ol>
     </div>
 
@@ -127,8 +155,12 @@
       </tbody>
     </table>
     <p>
-      <strong>Es gibt auf dieser Website kein Tracking, keine Werbe-Pixel und keine
-      Analyse-Cookies.</strong> Es werden keine Nutzungsprofile gebildet.
+      Darüber hinaus setzen wir <strong>Google Ads Conversion-Tracking</strong> ein, um zu
+      messen, welche unserer Anzeigen zu Anfragen führen. Das geschieht
+      <strong>ausschließlich mit Ihrer Einwilligung</strong>; ohne Einwilligung werden keine
+      Daten zu Werbezwecken verarbeitet. Einzelheiten finden Sie in den Abschnitten 5 und 16.
+      Analyse-Dienste wie Google Analytics und ein Meta-Pixel werden <strong>nicht</strong>
+      eingesetzt.
     </p>
 
     <h2 id="dse-3">3. Hosting (GitHub Pages)</h2>
@@ -169,17 +201,44 @@
       Interesse an der technisch fehlerfreien Darstellung und der Sicherheit dieser Website.
     </p>
 
-    <h2 id="dse-5">5. Cookies und lokale Speicherung</h2>
+    <h2 id="dse-5">5. Cookies, lokale Speicherung und Einwilligungsverwaltung</h2>
     <p>
-      Diese Website setzt <strong>keine eigenen Cookies</strong> und speichert nichts dauerhaft
-      in Ihrem Browser. Ihre Antworten im Futtercheck werden ausschließlich flüchtig im
-      Arbeitsspeicher Ihres Browsers gehalten und sind spätestens beim Schließen oder Neuladen
-      der Seite verschwunden – es sei denn, Sie senden sie am Ende bewusst ab.
+      Ihre Antworten im Futtercheck werden ausschließlich flüchtig im Arbeitsspeicher Ihres
+      Browsers gehalten und sind spätestens beim Schließen oder Neuladen der Seite
+      verschwunden – es sei denn, Sie senden sie am Ende bewusst ab.
+    </p>
+
+    <h3>Einwilligungsverwaltung (Cookiebot)</h3>
+    <p>
+      Für das Einholen und Verwalten Ihrer Einwilligung nutzen wir das
+      Consent-Management-Tool <strong>Cookiebot</strong> der Usercentrics A/S,
+      Havnegade 39, 1058 Kopenhagen, Dänemark. Beim ersten Aufruf der Website wird Ihnen ein
+      Auswahldialog angezeigt. Cookiebot speichert Ihre Entscheidung in einem Cookie
+      („CookieConsent"), damit der Dialog nicht bei jedem Seitenaufruf erneut erscheint, und
+      protokolliert die Einwilligung zum Nachweis (Rechenschaftspflicht nach Art. 5 Abs. 2
+      DSGVO). Dabei werden Ihre gekürzte IP-Adresse, Datum und Uhrzeit, Browserangaben sowie
+      der Umfang Ihrer Einwilligung verarbeitet.
     </p>
     <p>
-      Ein Cookie-Banner ist deshalb nicht erforderlich. Sollten künftig einwilligungspflichtige
-      Dienste eingesetzt werden, wird zuvor eine Einwilligung eingeholt und diese Erklärung
-      aktualisiert.
+      Rechtsgrundlage ist unsere rechtliche Verpflichtung, Einwilligungen einzuholen und
+      nachzuweisen (Art. 6 Abs. 1 lit. c DSGVO), sowie unser berechtigtes Interesse an einem
+      rechtskonformen Websitebetrieb (Art. 6 Abs. 1 lit. f DSGVO).
+    </p>
+
+    <h3>Cookies zu Werbezwecken</h3>
+    <p>
+      Erst <strong>nachdem</strong> Sie eingewilligt haben, werden Cookies und vergleichbare
+      Technologien für das in Abschnitt 16 beschriebene Google Ads Conversion-Tracking
+      eingesetzt. Lehnen Sie ab oder treffen Sie keine Auswahl, unterbleibt dies. Wir nutzen
+      dafür den <strong>Google Consent Mode v2</strong>: Die Google-Dienste werden zwar
+      geladen, erhalten aber bis zu Ihrer Einwilligung das Signal, keine Cookies zu setzen und
+      keine personenbezogenen Werbedaten zu verarbeiten.
+    </p>
+    <p>
+      <strong>Ihre Einwilligung können Sie jederzeit mit Wirkung für die Zukunft
+      widerrufen</strong> – über den Link „Cookie-Einstellungen" im Fußbereich jeder Seite.
+      Rechtsgrundlage für einwilligungspflichtige Speicherung ist § 25 Abs. 1 TDDDG in
+      Verbindung mit Art. 6 Abs. 1 S. 1 lit. a DSGVO.
     </p>
 
     <h2 id="dse-6">6. Futtercheck</h2>
@@ -275,31 +334,12 @@
       Weitere Informationen: <a href="https://www.brevo.com/de/legal/privacypolicy/" target="_blank" rel="noopener">Datenschutzerklärung von Brevo</a>
     </p>
 
-    <h2 id="dse-9">9. Google Fonts</h2>
+    <h2 id="dse-9">9. Schriftarten</h2>
     <p>
-      Diese Website bindet zur einheitlichen Darstellung der Schriftart „Poppins" Schriften
-      von <strong>Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland</strong>
-      ein. Beim Aufruf einer Seite lädt Ihr Browser die Schriften von Servern von Google
-      (fonts.googleapis.com und fonts.gstatic.com). Dabei wird Ihre IP-Adresse an Google
-      übertragen, gegebenenfalls auch an Server in den USA.
+      Die verwendete Schriftart „Poppins" wird <strong>lokal von unserem Server
+      ausgeliefert</strong>. Es besteht dabei keine Verbindung zu Servern von Google, und es
+      werden keine Daten – insbesondere nicht Ihre IP-Adresse – an Google übertragen.
     </p>
-    <p>
-      Rechtsgrundlage ist unser berechtigtes Interesse an einer einheitlichen Darstellung
-      (Art. 6 Abs. 1 lit. f DSGVO). Google LLC ist unter dem EU-U.S. Data Privacy Framework
-      zertifiziert.
-    </p>
-    <p>
-      Weitere Informationen: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Datenschutzerklärung von Google</a> und
-      <a href="https://developers.google.com/fonts/faq" target="_blank" rel="noopener">Google Fonts FAQ</a>
-    </p>
-    <div class="legal-box">
-      <p>
-        <strong>Hinweis an den Betreiber (diesen Kasten vor dem Livegang entfernen):</strong>
-        Sobald die Schriften selbst gehostet werden – siehe die Anleitung in
-        <code>assets/css/style.css</code> –, entfällt jede Übertragung an Google.
-        Löschen Sie dann diesen gesamten Abschnitt 9 samt Eintrag im Inhaltsverzeichnis.
-      </p>
-    </div>
 
     <h2 id="dse-10">10. Kontaktaufnahme per WhatsApp, Telefon oder E-Mail</h2>
     <p>
@@ -394,12 +434,54 @@
       dem Zugriff durch Dritte ist nicht möglich.
     </p>
 
-    <h2 id="dse-16">16. Analyse-Tools und Werbung</h2>
+    <h2 id="dse-16">16. Google Ads Conversion-Tracking und erweiterte Conversions</h2>
     <p>
-      Auf dieser Website werden <strong>keine Analyse-, Tracking- oder Werbedienste</strong>
-      eingesetzt. Es sind insbesondere kein Google Analytics, kein Meta-Pixel und keine
-      Retargeting-Dienste eingebunden. Sollte sich das ändern, wird diese
-      Datenschutzerklärung vorher angepasst und – wo erforderlich – eine Einwilligung eingeholt.
+      Wir schalten Anzeigen über <strong>Google Ads</strong>, einen Dienst der Google Ireland
+      Limited, Gordon House, Barrow Street, Dublin 4, Irland. Um zu messen, welche Anzeigen zu
+      Anfragen führen, setzen wir das Google-Tag mit Conversion-Tracking ein
+      (Conversion-ID AW-565697665).
+    </p>
+    <p>
+      Erfasst wird, ob Sie nach dem Klick auf eine unserer Anzeigen eine bestimmte Handlung
+      ausführen: das Absenden eines unserer Formulare, den Abschluss des Futterchecks oder den
+      Klick auf unseren WhatsApp- oder Telefon-Link. Dabei werden ein Cookie gesetzt sowie
+      Angaben zu Ihrem Browser, Ihrem Endgerät und der aufgerufenen Seite verarbeitet. Wir
+      erhalten von Google ausschließlich zusammengefasste Auswertungen und können Sie darüber
+      nicht persönlich identifizieren.
+    </p>
+
+    <h3>Erweiterte Conversions</h3>
+    <p>
+      Ergänzend nutzen wir die Funktion „Erweiterte Conversions". Wenn Sie uns über eines
+      unserer Formulare Ihre E-Mail-Adresse übermitteln, wird diese <strong>bereits in Ihrem
+      Browser</strong> mit dem Verfahren SHA-256 in einen Prüfwert (Hash) umgewandelt und
+      ausschließlich in dieser Form an Google übermittelt. Die Adresse im Klartext verlässt
+      Ihren Browser nicht. Google gleicht diesen Prüfwert mit Prüfwerten angemeldeter
+      Google-Konten ab, um die Zuordnung zu einer Anzeige zu verbessern.
+      <strong>Weitere Daten – insbesondere Ihr Name, Ihre Anschrift und Ihre Telefonnummer –
+      werden zu diesem Zweck nicht übermittelt.</strong>
+    </p>
+
+    <h3>Remarketing</h3>
+    <p>
+      Das Google-Tag bildet zudem Remarketing-Listen, über die Ihnen unsere Anzeigen später auf
+      anderen Websites erneut angezeigt werden können.
+    </p>
+
+    <p>
+      <strong>All dies geschieht ausschließlich auf Grundlage Ihrer Einwilligung</strong> nach
+      Art. 6 Abs. 1 S. 1 lit. a DSGVO sowie § 25 Abs. 1 TDDDG. Sie können sie jederzeit über den
+      Link „Cookie-Einstellungen" im Fußbereich widerrufen. Google verarbeitet die Daten als
+      Auftragsverarbeiter nach Art. 28 DSGVO auf Grundlage der
+      <a href="https://privacy.google.com/businesses/processorterms/" target="_blank" rel="noopener">Datenverarbeitungsbedingungen für Google Ads</a>.
+      Eine Übermittlung in die USA ist nicht ausgeschlossen; Google LLC ist unter dem
+      EU-U.S. Data Privacy Framework zertifiziert.
+    </p>
+    <p>
+      Der personalisierten Werbung können Sie zusätzlich jederzeit in Ihrem Google-Konto unter
+      <a href="https://myadcenter.google.com" target="_blank" rel="noopener">Mein Anzeigen-Center</a>
+      widersprechen. Weitere Informationen finden Sie in der
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Datenschutzerklärung von Google</a>.
     </p>
 
   </div>
@@ -416,6 +498,7 @@
     <div class="footer-links">
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
+      <a href="#" onclick="if(window.Cookiebot){Cookiebot.renew();}return false;">Cookie-Einstellungen</a>
       <a href="partner.html">Partner werden</a>
       <a href="index.html#kontakt">Kontakt</a>
     </div>

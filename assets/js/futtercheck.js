@@ -563,6 +563,14 @@
     uebergewicht: 'Gewicht', energielos: 'Energielevel', haut: 'Hautbild', ohren: 'Ohren', allergie: 'Allergien'
   };
 
+  // Macht Nutzereingaben (z.B. die E-Mail-Adresse) sicher fuer innerHTML -
+  // sonst koennte ein Zeichen wie "<" das Ergebnis-Layout zerschiessen.
+  function fcEsc(text){
+    return String(text == null ? '' : text)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
   function fcShowResult(){
     const a = fcState.answers;
     const score = fcComputeScore();
@@ -599,6 +607,20 @@
       '<p>' + teaser + '</p>' +
       '</div>';
 
+    // Prominenter Hinweis auf die ausfuehrliche Auswertung per E-Mail
+    // (Brevo verschickt sie automatisch, transaktional, ohne Bestaetigungs-
+    // schritt). Steht bewusst DIREKT unter dem Score - vorher stand das nur
+    // klein ganz unten und wurde leicht uebersehen.
+    const mailAdresse = a.email ? '<span class="fc-mail-addr">' + fcEsc(a.email) + '</span>' : 'deine E-Mail-Adresse';
+    html += '<div class="fc-mail-notice" role="status">' +
+      '<div class="fc-mail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>' +
+      '<div>' +
+      '<strong class="fc-mail-title">Dein ausf\u00fchrlicher Futtercheck ist unterwegs</strong>' +
+      '<p>In den n\u00e4chsten Minuten bekommst du die vollst\u00e4ndige Auswertung f\u00fcr ' + fcEsc(tiername) + ' per E-Mail an ' + mailAdresse + ' \u2013 mit allen Details zu deinem Ergebnis.</p>' +
+      '<p class="fc-mail-spam">Nichts angekommen? Schau bitte kurz im Spam- oder Werbung-Ordner nach.</p>' +
+      '</div>' +
+      '</div>';
+
     html += '<div class="fc-result-topics"><h3>Das bespreche ich gerne persönlich mit dir:</h3><ul>';
     if (symptomeLabels.length) {
       symptomeLabels.forEach(function(l){ html += '<li>• Thema: ' + l + '</li>'; });
@@ -613,7 +635,7 @@
 
     html += '<div class="fc-result-cta">' +
       '<a href="https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waMsg) + '" target="_blank" rel="noopener" class="btn btn-primary"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Jetzt per WhatsApp beraten lassen</a>' +
-      '<p class="fc-result-note">Die ausführliche Auswertung bekommst du gleich per E-Mail. Das ist keine tierärztliche Diagnose – bei Beschwerden wende dich bitte an deine Tierarztpraxis.</p>' +
+      '<p class="fc-result-note">Das ist keine tierärztliche Diagnose – bei Beschwerden wende dich bitte an deine Tierarztpraxis.</p>' +
       '</div></div>';
 
     fcStepArea.innerHTML = html;
